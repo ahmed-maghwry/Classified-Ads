@@ -1,15 +1,15 @@
 from django.shortcuts import render , HttpResponse
 from django.shortcuts import get_object_or_404 , redirect
-from .models import ads
+from . models import ads
 
 # Create your views here.
 
 def all_ads(request):
-    ad=ads.objects.all
+    ads_all=ads.objects.all()
 
     context = {
 
-        'ad' : ad ,
+        'ads_all' : ads_all ,
     }
 
-    return render(request , 'index.html' , context)
+    return render(request , 'all.html' , context)

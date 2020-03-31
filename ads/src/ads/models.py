@@ -19,7 +19,7 @@ class ads(models.Model):
     active = models.BooleanField(default=True)
     view =models.IntegerField(default=0)
     ad_option = models.CharField(max_length=4, choices=options , default='ex')
-
+    img=models.ImageField(upload_to='post_img/' , default="img/defu.png")
 
     class Meta:
         ordering = ['-view']

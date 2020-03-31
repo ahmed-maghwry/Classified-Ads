@@ -1,9 +1,10 @@
 {% extends 'base_ads.html' %}
 
-    {% block main %}
+
+{% block card %}
 
 
-      </section>
+  </section>
                 
       <section class="py-5 my-card-sec">
         <div class="container text-center">
@@ -34,8 +35,8 @@
                       <li class="list-group-item">Vestibulum at eros</li>
                     </ul>
                     <div class="card-body">
-                      <a href="#" class="card-link">Card link</a>
-                      <a href="#" class="card-link">Another link</a>
+                      <a class="btn btn-primary" href=" {{ ad.id }} " role="button">know More</a>
+                      <a class="btn btn-success" href="" role="button">favoret !</a>
                     </div>
                   </div>
                 </div>
@@ -240,4 +241,4 @@
 
         </div>
       </section>
-{% endblock main %}
+{% endblock card %}

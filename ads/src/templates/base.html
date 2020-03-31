@@ -26,7 +26,7 @@
             class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse justify-content-md-center col-8 px-0" id="navigations-09">
           <ul class="navbar-nav col-6 justify-content-center">
-            <li class="nav-item"><a class="nav-link active" href="#">Home<span class="sr-only">(current)</span></a></li>
+            <li class="nav-item"><a class="nav-link active" href="/">Home<span class="sr-only">(current)</span></a></li>
             <li class="nav-item"><a class="nav-link" href="#">Enterprise</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Support</a></li>
             <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">My
@@ -121,9 +121,12 @@
 
 
 
-    {% block main %}
+    {% block card %}
 
-    {% endblock main %}
+    {% endblock card %}
+{% block detail %}
+
+{% endblock detail %}
 
 
 

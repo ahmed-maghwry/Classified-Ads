@@ -5,8 +5,7 @@ app_name = 'ads'
 
 urlpatterns = [
      url(r'^$',views.all_ads, name='all_ads') ,
-     
-    # url(r'^(?P<id>\d+)$', views.details_product , name='details_product'),
+     url(r'^(?P<id>\d+)$', views.ads_detail , name='ads_detail'),
 
     # url(r'^$',views.all_post, name='all_post' ) ,
     # url(r'^create$', views.create_post , name='create_post'),

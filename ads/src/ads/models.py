@@ -51,3 +51,12 @@ class car_cat(models.Model):
 
     def __str__(self):
         return self.cat_name
+
+
+class mop_cat(models.Model):
+    cat_name=models.CharField ( max_length=15)
+    cat_main=models.ForeignKey ( 'self' , related_name='prod_category_set', 
+                                limit_choices_to={'cat_main__isnull':True},
+                                on_delete=models.CASCADE,blank=True,null=True)
+    def __str__(self):
+        return self.cat_name

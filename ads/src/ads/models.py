@@ -12,11 +12,27 @@ class ads(models.Model):
     ) 
 
     user = models.ForeignKey(User, blank=True , null=True, on_delete=models.CASCADE)
-
     title =models.CharField(max_length=80)
     description = models.TextField(max_length=500,default='')
-    ad_catugr=models.ForeignKey('catugry' ,limit_choices_to={'sub__isnull':True ,
-                             'main__isnull':False },on_delete=models.SET_NULL, null=True)
+
+
+    main=models.ForeignKey ( 'catugry',related_name='ad_main',
+                            limit_choices_to={'main__isnull':True ,
+                             'sub__isnull':True ,
+                             'end__isnull':True }
+                               , on_delete=models.CASCADE,blank=True,null=True)
+    sub=models.ForeignKey ( 'catugry' ,related_name='ad_sub',
+                            limit_choices_to={'sub__isnull':True ,
+                                'main__isnull':False ,
+                                 'end__isnull':True }
+                                ,on_delete=models.CASCADE,blank=True,null=True)
+    end=models.ForeignKey ( 'catugry' , related_name='ad_end',
+                                limit_choices_to={'sub__isnull':False ,
+                                                  'main__isnull':False }
+                                ,on_delete=models.CASCADE,blank=True,null=True)
+
+
+
     create_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
     view =models.IntegerField(default=0)
@@ -26,6 +42,18 @@ class ads(models.Model):
     adress=models.CharField(max_length=80 , null=True,blank=True)
     mobile =models.PositiveSmallIntegerField( default=1114796307 , null=True,blank=True,)
     email=models.EmailField(default="ahmed_mag22@yahoo.com" , null=True,blank=True)
+    
+    
+    def save( self,*args,**kwargs ):
+        if  self.sub  :
+            self.main= self.sub.main
+
+        if self.end :
+            self.main=self.end.sub.main
+            self.sub=self.end.sub
+            
+        super(ads, self).save(*args,**kwargs)
+
 
 
 
@@ -38,17 +66,17 @@ class ads(models.Model):
 
 class catugry(models.Model):
     name=models.CharField ( max_length=20)
-    main=models.ForeignKey ( 'self', related_name='ad_category_set' ,
+    main=models.ForeignKey ( 'self', related_name='re_main' ,
                             limit_choices_to={'main__isnull':True ,
                              'sub__isnull':True ,
                              'end__isnull':True }
                                , on_delete=models.CASCADE,blank=True,null=True)
-    sub=models.ForeignKey ( 'self' , related_name='ad_sub_category_set',
+    sub=models.ForeignKey ( 'self' , related_name='re_sub',
                             limit_choices_to={'sub__isnull':True ,
                                 'main__isnull':False ,
                                  'end__isnull':True }
                                 ,on_delete=models.CASCADE,blank=True,null=True)
-    end=models.ForeignKey ( 'self' , related_name='ad_end_category_set',
+    end=models.ForeignKey ( 'self' , related_name='re_end',
                                 limit_choices_to={'sub__isnull':False ,
                                                   'main__isnull':False }
                                 ,on_delete=models.CASCADE,blank=True,null=True)
@@ -58,7 +86,7 @@ class catugry(models.Model):
         if  self.sub  :
             self.main= self.sub.main
 
-        elif self.end :
+        if self.end :
             self.main=self.end.sub.main
             self.sub=self.end.sub
             

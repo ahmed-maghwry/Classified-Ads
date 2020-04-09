@@ -15,6 +15,8 @@ class ads(models.Model):
 
     title =models.CharField(max_length=80)
     description = models.TextField(max_length=500,default='')
+    ad_catugr=models.ForeignKey('catugry' ,limit_choices_to={'sub__isnull':True ,
+                             'main__isnull':False },on_delete=models.SET_NULL, null=True)
     create_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
     view =models.IntegerField(default=0)
@@ -34,4 +36,56 @@ class ads(models.Model):
 
 
 
+class catugry(models.Model):
+    name=models.CharField ( max_length=20)
+    main=models.ForeignKey ( 'self', related_name='ad_category_set' ,
+                            limit_choices_to={'main__isnull':True ,
+                             'sub__isnull':True ,
+                             'end__isnull':True }
+                               , on_delete=models.CASCADE,blank=True,null=True)
+    sub=models.ForeignKey ( 'self' , related_name='ad_sub_category_set',
+                            limit_choices_to={'sub__isnull':True ,
+                                'main__isnull':False ,
+                                 'end__isnull':True }
+                                ,on_delete=models.CASCADE,blank=True,null=True)
+    end=models.ForeignKey ( 'self' , related_name='ad_end_category_set',
+                                limit_choices_to={'sub__isnull':False ,
+                                                  'main__isnull':False }
+                                ,on_delete=models.CASCADE,blank=True,null=True)
 
+
+    def save( self,*args,**kwargs ):
+        if  self.sub  :
+            self.main= self.sub.main
+
+        elif self.end :
+            self.main=self.end.sub.main
+            self.sub=self.end.sub
+            
+        super(catugry, self).save(*args,**kwargs)
+
+
+
+
+
+
+    class Meta:
+        verbose_name = "catugry"
+        verbose_name_plural = "catsdugry"
+
+    def __str__(self):
+
+        # if self.main is None and self.sub is None:
+        #     print("2")
+        #     return str(self.name)
+        
+        # if self.main is not None and self.sub is None:
+        #     print("3")
+        #     return str(self.main) + " >>>" + str(self.name)
+        
+        # if self.main is not None and self.sub is not None:
+        #     print("4")
+        #     print(self.sub.main)
+
+        #     return str(self.main) + " >>>" + str(self.sub) + " >>>" + str(self.name)
+        return str(self.name)

@@ -1,10 +1,9 @@
 from django.contrib import admin
-from .models import ads , car_cat ,  mop_cat , cat
+from .models import ads , catugry
 # Register your models here.
 admin.site.register(ads)
-admin.site.register(car_cat)
-admin.site.register(mop_cat)
-admin.site.register(cat)
+admin.site.register(catugry)
+
 
 
 

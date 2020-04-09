@@ -12,7 +12,10 @@ class ads(models.Model):
     ) 
 
     user = models.ForeignKey(User, blank=True , null=True, on_delete=models.CASCADE)
-    # slug= models.SlugField(default='' , null = True , blank= True)
+    # main_catugr=models.ForeignKey('Prod_catugry' ,limit_choices_to={'cat_Sub__isnull':True ,
+    #                          'cat_main__isnull':False },on_delete=models.SET_NULL, null=True)
+    # sup_catugr=models.ForeignKey('Prod_catugry' ,limit_choices_to={'cat_Sub__isnull':True ,
+    #                          'cat_main__isnull':False },on_delete=models.SET_NULL, null=True)
     title =models.CharField(max_length=80)
     description = models.TextField(max_length=500,default='')
     create_date = models.DateTimeField(default=timezone.now)
@@ -32,8 +35,17 @@ class ads(models.Model):
     def __str__(self):
         return self.title
 
+class cat(models.Model):
+    car_cat=models.ForeignKey('car_cat',on_delete=models.CASCADE)
+    mop_cat=models.ForeignKey('mop_cat',on_delete=models.CASCADE)
+    def __str__(self):
+        a= str(self.car_cat)
+        s= str(self.mop_cat)
+        d=" >> "
+        return  a+d+s
 
 class car_cat(models.Model):
+
     cat_name=models.CharField ( max_length=15)
     cat_main=models.ForeignKey ( 'self' , related_name='prod_category_set', 
                                 limit_choices_to={'cat_main__isnull':True},
@@ -59,4 +71,5 @@ class mop_cat(models.Model):
                                 limit_choices_to={'cat_main__isnull':True},
                                 on_delete=models.CASCADE,blank=True,null=True)
     def __str__(self):
+    
         return self.cat_name

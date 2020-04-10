@@ -2,6 +2,7 @@
 
 
 {% block card %}
+{% comment %} {% load crispy_forms_tags %}
 
 
 <section class="py-5 my-card-sec">
@@ -9,24 +10,65 @@
 
 
 
-  <form method="post" enctype="multipart/form-data">
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <div class="row">
 
-      {% csrf_token %}
-  
-      <table>
-        {{ form.as_table }}
-      </table>
-  
-      <button type="submit" class="btn btn-primary">submet</button>
-  
-      <h2><a href="{{ '/' }}"> HOME </a></h2>
-  
+      {%for fild in form%}
+
+      <div class="form-group ">
+        {{ fild|as_crispy_field }}
+      </div>
+      {%endfor%}
+    <button type="submit" class="btn btn-success">Save person</button>
   </form>
+
+
+  
 
 
 
     </div>
   </section>
+ {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+
+ <form method="post" id="adsform" data-cities-url="{% url 'ads:load_sub'%}" novalidate>
+    {% csrf_token %}
+    <table>
+      {{ form.as_table }}
+    </table>
+    <button type="submit">Save</button>
+  </form>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $("#id_main").change(function () {
+      var url = $("#adsform").attr("data-cities-url");  // get the url of the `load_cities` view
+      var mainId = $(this).val();  // get the selected country ID from the HTML input
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'main': mainId       // add the country id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+          $("#id_sub").html(data);  // replace the contents of the city input with the data that came from the server
+        }
+      });
+
+    });
+  </script>
 
 
   {% endblock card %}

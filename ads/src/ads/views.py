@@ -1,6 +1,6 @@
 from django.shortcuts import render , HttpResponse
 from django.shortcuts import get_object_or_404 , redirect
-from . models import ads
+from . models import ads ,catugry
 from . forms import adsform
 
 # Create your views here.
@@ -35,5 +35,13 @@ def creat_ads(request):
         'form': form ,
     }
     return render (request , 'creat.html' , context)
+
+
+def load_sub(request):
+    main_id = request.GET.get('main')
+    print("sds")
+    print(main_id)
+    sub = catugry.objects.filter(main_id=main_id , sub_id=None).order_by('name')
+    return render(request, 'load_sub_list_options.html', {'sub': sub})
 
     

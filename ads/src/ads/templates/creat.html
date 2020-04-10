@@ -1,0 +1,32 @@
+{% extends 'base_ads.html' %}
+
+
+{% block card %}
+
+
+<section class="py-5 my-card-sec">
+    <div class="container text-center">
+
+
+
+  <form method="post" enctype="multipart/form-data">
+
+      {% csrf_token %}
+  
+      <table>
+        {{ form.as_table }}
+      </table>
+  
+      <button type="submit" class="btn btn-primary">submet</button>
+  
+      <h2><a href="{{ '/' }}"> HOME </a></h2>
+  
+  </form>
+
+
+
+    </div>
+  </section>
+
+
+  {% endblock card %}

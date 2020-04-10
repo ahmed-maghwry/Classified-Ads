@@ -36,3 +36,23 @@ class mop_cat(models.Model):
     def __str__(self):
     
         return self.cat_name
+
+
+
+
+
+
+#######################################################
+# if self.main is None and self.sub is None:
+        #     print("2")
+        #     return str(self.name)
+        
+        # if self.main is not None and self.sub is None:
+        #     print("3")
+        #     return str(self.main) + " >>>" + str(self.name)
+        
+        # if self.main is not None and self.sub is not None:
+        #     print("4")
+        #     print(self.sub.main)
+
+        #     return str(self.main) + " >>>" + str(self.sub) + " >>>" + str(self.name)

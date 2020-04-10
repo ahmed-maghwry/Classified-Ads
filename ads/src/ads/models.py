@@ -10,12 +10,9 @@ class ads(models.Model):
     ("Sale", "Sale"), 
     ("free", "free"), 
     ) 
-
     user = models.ForeignKey(User, blank=True , null=True, on_delete=models.CASCADE)
     title =models.CharField(max_length=80)
     description = models.TextField(max_length=500,default='')
-
-
     main=models.ForeignKey ( 'catugry',related_name='ad_main',
                             limit_choices_to={'main__isnull':True ,
                              'sub__isnull':True ,
@@ -30,9 +27,6 @@ class ads(models.Model):
                                 limit_choices_to={'sub__isnull':False ,
                                                   'main__isnull':False }
                                 ,on_delete=models.CASCADE,blank=True,null=True)
-
-
-
     create_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
     view =models.IntegerField(default=0)
@@ -42,8 +36,7 @@ class ads(models.Model):
     adress=models.CharField(max_length=80 , null=True,blank=True)
     mobile =models.PositiveSmallIntegerField( default=1114796307 , null=True,blank=True,)
     email=models.EmailField(default="ahmed_mag22@yahoo.com" , null=True,blank=True)
-    
-    
+  
     def save( self,*args,**kwargs ):
         if  self.sub  :
             self.main= self.sub.main
@@ -54,11 +47,8 @@ class ads(models.Model):
             
         super(ads, self).save(*args,**kwargs)
 
-
-
-
     class Meta:
-        ordering = ['-view']
+        ordering = ['-create_date']
     def __str__(self):
         return self.title
 
@@ -81,7 +71,6 @@ class catugry(models.Model):
                                                   'main__isnull':False }
                                 ,on_delete=models.CASCADE,blank=True,null=True)
 
-
     def save( self,*args,**kwargs ):
         if  self.sub  :
             self.main= self.sub.main
@@ -92,28 +81,10 @@ class catugry(models.Model):
             
         super(catugry, self).save(*args,**kwargs)
 
-
-
-
-
-
     class Meta:
         verbose_name = "catugry"
         verbose_name_plural = "catsdugry"
 
     def __str__(self):
 
-        # if self.main is None and self.sub is None:
-        #     print("2")
-        #     return str(self.name)
-        
-        # if self.main is not None and self.sub is None:
-        #     print("3")
-        #     return str(self.main) + " >>>" + str(self.name)
-        
-        # if self.main is not None and self.sub is not None:
-        #     print("4")
-        #     print(self.sub.main)
-
-        #     return str(self.main) + " >>>" + str(self.sub) + " >>>" + str(self.name)
         return str(self.name)

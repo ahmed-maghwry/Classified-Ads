@@ -38,10 +38,30 @@ def creat_ads(request):
 
 
 def load_sub(request):
-    main_id = request.GET.get('main')
-    print("sds")
-    print(main_id)
-    sub = catugry.objects.filter(main_id=main_id , sub_id=None).order_by('name')
-    return render(request, 'load_sub_list_options.html', {'sub': sub})
+    main_idt = request.GET.get('main')
+    sub_idt = request.GET.get('sub')
+    sub = catugry.objects.filter(main_id=main_idt , sub_id=None).order_by('name')
+    print( main_idt , sub_idt)
+    end=[]
+    if sub_idt :
+        end = catugry.objects.filter( main_id=main_idt ,sub_id=sub_idt ,end_id=None).order_by('name')
+        print (end)
+        sub=[]
+
+        print( main_idt , sub_idt)
+    else: 
+        print("no")
+        end = catugry.objects.none()
+    context={
+        'sub': sub ,
+        'end': end
+    }
+    return render(request, 'load_sub_list_options.html',context)
+# def load_end(request):
+#     main_id = request.GET.get('main')
+#     sub_id = request.GET.get('sub')
+#     end = catugry.objects.filter(sub_id=sub_id ).order_by('name')
+#     return render(request, 'load_sub_list_options.html', {'end': end})
+
 
     

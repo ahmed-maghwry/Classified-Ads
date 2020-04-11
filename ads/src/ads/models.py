@@ -27,6 +27,11 @@ class ads(models.Model):
                                 limit_choices_to={'sub__isnull':False ,
                                                   'main__isnull':False }
                                 ,on_delete=models.CASCADE,blank=True,null=True)
+    last=models.ForeignKey ( 'catugry' , related_name='ad_last',
+                                limit_choices_to={'sub__isnull':False ,
+                                                  'main__isnull':False ,
+                                                  'end__isnull':False}
+                                ,on_delete=models.CASCADE,blank=True,null=True)
     create_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
     view =models.IntegerField(default=0)
@@ -70,6 +75,7 @@ class catugry(models.Model):
                                 limit_choices_to={'sub__isnull':False ,
                                                   'main__isnull':False }
                                 ,on_delete=models.CASCADE,blank=True,null=True)
+    
 
     def save( self,*args,**kwargs ):
         if  self.sub  :

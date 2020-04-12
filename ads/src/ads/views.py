@@ -3,6 +3,8 @@ from django.shortcuts import get_object_or_404 , redirect
 from . models import ads ,catugry
 from . forms import adsform
 
+
+
 # Create your views here.
 
 def all_ads(request):
@@ -22,6 +24,8 @@ def ads_detail(request , id):
     #########################################################################
 
 def creat_ads(request):
+    from . forms import adsform
+
     if request.method =='POST':
         form = adsform(request.POST ,request.FILES)
         if form.is_valid():
@@ -35,33 +39,37 @@ def creat_ads(request):
         'form': form ,
     }
     return render (request , 'creat.html' , context)
-
+    #########################################################################
 
 def load_sub(request):
     main_idt = request.GET.get('main')
     sub_idt = request.GET.get('sub')
+    end_idt = request.GET.get('end')
     sub = catugry.objects.filter(main_id=main_idt , sub_id=None).order_by('name')
-    print( main_idt , sub_idt)
     end=[]
+    last=[]
     if sub_idt :
         end = catugry.objects.filter( main_id=main_idt ,sub_id=sub_idt ,end_id=None).order_by('name')
-        print (end)
         sub=[]
+        # last=[]
+    
+    else: pass
+        # sub =  catugry.objects.none()        
+        # end =  catugry.objects.none()
+        # last = catugry.objects.none()
+    if end_idt:
+        last = catugry.objects.filter( main_id=main_idt ,sub_id=sub_idt ,end_id=end_idt).order_by('name')
+        sub=[]
+        end=[]
+        print ("ok")
 
-        print( main_idt , sub_idt)
-    else: 
-        print("no")
-        end = catugry.objects.none()
+    else: print ("else")
+        # end = catugry.objects.none()
+        # last = catugry.objects.none()
+        # sub = catugry.objects.none()
     context={
         'sub': sub ,
-        'end': end
+        'end': end ,
+        'last': last
     }
     return render(request, 'load_sub_list_options.html',context)
-# def load_end(request):
-#     main_id = request.GET.get('main')
-#     sub_id = request.GET.get('sub')
-#     end = catugry.objects.filter(sub_id=sub_id ).order_by('name')
-#     return render(request, 'load_sub_list_options.html', {'end': end})
-
-
-    

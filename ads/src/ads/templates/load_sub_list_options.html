@@ -1,6 +1,6 @@
 
 
-<option value="Choose">Choose</option>
+<option value="">Choose</option>
 {% for cat in sub %}
 <option value="{{ cat.pk }}">{{ cat.name }}</option>
 {% endfor %}
@@ -9,8 +9,7 @@
 <option value="{{ cate.pk }}">{{ cate.name }}</option>
 {% endfor %}
 
-
-<!-- <option value="">---------</option>
-{% for cate in end %}
+{% for cate in last %}
 <option value="{{ cate.pk }}">{{ cate.name }}</option>
-{% endfor %} -->
+{% endfor %}
+

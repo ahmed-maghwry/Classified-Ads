@@ -1,7 +1,7 @@
 from django.shortcuts import render , HttpResponse
 from django.shortcuts import get_object_or_404 , redirect
 from . models import ads ,catugry
-from . forms import adsform
+from . forms import *
 
 
 
@@ -22,9 +22,25 @@ def ads_detail(request , id):
     return render(request,'detail.html', context)
 
     #########################################################################
+def ff (request):
+    main_ff = request.GET.get('mainff')
+
+    if main_ff == "8" :
+        cat=carf()
+    elif main_ff == "23" :
+        cat=mobilef()
+    else :
+        cat="Ahmed"
+    context2 ={
+
+        'cat':cat,
+    }
+
+    return render (request , 'ff.html' , context2)
+
+    #########################################################################
 
 def creat_ads(request):
-    from . forms import adsform
 
     if request.method =='POST':
         form = adsform(request.POST ,request.FILES)
@@ -61,9 +77,8 @@ def load_sub(request):
         last = catugry.objects.filter( main_id=main_idt ,sub_id=sub_idt ,end_id=end_idt).order_by('name')
         sub=[]
         end=[]
-        print ("ok")
 
-    else: print ("else")
+    else: pass
         # end = catugry.objects.none()
         # last = catugry.objects.none()
         # sub = catugry.objects.none()

@@ -8,7 +8,7 @@ urlpatterns = [
      url(r'^(?P<id>\d+)$', views.ads_detail , name='ads_detail'),
      url(r'^creat$', views.creat_ads , name='creat_ads'),
      url('ajax/load-cities/', views.load_sub, name='load_sub'),# <-- this one here #
-    # url('ajax/load-cities/', views.load_end, name='load_end'),   # <-- this one here
+    url('ajax/ff/', views.ff, name='ff'),   # <-- this one here
 
 
 

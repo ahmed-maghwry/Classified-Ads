@@ -9,15 +9,24 @@
     <table>
       {{ form.as_table }}
     </table>
-    <button type="submit">Save</button>
-  </form>
 
+    <table  id="fff">
+      {% include "ff.html" %}
+    </table>
+    <button type="submit">Save</button>
+
+
+  </form>
+  
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script>
     $("#id_main").change(function () {
       var url = $("#adsform").attr("data-url");
       var url2= ("{% url 'ads:load_sub'%}")  // get the url of the `load_cities` view
+      var url3= ("{% url 'ads:ff'%}")  // get the url of the `load_cities` view
       var mainId = $(this).val();  // get the selected country ID from the HTML input
+      var mainff = $(this).val();  // get the selected country ID from the HTML input
+
 
       $.ajax({                       // initialize an AJAX request
         url: url2,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
@@ -26,11 +35,31 @@
         },
         success: function (data) {   // `data` is the return of the `load_cities` view function
           $("#id_sub").html(data);
-          console.log(data);  // replace the contents of the city input with the data that came from the server
+        }
+      });
+// ############################################################
+// ###########################################################
+
+      $.ajax({                       // initialize an AJAX request
+        url: url3,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'mainff': mainff,
+
+        },
+        success: function (data2) {   // `data` is the return of the `load_cities` view function
+          $("#fff").html(data2);
+          console.log(data2);  // replace the contents of the city input with the data that came from the server
+
+
         }
       });
 
+
     });
+
+// ############################################################
+// ###########################################################
+
 {% comment %} ############################################# {% endcomment %}
     $("#id_sub").change(function () {
       var url = $("#adsform").attr("data-url");  // get the url of the `load_cities` view
@@ -51,7 +80,10 @@
         }
       });
 
+
     });
+
+    
 
     {% comment %} ############################################# {% endcomment %}
 

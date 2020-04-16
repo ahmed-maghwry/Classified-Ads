@@ -2,6 +2,19 @@ from django import forms
 from .models import ads , catugry
 import PIL
 
+
+
+class carf(forms.ModelForm):
+    class Meta:
+        model = catugry
+        fields = ['name', 'main'  ]
+
+class mobilef(forms.ModelForm):
+    class Meta:
+        model = catugry
+        fields = ['sub', 'end'  ]
+
+
 class adsform(forms.ModelForm):
     class Meta:
         model = ads

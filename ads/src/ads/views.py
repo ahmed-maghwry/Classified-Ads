@@ -1,10 +1,11 @@
 from django.shortcuts import render , HttpResponse
 from django.shortcuts import get_object_or_404 , redirect
 from . models import ads ,catugry
-from . forms import *
+from . forms import carf , mobilef , adsform , bbf
 
 
 
+cat="Ahmed"
 # Create your views here.
 
 def all_ads(request):
@@ -24,9 +25,8 @@ def ads_detail(request , id):
     #########################################################################
 def ff (request):
     main_ff = request.GET.get('mainff')
-
     if main_ff == "8" :
-        cat=carf()
+        cat=bbf()
     elif main_ff == "23" :
         cat=mobilef()
     else :
@@ -35,22 +35,40 @@ def ff (request):
 
         'cat':cat,
     }
-
+    
     return render (request , 'ff.html' , context2)
 
+
     #########################################################################
-
 def creat_ads(request):
-
+    
     if request.method =='POST':
         form = adsform(request.POST ,request.FILES)
-        if form.is_valid():
+        
+
+
+        if form.is_valid() :
+            print(1)
             new_form = form.save(commit=False)  # تاخير حفظ الفورم حتي تعديلها
             new_form.user=request.user
-            form.save()
-            return redirect('/')
+            print(type(new_form.main.id))
+            if new_form.main.id == 8 :
+                catff = bbf (request.POST , request.FILES)
+                print(3)
+            elif new_form.main.id == 23 :
+                print(4)
+                catff = mobilef (request.POST , request.FILES)
+            else :
+                print(5)
+                pass
+            if catff.is_valid() :
+                form.save()
+                catff.save()
+                return redirect('/')
+            else : pass
     else:
         form = adsform()
+
     context = {
         'form': form ,
     }
@@ -67,7 +85,6 @@ def load_sub(request):
     if sub_idt :
         end = catugry.objects.filter( main_id=main_idt ,sub_id=sub_idt ,end_id=None).order_by('name')
         sub=[]
-        # last=[]
     
     else: pass
         # sub =  catugry.objects.none()        

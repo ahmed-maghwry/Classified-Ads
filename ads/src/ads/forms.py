@@ -1,8 +1,11 @@
 from django import forms
-from .models import ads , catugry
+from .models import ads , catugry , bb
 import PIL
 
-
+class bbf(forms.ModelForm):
+    class Meta:
+        model = bb
+        fields = ['name2']
 
 class carf(forms.ModelForm):
     class Meta:
@@ -12,7 +15,7 @@ class carf(forms.ModelForm):
 class mobilef(forms.ModelForm):
     class Meta:
         model = catugry
-        fields = ['sub', 'end'  ]
+        fields = ['name','sub', 'end'  ]
 
 
 class adsform(forms.ModelForm):

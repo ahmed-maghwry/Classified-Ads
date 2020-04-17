@@ -60,7 +60,7 @@ class ads(models.Model):
 
 
 class catugry(models.Model):
-    name=models.CharField ( max_length=20)
+    name=models.CharField ( max_length=20 , default='')
     main=models.ForeignKey ( 'self', related_name='re_main' ,
                             limit_choices_to={'main__isnull':True ,
                              'sub__isnull':True ,
@@ -94,3 +94,7 @@ class catugry(models.Model):
     def __str__(self):
 
         return str(self.name)
+
+
+class bb(models.Model):
+    name2=models.TextField(max_length=500,default='')

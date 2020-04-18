@@ -23,7 +23,7 @@ def ads_detail(request , id):
     return render(request,'detail.html', context)
 
     #########################################################################
-def ff (request):
+def change_form (request):
     main_ff = request.GET.get('mainff')
     if main_ff == "8" :
         cat=bbf()
@@ -34,44 +34,82 @@ def ff (request):
     context2 ={
 
         'cat':cat,
+        'signalf' :0
     }
     
-    return render (request , 'ff.html' , context2)
+    return render (request , 'change_form.html' , context2)
 
 
     #########################################################################
 def creat_ads(request):
+    signalf=0
     
     if request.method =='POST':
+        print (" request is post")
         form = adsform(request.POST ,request.FILES)
         
+        if form.data['main'] == "8" :
+            print ("main = 8")
+            catff = bbf (request.POST , request.FILES)
+            catf22=bbf()
+            signalf=1
+        elif form.data['main'] == "23" :
+            print ("main = 23")
+            catff = mobilef (request.POST , request.FILES)  
+            catf22=mobilef()
+            signalf=1
 
-
-        if form.is_valid() :
-            print(1)
-            new_form = form.save(commit=False)  # تاخير حفظ الفورم حتي تعديلها
-            new_form.user=request.user
-            print(type(new_form.main.id))
-            if new_form.main.id == 8 :
-                catff = bbf (request.POST , request.FILES)
-                print(3)
-            elif new_form.main.id == 23 :
-                print(4)
-                catff = mobilef (request.POST , request.FILES)
-            else :
-                print(5)
-                pass
-            if catff.is_valid() :
+        else : 
+            print ("no main response")
+            pass
+        if signalf == 1 :
+            print ("test main in response or not ")
+            if form.is_valid() and catff.is_valid() :
+                print ("test two form valid or not ")
+                new_form = form.save(commit=False)  # تاخير حفظ الفورم حتي تعديلها
+                new_form.user=request.user
                 form.save()
                 catff.save()
                 return redirect('/')
-            else : pass
-    else:
-        form = adsform()
 
-    context = {
+            
+            else:
+                print ("return one of two forms is not valid")
+                context = {
+                    'form': form,
+                    'catff': catff,
+                    'signalf': signalf,
+                }
+                pass
+        else:
+            print (" main is not in response")
+            if form.is_valid() :
+                print ("if form is valid ")
+                new_form = form.save(commit=False)  # تاخير حفظ الفورم حتي تعديلها
+                new_form.user=request.user
+                form.save()
+                return redirect('/')
+            else:
+                print ("form is not valid")
+                # form = adsform()
+                pass
+    else:
+        print (" not POST request")
+        form= adsform() 
+
+    try:
+        context = {
+            'form': form ,
+            'catff': catff,
+            'signalf': signalf,
+        }
+
+    except :
+        context = {
         'form': form ,
+        'signalf': signalf,
     }
+
     return render (request , 'creat.html' , context)
     #########################################################################
 

@@ -10,12 +10,17 @@
       {{ form.as_table }}
     </table>
 
-    <table  id="fff">
-            
-    </table>
+
+    {% if signalf == 1 %}
+    <table  id="change_form">
+      {{catff}}
+    </table>    
+    
+    {% else %}
+    <table  id="change_form">
+    </table>    
+    {% endif %}
     <button type="submit">Save</button>
-
-
   </form>
   
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -23,7 +28,7 @@
     $("#id_main").change(function () {
       var url = $("#adsform").attr("data-url");
       var url2= ("{% url 'ads:load_sub'%}")  // get the url of the `load_cities` view
-      var url3= ("{% url 'ads:ff'%}")  // get the url of the `load_cities` view
+      var url3= ("{% url 'ads:change_form'%}")  // get the url of the `load_cities` view
       var mainId = $(this).val();  // get the selected country ID from the HTML input
       var mainff = $(this).val();  // get the selected country ID from the HTML input
 
@@ -47,7 +52,7 @@
 
         },
         success: function (data2) {   // `data` is the return of the `load_cities` view function
-          $("#fff").html(data2);
+          $("#change_form").html(data2);
           console.log(data2);  // replace the contents of the city input with the data that came from the server
 
 

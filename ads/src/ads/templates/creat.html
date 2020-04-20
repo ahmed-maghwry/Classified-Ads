@@ -30,7 +30,7 @@
       var url2= ("{% url 'ads:load_sub'%}")  // get the url of the `load_cities` view
       var url3= ("{% url 'ads:change_form'%}")  // get the url of the `load_cities` view
       var mainId = $(this).val();  // get the selected country ID from the HTML input
-      var mainff = $(this).val();  // get the selected country ID from the HTML input
+      var main_form_id = $(this).val();  // get the selected country ID from the HTML input
 
 
       $.ajax({                       // initialize an AJAX request
@@ -48,7 +48,7 @@
       $.ajax({                       // initialize an AJAX request
         url: url3,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
         data: {
-          'mainff': mainff,
+          'main_form_id': main_form_id,
 
         },
         success: function (data2) {   // `data` is the return of the `load_cities` view function

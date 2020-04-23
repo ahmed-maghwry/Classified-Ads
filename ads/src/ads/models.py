@@ -19,23 +19,23 @@ class ads(models.Model):
                             limit_choices_to={'main__isnull':True ,
                              'sub__isnull':True ,
                              'end__isnull':True }
-                               , on_delete=models.CASCADE,blank=True,null=True)
+                               , on_delete=models.CASCADE,blank=True,null=True, verbose_name='Main Category')
     sub=models.ForeignKey ( 'catugry' ,related_name='ad_sub',
                             limit_choices_to={'sub__isnull':True ,
                                 'main__isnull':False ,
                                  'end__isnull':True }
-                                ,on_delete=models.CASCADE,blank=True,null=True)
+                                ,on_delete=models.CASCADE,blank=True,null=True, verbose_name='Under Surface Category')
     end=models.ForeignKey ( 'catugry' , related_name='ad_end',
                                 limit_choices_to={'sub__isnull':False ,
                                                   'main__isnull':False ,
                                                   'end__isnull':True }
 
-                                ,on_delete=models.CASCADE,blank=True,null=True)
+                                ,on_delete=models.CASCADE,blank=True,null=True, verbose_name='Deep Category')
     last=models.ForeignKey ( 'catugry' , related_name='ad_last',
                                 limit_choices_to={'sub__isnull':False ,
                                                   'main__isnull':False ,
                                                   'end__isnull':False}
-                                ,on_delete=models.CASCADE,blank=True,null=True)
+                                ,on_delete=models.CASCADE,blank=True,null=True, verbose_name='Last Category')
     create_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
     view =models.IntegerField(default=0)

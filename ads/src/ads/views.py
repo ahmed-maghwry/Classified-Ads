@@ -117,6 +117,53 @@ def creat_ads(request):
     }
     return render (request , 'creat.html' , context)
     #########################################################################
+
+
+
+
+
+def edit_ads(request , id ):
+
+
+    ad_id=get_object_or_404(ads ,id=id )
+
+    ads_user = str(ad_id.user.username)
+    login_user = str(request.user)
+
+    if ads_user==login_user or login_user=="admin" :
+        if request.method == 'POST':
+            form = adsform(request.POST, request.FILES, instance=ad_id)
+            if form.is_valid():
+                form.save()
+                return redirect('/' + id)
+
+
+        else:
+            form = adsform(instance=ad_id)
+
+        context = {
+
+            'form': form,
+        }
+
+        return render(request, 'edit.html', context)
+    else:
+        return HttpResponse("<h1>You Don't Have Permissio</h1>")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def load_sub(request):
     main_idt = request.GET.get('main')
     sub_idt = request.GET.get('sub')

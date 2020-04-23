@@ -1,7 +1,7 @@
 from django.shortcuts import render , HttpResponse
 from django.shortcuts import get_object_or_404 , redirect
-from . models import ads ,catugry
-from . forms import carf , mobilef , adsform , bbf
+from . models import ads ,catugry , car_form
+from . forms import carf , mobilef , adsform  ,car_forms
 
 
 
@@ -40,7 +40,7 @@ def ads_detail(request , id):
 def change_form (request):
     main_form_id = request.GET.get('main_form_id')
     if main_form_id == "8" :
-        cat=bbf()
+        cat=car_forms()
     elif main_form_id == "23" :
         cat=mobilef()
     else :
@@ -53,14 +53,16 @@ def change_form (request):
     return render (request , 'change_form.html' , context2)
     #########################################################################
 def creat_ads(request):
+    for f in car_forms():
+        print(type(f))
     signalf=0
     if request.method =='POST':
         print (" request is post")
         form = adsform(request.POST ,request.FILES)
         if form.data['main'] == "8" :
             print ("main = 8")
-            catff = bbf (request.POST , request.FILES)
-            catf22=bbf()
+            catff = car_forms (request.POST , request.FILES)
+            catf22=car_forms()
             signalf=1
         elif form.data['main'] == "23" :
             print ("main = 23")

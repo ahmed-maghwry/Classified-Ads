@@ -1,23 +1,27 @@
 from django import forms
-from .models import ads , catugry , bb
+from .models import ads , catugry , car_form
 import PIL
+from django.forms.widgets import RadioSelect
 
-class bbf(forms.ModelForm):
+class car_forms(forms.ModelForm):
+
     class Meta:
-        model = bb
-        fields = ['name2']
-
+        model = car_form
+        exclude = ['ad_id']
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.BooleanField.widget.forms.update(RadioSelect)
+            # .widget.attrs.update({'class': 'special'})
+            # widget=forms.RadioSelect
+            # self.fields['comment'].widget.attrs.update(size='40')
 class carf(forms.ModelForm):
     class Meta:
         model = catugry
         fields = ['name', 'main'  ]
-
 class mobilef(forms.ModelForm):
     class Meta:
         model = catugry
         fields = ['name','sub', 'end'  ]
-
-
 class adsform(forms.ModelForm):
     class Meta:
         model = ads

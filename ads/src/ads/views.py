@@ -1,7 +1,11 @@
 from django.shortcuts import render , HttpResponse
 from django.shortcuts import get_object_or_404 , redirect
 from . models import ads ,catugry , car_form
-from . forms import carf , mobilef , adsform  ,car_forms
+from . forms import carf , mobilef , adsform  ,car_forms ,adsform2
+from django.views.generic import UpdateView
+from django.urls import reverse_lazy
+
+
 
 
 
@@ -53,8 +57,7 @@ def change_form (request):
     return render (request , 'change_form.html' , context2)
     #########################################################################
 def creat_ads(request):
-    for f in car_forms():
-        print(type(f))
+    
     signalf=0
     if request.method =='POST':
         print (" request is post")
@@ -118,37 +121,88 @@ def creat_ads(request):
     return render (request , 'creat.html' , context)
     #########################################################################
 
-
-
-
-
 def edit_ads(request , id ):
+    adedit=get_object_or_404(ads,id=id)
 
-
-    ad_id=get_object_or_404(ads ,id=id )
-
-    ads_user = str(ad_id.user.username)
-    login_user = str(request.user)
-
-    if ads_user==login_user or login_user=="admin" :
-        if request.method == 'POST':
-            form = adsform(request.POST, request.FILES, instance=ad_id)
-            if form.is_valid():
+    
+    signalf=0
+    if request.method =='POST':
+        print (" request is post")
+        form = adsform2(request.POST ,request.FILES)
+        if form.data['main'] == "8" :
+            print ("main = 8")
+            catff = car_forms (request.POST , request.FILES)
+            catf22=car_forms()
+            signalf=1
+        elif form.data['main'] == "23" :
+            print ("main = 23")
+            catff = mobilef (request.POST , request.FILES)  
+            catf22=mobilef()
+            signalf=1
+        else : 
+            print ("no main response")
+            pass
+        if signalf == 1 :
+            print ("test main in response or not ")
+            if form.is_valid() and catff.is_valid() :
+                print ("test two form valid or not ")
+                new_form = form.save(commit=False)  # تاخير حفظ الفورم حتي تعديلها
+                new_form.user=request.user
                 form.save()
-                return redirect('/' + id)
-
-
+                catff.save()
+                return redirect('/')
+            else:
+                print ("return one of two forms is not valid")
+                context = {
+                    'form': form,
+                    'catff': catff,
+                    'signalf': signalf,
+                }
+                pass
         else:
-            form = adsform(instance=ad_id)
-
-        context = {
-
-            'form': form,
-        }
-
-        return render(request, 'edit.html', context)
+            print (" main is not in response")
+            if form.is_valid() :
+                print ("if form is valid ")
+                new_form = form.save(commit=False)  # تاخير حفظ الفورم حتي تعديلها
+                new_form.user=request.user
+                form.save()
+                return redirect('/')
+            else:
+                print ("form is not valid")
+                # form = adsform()
+                pass
     else:
-        return HttpResponse("<h1>You Don't Have Permissio</h1>")
+        
+        form= adsform2(instance=adedit) 
+        # print (" not POST request")
+        # print("views")
+        # print(adedit.main)
+        # print(adedit.sub)
+        # print("views")
+        # print(adedit)
+        # form.data['sub']=request.sub
+        # print(form.fields['sub'])
+        v={
+            'sub_instance' : adedit.sub,
+            'end_instance' : adedit.end,
+            'last_instance' : adedit.last,
+        }
+    try:
+        context = {
+            'form': form ,
+            'catff': catff,
+            'signalf': signalf,
+            'v':v,
+        }
+    except :
+        context = {
+        'form': form ,
+        'signalf': signalf,
+        'v':v,
+    }
+    return render (request , 'edit.html' , context)
+    #########################################################################
+
 
 
 

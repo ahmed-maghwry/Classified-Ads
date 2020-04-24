@@ -40,7 +40,7 @@ class ads(models.Model):
     active = models.BooleanField(default=True)
     view =models.IntegerField(default=0)
     ad_option = models.CharField(max_length=4, choices=options , default='ex')
-    img=models.ImageField(upload_to='post_img/' , default="img/defu.png")
+    img=models.ImageField(upload_to='post_img2/' , default="img/defu.png")
     name_of_who=models.CharField(max_length=15 , null=True,blank=True)
     adress=models.CharField(max_length=80 , null=True,blank=True)
     mobile =models.PositiveSmallIntegerField( default=1114796307 , null=True,blank=True,)

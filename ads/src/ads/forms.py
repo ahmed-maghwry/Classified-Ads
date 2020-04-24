@@ -40,6 +40,9 @@ class adsform(forms.ModelForm):
             except (ValueError, TypeError):
                 pass  # invalid input from the client; ignore and fallback to empty City queryset
         elif self.instance.pk:
+            pass
+            self.fields['sub'].value = self.instance.main.sub_set.order_by('name')   
+
             self.fields['sub'].queryset = self.instance.main.sub_set.order_by('name')   
 #################################################################
         if 'sub' in self.data:
@@ -63,7 +66,59 @@ class adsform(forms.ModelForm):
 
         
          
+class adsform2(forms.ModelForm):
+    class Meta:
+        model = ads
+        fields = ['title', 'description' , 'ad_option' , 'main' 
+                , 'sub','end' , 'last' , 'img','name_of_who','adress','mobile','email' ]
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        try:
+            if self.instance.main.id :
+                print{}
+                main_id = self.instance.main.id
+                sub_id = self.instance.sub.id
+                end_id = self.instance.end.id
+                self.fields['sub'].queryset = catugry.objects.filter(main_id=main_id , sub_id=None).order_by('name')
+                self.fields['end'].queryset = catugry.objects.filter(main_id=main_id ,sub_id=sub_id ,end_id=None).order_by('name')
+                self.fields['last'].queryset = catugry.objects.filter(main_id=main_id ,sub_id=sub_id ,end_id=end_id ).order_by('name')
+            else:
+                self.fields['sub'].queryset = catugry.objects.none()
+                self.fields['end'].queryset = catugry.objects.none()
+                self.fields['last'].queryset = catugry.objects.none()
+
+        except :
+            if 'main' in self.data:
+                try:
+                    main_id = int(self.data.get('main'))
+                    self.fields['sub'].queryset = catugry.objects.filter(main_id=main_id , sub_id=None).order_by('name')
+                except (ValueError, TypeError):
+                    pass  # invalid input from the client; ignore and fallback to empty City queryset
+            elif self.instance.pk:
+                self.fields['sub'].value = self.instance.main.sub_set.order_by('name')   
+    #################################################################
+            if 'sub' in self.data:
+                try:
+                    sub_id = int(self.data.get('sub'))
+                    self.fields['end'].queryset = catugry.objects.filter(main_id=main_id ,sub_id=sub_id ,end_id=None).order_by('name')
+                except (ValueError, TypeError):
+                    pass  # invalid input from the client; ignore and fallback to empty City queryset
+            elif self.instance.pk:
+                self.fields['end'].queryset = self.instance.main.sub.end_set.order_by('name')   
+    #################################################################
+            if 'end' in self.data:
+                try:
+                    end_id = int(self.data.get('end'))
+                    self.fields['last'].queryset = catugry.objects.filter(main_id=main_id ,sub_id=sub_id ,end_id=end_id ).order_by('name')
+                except (ValueError, TypeError):
+                    pass  # invalid input from the client; ignore and fallback to empty City queryset
+            elif self.instance.pk:
+                self.fields['last'].queryset = self.instance.main.sub.end_set.order_by('name')
 
 
+            
+            
+
+                  
 
 

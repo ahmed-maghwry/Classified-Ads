@@ -1,1 +1,119 @@
-{{ form }}
+{% extends 'base_ads.html' %}
+
+
+{% block card %}
+
+
+ <form method="post" id="adsform" data-url="{% url 'ads:load_sub'%}mkm"  enctype="multipart/form-data" novalidate >
+    {% csrf_token %}
+    <table>
+      {{ form.as_table }}
+    </table>
+
+
+    {% if signalf == 1 %}
+    <table  id="change_form">
+      {{catff}}
+    </table>    
+    
+    {% else %}
+    <table  id="change_form">
+    </table>    
+    {% endif %}
+    <button type="submit">Save</button>
+  </form>
+  
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $("#id_main").change(function () {
+      var url = $("#adsform").attr("data-url");
+      var url2= ("{% url 'ads:load_sub'%}")  // get the url of the `load_cities` view
+      var url3= ("{% url 'ads:change_form'%}")  // get the url of the `load_cities` view
+      var mainId = $(this).val();  // get the selected country ID from the HTML input
+      var main_form_id = $(this).val();  // get the selected country ID from the HTML input
+
+
+      $.ajax({                       // initialize an AJAX request
+        url: url2,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'main': mainId       // add the country id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+          $("#id_sub").html(data);
+        }
+      });
+// ############################################################
+// ###########################################################
+
+      $.ajax({                       // initialize an AJAX request
+        url: url3,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'main_form_id': main_form_id,
+
+        },
+        success: function (data2) {   // `data` is the return of the `load_cities` view function
+          $("#change_form").html(data2);
+          console.log(data2);  // replace the contents of the city input with the data that came from the server
+
+
+        }
+      });
+
+
+    });
+
+// ############################################################
+// ###########################################################
+
+{% comment %} ############################################# {% endcomment %}
+    $("#id_sub").change(function () {
+      var url = $("#adsform").attr("data-url");  // get the url of the `load_cities` view
+      var subId = $(this).val();  // get the selected country ID from the HTML input
+      var url2= ("{% url 'ads:load_sub'%}")  // get the url of the `load_cities` view
+
+      var mainId=$("#id_main").val();
+
+      $.ajax({                       // initialize an AJAX request
+        url: url2,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'main':mainId ,
+          'sub': subId       // add the country id to the GET parameters
+          
+        },
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+          $("#id_end").html(data);
+        }
+      });
+
+
+    });
+
+    
+
+    {% comment %} ############################################# {% endcomment %}
+
+    $("#id_end").change(function () {
+      var url = $("#adsform").attr("data-url");  // get the url of the `load_cities` view
+      var endId = $(this).val();  // get the selected country ID from the HTML input // get the url of the `load_cities` view
+      var mainId=$("#id_main").val();
+      var subId=$("#id_sub").val();
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'main':mainId ,
+          'sub': subId ,
+          'end': endId      // add the country id to the GET parameters
+          
+        },
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+          $("#id_last").html(data);
+          console.log(data);  // replace the contents of the city input with the data that came from the server
+        }
+      });
+
+    });
+
+  </script>
+
+  {% endblock card %}

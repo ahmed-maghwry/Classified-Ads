@@ -4,7 +4,7 @@
 {% block card %}
 
 
- <form method="post" id="adsform" data-url="{% url 'ads:load_sub'%}mkm" novalidate >
+ <form method="post" id="adsform" data-url="{% url 'ads:load_sub'%}mkm"  enctype="multipart/form-data" novalidate >
     {% csrf_token %}
     <table>
       {{ form.as_table }}
@@ -40,6 +40,11 @@
         },
         success: function (data) {   // `data` is the return of the `load_cities` view function
           $("#id_sub").html(data);
+          // console.log(data);
+
+
+
+
         }
       });
 // ############################################################

@@ -43,7 +43,7 @@ def ads_detail(request , id):
 
 def change_form (request):
     main_form_id = request.GET.get('main_form_id')
-    if main_form_id == "8" :
+    if main_form_id == "43" :
         cat=car_forms()
     elif main_form_id == "23" :
         cat=mobilef()
@@ -57,26 +57,24 @@ def change_form (request):
     return render (request , 'change_form.html' , context2)
     #########################################################################
 def creat_ads(request):
-    
+
     signalf=0
     if request.method =='POST':
-        print (" request is post")
-        form = adsform(request.POST ,request.FILES)
-        if form.data['main'] == "8" :
-            print ("main = 8")
-            catff = car_forms (request.POST , request.FILES)
+        form = adsform(request.POST , request.FILES )
+        if form.data['main'] == "43" :
+            catff = car_forms (request.POST )
             catf22=car_forms()
             signalf=1
-        elif form.data['main'] == "23" :
+        elif form.data['main'] == "43" :
             print ("main = 23")
-            catff = mobilef (request.POST , request.FILES)  
+            catff = mobilef (request.POST )  
             catf22=mobilef()
             signalf=1
         else : 
             print ("no main response")
             pass
         if signalf == 1 :
-            print ("test main in response or not ")
+    #         print ("test main in response or not ")
             if form.is_valid() and catff.is_valid() :
                 print ("test two form valid or not ")
                 new_form = form.save(commit=False)  # تاخير حفظ الفورم حتي تعديلها
@@ -86,6 +84,9 @@ def creat_ads(request):
                 return redirect('/')
             else:
                 print ("return one of two forms is not valid")
+                form.fields['sub'].queryset = catugry.objects.none()
+                form.fields['end'].queryset = catugry.objects.none()
+                form.fields['last'].queryset = catugry.objects.none()
                 context = {
                     'form': form,
                     'catff': catff,
@@ -101,12 +102,21 @@ def creat_ads(request):
                 form.save()
                 return redirect('/')
             else:
+                form.fields['sub'].queryset = catugry.objects.none()
+                form.fields['end'].queryset = catugry.objects.none()
+                form.fields['last'].queryset = catugry.objects.none()
                 print ("form is not valid")
                 # form = adsform()
                 pass
     else:
         print (" not POST request")
         form= adsform() 
+
+        form.fields['sub'].queryset = catugry.objects.none()
+        form.fields['end'].queryset = catugry.objects.none()
+        form.fields['last'].queryset = catugry.objects.none()
+
+
     try:
         context = {
             'form': form ,
@@ -128,15 +138,15 @@ def edit_ads(request , id ):
     signalf=0
     if request.method =='POST':
         print (" request is post")
-        form = adsform2(request.POST ,request.FILES)
+        form = adsform2(request.POST , request.FILES , instance=adedit )
         if form.data['main'] == "8" :
             print ("main = 8")
-            catff = car_forms (request.POST , request.FILES)
+            catff = car_forms (request.POST)
             catf22=car_forms()
             signalf=1
         elif form.data['main'] == "23" :
             print ("main = 23")
-            catff = mobilef (request.POST , request.FILES)  
+            catff = mobilef (request.POST)  
             catf22=mobilef()
             signalf=1
         else : 
@@ -146,11 +156,9 @@ def edit_ads(request , id ):
             print ("test main in response or not ")
             if form.is_valid() and catff.is_valid() :
                 print ("test two form valid or not ")
-                new_form = form.save(commit=False)  # تاخير حفظ الفورم حتي تعديلها
-                new_form.user=request.user
                 form.save()
                 catff.save()
-                return redirect('/')
+                return redirect('/'+ id)
             else:
                 print ("return one of two forms is not valid")
                 context = {
@@ -163,10 +171,8 @@ def edit_ads(request , id ):
             print (" main is not in response")
             if form.is_valid() :
                 print ("if form is valid ")
-                new_form = form.save(commit=False)  # تاخير حفظ الفورم حتي تعديلها
-                new_form.user=request.user
                 form.save()
-                return redirect('/')
+                return redirect('/'+ id)
             else:
                 print ("form is not valid")
                 # form = adsform()
@@ -192,13 +198,11 @@ def edit_ads(request , id ):
             'form': form ,
             'catff': catff,
             'signalf': signalf,
-            'v':v,
         }
     except :
         context = {
         'form': form ,
         'signalf': signalf,
-        'v':v,
     }
     return render (request , 'edit.html' , context)
     #########################################################################

@@ -22,21 +22,35 @@
   
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script>
+    var Choose2 = '<option value="">Choose</option>'
+
     $("#id_main").change(function () {
       var url2= ("{% url 'ads:load_sub'%}")  // get the url of the `load_cities` view
       var url3= ("{% url 'ads:change_form'%}")  // get the url of the `load_cities` view
       var mainId = $(this).val();  // get the selected country ID from the HTML input
       var main_form_id = $(this).val();  // get the selected country ID from the HTML input
+      var sub_Id = $("#id_sub").val();
+      var end_Id = $("#id_end").val();
+      var Choose2 = '<option value="">Choose</option>'
+      var rrr = {
+        'mainff':'sdsd'
+      }
+
 
 
       $.ajax({                       // initialize an AJAX request
         url: url2,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
         data: {
-          'main': mainId       // add the country id to the GET parameters
+          'main': mainId ,
+          // 'sub':sub_Id ,                 // add the country id to the GET parameters
+          // 'end':end_Id ,
         },
+        
         success: function (data) {   // `data` is the return of the `load_cities` view function
           $("#id_sub").html(data);
-          // console.log(data);
+          $("#id_end").html(Choose2);
+          $("#id_last").html(Choose2);
+          console.log(data);
 
 
 
@@ -83,6 +97,7 @@
         },
         success: function (data) {   // `data` is the return of the `load_cities` view function
           $("#id_end").html(data);
+          $("#id_last").html(Choose2);
         }
       });
 

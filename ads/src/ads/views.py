@@ -63,12 +63,10 @@ def creat_ads(request):
         form = adsform(request.POST , request.FILES )
         if form.data['main'] == "43" :
             catff = car_forms (request.POST )
-            catf22=car_forms()
             signalf=1
         elif form.data['main'] == "43" :
             print ("main = 23")
             catff = mobilef (request.POST )  
-            catf22=mobilef()
             signalf=1
         else : 
             print ("no main response")
@@ -76,17 +74,26 @@ def creat_ads(request):
         if signalf == 1 :
     #         print ("test main in response or not ")
             if form.is_valid() and catff.is_valid() :
-                print ("test two form valid or not ")
                 new_form = form.save(commit=False)  # تاخير حفظ الفورم حتي تعديلها
                 new_form.user=request.user
                 form.save()
                 catff.save()
                 return redirect('/')
             else:
-                print ("return one of two forms is not valid")
-                form.fields['sub'].queryset = catugry.objects.none()
-                form.fields['end'].queryset = catugry.objects.none()
-                form.fields['last'].queryset = catugry.objects.none()
+                main_id_creat=form.data['main']
+                sub_id_creat=form.data['sub']
+                end_id_creat=form.data['end']
+                if main_id_creat == "" : main_id_creat=0
+                else: main_id_creat=form.data['main']
+                if sub_id_creat == "" : sub_id_creat=0
+                else: sub_id_creat=form.data['sub']
+                if end_id_creat == "" : end_id_creat=0
+                else: end_id_creat=form.data['end']
+                form.fields['sub'].queryset = catugry.objects.filter(main_id=main_id_creat , sub_id=None
+                ).order_by('name')
+                form.fields['end'].queryset = catugry.objects.filter(main_id=main_id_creat ,sub_id=sub_id_creat ,end_id=None).order_by('name')
+                form.fields['last'].queryset = catugry.objects.filter(main_id=main_id_creat ,sub_id=sub_id_creat ,end_id=end_id_creat
+                ).order_by('name')
                 context = {
                     'form': form,
                     'catff': catff,
@@ -102,21 +109,25 @@ def creat_ads(request):
                 form.save()
                 return redirect('/')
             else:
-                form.fields['sub'].queryset = catugry.objects.none()
-                form.fields['end'].queryset = catugry.objects.none()
-                form.fields['last'].queryset = catugry.objects.none()
-                print ("form is not valid")
-                # form = adsform()
-                pass
+                main_id_creat=form.data['main']
+                sub_id_creat=form.data['sub']
+                end_id_creat=form.data['end']
+                if main_id_creat == "" : main_id_creat=0
+                else: main_id_creat=form.data['main']
+                if sub_id_creat == "" : sub_id_creat=0
+                else: sub_id_creat=form.data['sub']
+                if end_id_creat == "" : end_id_creat=0
+                else: end_id_creat=form.data['end']
+                form.fields['sub'].queryset = catugry.objects.filter(main_id=main_id_creat , sub_id=None
+                ).order_by('name')
+                form.fields['end'].queryset = catugry.objects.filter(main_id=main_id_creat ,sub_id=sub_id_creat ,end_id=None).order_by('name')
+                form.fields['last'].queryset = catugry.objects.filter(main_id=main_id_creat ,sub_id=sub_id_creat ,end_id=end_id_creat
+                ).order_by('name')
     else:
-        print (" not POST request")
         form= adsform() 
-
         form.fields['sub'].queryset = catugry.objects.none()
         form.fields['end'].queryset = catugry.objects.none()
         form.fields['last'].queryset = catugry.objects.none()
-
-
     try:
         context = {
             'form': form ,
@@ -133,8 +144,6 @@ def creat_ads(request):
 
 def edit_ads(request , id ):
     adedit=get_object_or_404(ads,id=id)
-
-    
     signalf=0
     if request.method =='POST':
         print (" request is post")
@@ -180,14 +189,7 @@ def edit_ads(request , id ):
     else:
         
         form= adsform2(instance=adedit) 
-        # print (" not POST request")
-        # print("views")
-        # print(adedit.main)
-        # print(adedit.sub)
-        # print("views")
-        # print(adedit)
-        # form.data['sub']=request.sub
-        # print(form.fields['sub'])
+    
         v={
             'sub_instance' : adedit.sub,
             'end_instance' : adedit.end,
@@ -223,24 +225,35 @@ def edit_ads(request , id ):
 
 
 def load_sub(request):
+    
     main_idt = request.GET.get('main')
     sub_idt = request.GET.get('sub')
     end_idt = request.GET.get('end')
-    sub = catugry.objects.filter(main_id=main_idt , sub_id=None).order_by('name')
-    end=[]
-    last=[]
+    if main_idt :
+        sub = catugry.objects.filter(main_id=main_idt , sub_id=None).order_by('name')
+        end=[]
+        last=[]
+    else:
+        sub=[]
+        end=[]
+        last=[]
+
     if sub_idt :
         end = catugry.objects.filter( main_id=main_idt ,sub_id=sub_idt ,end_id=None).order_by('name')
         sub=[]  
-    else: pass
+    else:
+        end=[]
+        last=[]
     if end_idt:
         last = catugry.objects.filter( main_id=main_idt ,sub_id=sub_idt ,end_id=end_idt).order_by('name')
         sub=[]
         end=[]
-    else: pass
+    else: 
+        last=[]
     context={
         'sub': sub ,
         'end': end ,
-        'last': last
+        'last': last,
+
     }
     return render(request, 'load_sub_list_options.html',context)

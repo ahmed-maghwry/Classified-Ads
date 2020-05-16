@@ -4,7 +4,6 @@ from . models import ads ,catugry , car_form
 from . forms import carf , mobilef , adsform  ,car_forms ,adsform2
 from django.views.generic import UpdateView
 from django.urls import reverse_lazy
-
 cat=""# Empty variable use like signal and i think it is not important but i'm afraid to delete it
 # Create your views here.
 def all_ads(request):
@@ -61,21 +60,19 @@ def creat_ads(request):
             catff = car_forms (request.POST )
             signalf=1
         elif form.data['main'] == "43" :
-            print ("main = 23")
             catff = mobilef (request.POST )  
             signalf=1
         else : 
-            print ("no main response")
             pass
         if signalf == 1 :
-    #         print ("test main in response or not ")
             if form.is_valid() and catff.is_valid() :
                 new_form = form.save(commit=False)  # تاخير حفظ الفورم حتي تعديلها
                 new_form.user=request.user
                 new_catff=catff.save(commit=False)
                 new_catff.ad_id=form.save()
+                print (form.cleaned_data)
                 form.save()
-                catff.save()
+                catff.save()   
                 return redirect('/')
                 
             else:
@@ -100,9 +97,7 @@ def creat_ads(request):
                 }
                 pass
         else:
-            print (" main is not in response")
             if form.is_valid() :
-                print ("if form is valid ")
                 new_form = form.save(commit=False)  # تاخير حفظ الفورم حتي تعديلها
                 new_form.user=request.user
                 form.save()
@@ -141,34 +136,69 @@ def creat_ads(request):
     return render (request , 'creat.html' , context)
     #########################################################################
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def edit_ads(request , id ):
-    adedit=get_object_or_404(ads,id=id)
+    ads_edit=get_object_or_404(ads,id=id)
+    print (ads_edit.main.id)
     signalf=0
     if request.method =='POST':
-        print (" request is post")
-        form = adsform2(request.POST , request.FILES , instance=adedit )
-        if form.data['main'] == "8" :
-            print ("main = 8")
-            catff = car_forms (request.POST)
-            catf22=car_forms()
+        print (ads_edit.main.id)
+        form = adsform(request.POST , request.FILES, instance=ads_edit  )
+        if ads_edit.main.id == 43 and form.data['main'] == "43" :
+            ads_exe_edit=get_object_or_404(car_form,ad_id=ads_edit)
+            catff = car_forms ( request.POST ,instance=ads_exe_edit )
             signalf=1
-        elif form.data['main'] == "23" :
-            print ("main = 23")
-            catff = mobilef (request.POST)  
-            catf22=mobilef()
-            signalf=1
+        elif ads_edit.main.id == 43 and form.data['main'] == "43":
+            # catff = mobilef (request.POST, instance=ads_edit )  
+            # signalf=1
+            pass
         else : 
-            print ("no main response")
             pass
         if signalf == 1 :
-            print ("test main in response or not ")
+            print('dsdsdsdsdsdsdsdsdsdsdsdsds')
+
+            print (ads_edit.main.id)
             if form.is_valid() and catff.is_valid() :
-                print ("test two form valid or not ")
+                print('dsdsdsdsdsdsdsdsdsdsdsdsds')
+                new_form = form.save(commit=False)  # تاخير حفظ الفورم حتي تعديلها
+                new_form.user=request.user
+                new_catff=catff.save(commit=False)
+                new_catff.ad_id=form.save()
                 form.save()
-                catff.save()
-                return redirect('/'+ id)
+                catff.save()   
+                return redirect('/')
+                
             else:
-                print ("return one of two forms is not valid")
+                main_id_creat=form.data['main']
+                sub_id_creat=form.data['sub']
+                end_id_creat=form.data['end']
+                if main_id_creat == "" : main_id_creat=0
+                else: main_id_creat=form.data['main']
+                if sub_id_creat == "" : sub_id_creat=0
+                else: sub_id_creat=form.data['sub']
+                if end_id_creat == "" : end_id_creat=0
+                else: end_id_creat=form.data['end']
+                form.fields['sub'].queryset = catugry.objects.filter(main_id=main_id_creat , sub_id=None
+                ).order_by('name')
+                form.fields['end'].queryset = catugry.objects.filter(main_id=main_id_creat ,sub_id=sub_id_creat ,end_id=None).order_by('name')
+                form.fields['last'].queryset = catugry.objects.filter(main_id=main_id_creat ,sub_id=sub_id_creat ,end_id=end_id_creat
+                ).order_by('name')
                 context = {
                     'form': form,
                     'catff': catff,
@@ -176,24 +206,70 @@ def edit_ads(request , id ):
                 }
                 pass
         else:
-            print (" main is not in response")
+            print("else")
+            print (ads_edit.main.id)
             if form.is_valid() :
-                print ("if form is valid ")
+                print (ads_edit.main.id)
+                new_form = form.save(commit=False)  # تاخير حفظ الفورم حتي تعديلها
+                new_form.user=request.user
+                print(3333333333333333333333)
+                print(form.data['main'])
                 form.save()
-                return redirect('/'+ id)
+                return redirect('/')
             else:
-                print ("form is not valid")
-                # form = adsform()
-                pass
+                main_id_creat=form.data['main']
+                sub_id_creat=form.data['sub']
+                end_id_creat=form.data['end']
+                if main_id_creat == "" : main_id_creat=0
+                else: main_id_creat=form.data['main']
+                if sub_id_creat == "" : sub_id_creat=0
+                else: sub_id_creat=form.data['sub']
+                if end_id_creat == "" : end_id_creat=0
+                else: end_id_creat=form.data['end']
+                form.fields['sub'].queryset = catugry.objects.filter(main_id=main_id_creat , sub_id=None
+                ).order_by('name')
+                form.fields['end'].queryset = catugry.objects.filter(main_id=main_id_creat ,sub_id=sub_id_creat ,end_id=None).order_by('name')
+                form.fields['last'].queryset = catugry.objects.filter(main_id=main_id_creat ,sub_id=sub_id_creat ,end_id=end_id_creat
+                ).order_by('name')
     else:
+        form= adsform(instance=ads_edit )
+        main_id_creat=ads_edit.main
+        sub_id_creat=ads_edit.sub
+        end_id_creat=ads_edit.end
+        if main_id_creat == "" or main_id_creat == None: 
+            main_id_creat=0
+            form.fields['sub'].queryset = catugry.objects.none()
+            form.fields['end'].queryset = catugry.objects.none()
+            form.fields['last'].queryset = catugry.objects.none()
+        else: main_id_creat=ads_edit.main
+        if sub_id_creat == "" or sub_id_creat == None:
+            sub_id_creat=0
+            form.fields['end'].queryset = catugry.objects.none()
+            form.fields['last'].queryset = catugry.objects.none()
+        else: sub_id_creat=ads_edit.sub
+        if end_id_creat == "" or end_id_creat == None: 
+            end_id_creat=0
+            form.fields['last'].queryset = catugry.objects.none()
+        else: end_id_creat=ads_edit.end
+        form.fields['sub'].queryset = catugry.objects.filter(main_id=main_id_creat , sub_id=None
+        ).order_by('name')
+        form.fields['end'].queryset = catugry.objects.filter(main_id=main_id_creat ,sub_id=sub_id_creat ,end_id=None).order_by('name')
+        form.fields['last'].queryset = catugry.objects.filter(main_id=main_id_creat ,sub_id=sub_id_creat ,end_id=end_id_creat
+        ).order_by('name') 
         
-        form= adsform2(instance=adedit) 
-    
-        v={
-            'sub_instance' : adedit.sub,
-            'end_instance' : adedit.end,
-            'last_instance' : adedit.last,
-        }
+        if ads_edit.main.id == 43 :
+            ads_exe_edit=get_object_or_404(car_form,ad_id=ads_edit)
+            catff = car_forms ( instance=ads_exe_edit )
+            signalf=1
+
+        elif ads_edit.main.id == 43 :
+            ads_exe_edit=get_object_or_404(car_form,ad_id=ads_edit)
+            # catff = mobilef (request.POST, instance=ads_edit )  
+            # signalf=1
+            pass
+        else : 
+            pass
+
     try:
         context = {
             'form': form ,
@@ -205,23 +281,8 @@ def edit_ads(request , id ):
         'form': form ,
         'signalf': signalf,
     }
-    return render (request , 'edit.html' , context)
+    return render (request , 'creat.html' , context)
     #########################################################################
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 def load_sub(request):
     

@@ -59,7 +59,7 @@ class ads(models.Model):
     class Meta:
         ordering = ['-create_date']
     def __str__(self):
-        return self.title
+        return str (self.id)
 class catugry(models.Model):
     name=models.CharField ( max_length=40 , default='')
     main=models.ForeignKey ( 'self', related_name='re_main' ,

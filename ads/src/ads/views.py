@@ -5,10 +5,6 @@ from . forms import carf , mobilef , adsform  ,car_forms ,adsform2
 from django.views.generic import UpdateView
 from django.urls import reverse_lazy
 
-
-
-
-
 cat=""# Empty variable use like signal and i think it is not important but i'm afraid to delete it
 # Create your views here.
 def all_ads(request):
@@ -76,9 +72,12 @@ def creat_ads(request):
             if form.is_valid() and catff.is_valid() :
                 new_form = form.save(commit=False)  # تاخير حفظ الفورم حتي تعديلها
                 new_form.user=request.user
+                new_catff=catff.save(commit=False)
+                new_catff.ad_id=form.save()
                 form.save()
                 catff.save()
                 return redirect('/')
+                
             else:
                 main_id_creat=form.data['main']
                 sub_id_creat=form.data['sub']

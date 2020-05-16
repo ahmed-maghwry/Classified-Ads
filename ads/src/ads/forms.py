@@ -26,7 +26,7 @@ class mobilef(forms.ModelForm):
 class adsform(forms.ModelForm):
     class Meta:
         model = ads
-        fields = ['title', 'description' , 'ad_option' , 'main' 
+        fields = [ 'title', 'description' , 'ad_option' , 'main' 
                 , 'sub','end' , 'last' , 'img','name_of_who','adress','mobile','email' ]
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

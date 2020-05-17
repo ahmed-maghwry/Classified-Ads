@@ -36,7 +36,7 @@
                     </ul>
                     <div class="card-body">
                       <a class="btn btn-primary" href=" {{ ad.id }}#con " role="button">know More</a>
-                      <a class="btn btn-success" href="" role="button">favoret !</a>
+                      <a class="btn btn-success" href="{% url 'ads:edit_ads' ad.id %}" role="button">Edit !</a>
                     </div>
                   </div>
                 </div>

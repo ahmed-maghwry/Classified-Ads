@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from . import views
+from . import cat
 app_name = 'ads'
 
 
@@ -9,7 +10,7 @@ urlpatterns = [
     url(r'^creat$', views.creat_ads , name='creat_ads'),
     url('ajax/load-cities/', views.load_sub, name='load_sub'),# <-- this one here #
     url('ajax/change_form/', views.change_form, name='change_form'),   # <-- this one here
-    url(r'^(?P<id>\d+)/edit$', views.edit_ads, name='edit_ads'),
+    url(r'^(?P<id>\d+)/edit$', cat.edit_ads, name='edit_ads'),
 
 
 

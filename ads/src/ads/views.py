@@ -137,18 +137,6 @@ def creat_ads(request):
     ##################################################  edit_ads  #######################
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 def load_sub(request):
     
     main_idt = request.GET.get('main')

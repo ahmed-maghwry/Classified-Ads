@@ -2,7 +2,6 @@ from django.shortcuts import render , HttpResponse
 from django.shortcuts import get_object_or_404 , redirect
 from . models import ads ,catugry , car_form
 from . forms import carf , mobilef , adsform  ,car_forms ,adsform2
-from django.views.generic import UpdateView
 from django.urls import reverse_lazy
 cat=""# Empty variable use like signal and i think it is not important but i'm afraid to delete it
 # Create your views here.

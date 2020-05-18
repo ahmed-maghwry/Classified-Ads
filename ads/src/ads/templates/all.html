@@ -14,10 +14,11 @@
         <a class="nav-item nav-link my-taps active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
           aria-controls="nav-home" aria-selected="true"> Home</a>
         <a class="nav-item nav-link my-taps" id="nav-Mobile-tab" data-toggle="tab" href="#nav-Mobile" role="tab"
-          aria-controls="nav-Mobile" aria-selected="false">Mobile Phones & Accessories</a>
+          aria-controls="nav-Mobile" href="#" aria-selected="false">Mobile Phones & Accessories</a>
 
         <a class="nav-item nav-link my-taps" id="nav-clothes-tab" data-toggle="tab" href="#nav-clothes" role="tab"
           aria-controls="nav-clothes" aria-selected="false">clothes</a>
+
 
         <a class="nav-item nav-link my-taps" id="nav-Appliances-tab" data-toggle="tab" href="#nav-Appliances" role="tab"
           aria-controls="nav-Appliances" aria-selected="false">Appliances</a>
@@ -92,6 +93,7 @@
       <!-- new tab -->
 
       <div class="tab-pane fade" id="nav-Mobile" role="tabpanel" aria-labelledby="nav-Mobile-tab">Mobile
+
       </div>
 
 
@@ -159,4 +161,158 @@
   </div>
   </div>
 </section>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<script>
+  $("#nav-Vehicles-tab").click(function () {
+    var cat = 43 ;
+    $.ajax({
+      url: "{% url 'search:by_catugry' %}",
+      data: { 'cat': cat },
+      success: function (data) {
+        $("#nav-Vehicles").html(data);
+        console.log(data);
+      }
+    });
+  });
+
+
+  $("#nav-Mobile-tab").click(function () {
+    var cat = 50;
+    $.ajax({
+      url: "{% url 'search:by_catugry' %}",
+      data: { 'cat': cat },
+      success: function (data) {
+        $("#nav-Mobile").html(data);
+        console.log(data);
+      }
+    });
+  });
+
+
+  $("#nav-clothes-tab").click(function () {
+    var cat = 112;
+    $.ajax({
+      url: "{% url 'search:by_catugry' %}",
+      data: { 'cat': cat },
+      success: function (data) {
+        $("#nav-clothes").html(data);
+        console.log(data);
+      }
+    });
+  });
+
+
+
+  $("#nav-Appliances-tab").click(function () {
+    var cat = 113;
+    $.ajax({
+      url: "{% url 'search:by_catugry' %}",
+      data: { 'cat': cat },
+      success: function (data) {
+        $("#nav-Appliances").html(data);
+        console.log(data);
+      }
+    });
+  });
+
+
+
+  $("#nav-Electronic-tab").click(function () {
+    var cat = 53;
+    $.ajax({
+      url: "{% url 'search:by_catugry' %}",
+      data: { 'cat': cat },
+      success: function (data) {
+        $("#nav-Electronic").html(data);
+        console.log(data);
+      }
+    });
+  });
+
+
+  $("#nav-Sports-tab").click(function () {
+    var cat = 115;
+    $.ajax({
+      url: "{% url 'search:by_catugry' %}",
+      data: { 'cat': cat },
+      success: function (data) {
+        $("#nav-Sports").html(data);
+        console.log(data);
+      }
+    });
+  });
+
+
+
+  $("#nav-Pets-tab").click(function () {
+    var cat = 116;
+    $.ajax({
+      url: "{% url 'search:by_catugry' %}",
+      data: { 'cat': cat },
+      success: function (data) {
+        $("#nav-Pets").html(data);
+        console.log(data);
+      }
+    });
+  });
+
+
+  $("#nav-Furniture-tab").click(function () {
+    var cat =117;
+    $.ajax({
+      url: "{% url 'search:by_catugry' %}",
+      data: { 'cat': cat },
+      success: function (data) {
+        $("#nav-Furniture").html(data);
+        console.log(data);
+      }
+    });
+  });
+
+
+
+  $("#nav-Babies-tab").click(function () {
+    var cat = 118;
+    $.ajax({
+      url: "{% url 'search:by_catugry' %}",
+      data: { 'cat': cat },
+      success: function (data) {
+        $("#nav-Babies").html(data);
+        console.log(data);
+      }
+    });
+  });
+
+
+
+  $("#nav-Properties-tab").click(function () {
+    var cat = 111;
+    $.ajax({
+      url: "{% url 'search:by_catugry' %}",
+      data: { 'cat': cat },
+      success: function (data) {
+        $("#nav-Properties").html(data);
+        console.log(data);
+      }
+    });
+  });
+
+
+
+
+  $("#nav-Services-tab").click(function () {
+    var cat = 114 ;
+    $.ajax({
+      url: "{% url 'search:by_catugry' %}",
+      data: { 'cat': cat },
+      success: function (data) {
+        $("#nav-Services").html(data);
+        console.log(data);
+      }
+    });
+  });
+</script>
+
 {% endblock card %}

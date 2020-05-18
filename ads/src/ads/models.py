@@ -52,6 +52,12 @@ class ads(models.Model):
         if self.end :
             self.main=self.end.sub.main
             self.sub=self.end.sub
+        if self.last :
+            self.main=self.last.end.sub.main
+            self.sub=self.last.end.sub
+            self.end=self.last.end
+
+
             
         super(ads, self).save(*args,**kwargs)
 
@@ -84,8 +90,7 @@ class catugry(models.Model):
 
         if self.end :
             self.main=self.end.sub.main
-            self.sub=self.end.sub
-            
+            self.sub=self.end.sub            
         super(catugry, self).save(*args,**kwargs)
 
     class Meta:

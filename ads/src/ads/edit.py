@@ -2,7 +2,6 @@ from django.shortcuts import render , HttpResponse
 from django.shortcuts import get_object_or_404 , redirect
 from . models import ads ,catugry , car_form
 from . forms import carf , mobilef , adsform  ,car_forms ,adsform2
-from django.views.generic import UpdateView
 from django.urls import reverse_lazy
 
 
@@ -12,10 +11,6 @@ def edit_ads(request , id ):
     signalf=0
     if request.method =='POST':
         form = adsform(request.POST , request.FILES, instance=ads_edit  )
-        print("111111111111111111111")
-        print(ads_edit.main.id)
-        print(form.data['main'])
-        # if ads_edit.main.id == 43 and
         if form.data['main'] == "43" :
             try:
                 ads_exe_edit=get_object_or_404(car_form,ad_id=ads_edit)
@@ -26,21 +21,16 @@ def edit_ads(request , id ):
                 signalf=1     
             
         elif ads_edit.main.id == 43 and form.data['main'] == "43":
-            # catff = mobilef (request.POST, instance=ads_edit )  
-            # signalf=1
             pass
         else : 
             pass
         if signalf == 1 :
-            print("3333333333333333333333333")
             if form.is_valid() and catff.is_valid() :
-                print("44444444444444444")
                 new_form = form.save(commit=False)  # تاخير حفظ الفورم حتي تعديلها
                 new_form.user=request.user
                 new_catff=catff.save(commit=False)
                 new_catff.ad_id=form.save()
-                try :
-                    ads_exe_edit.delete()
+                try : ads_exe_edit.delete()
                 except:pass
                 form.save()
                 catff.save()   
@@ -68,20 +58,15 @@ def edit_ads(request , id ):
                 }
                 pass
         else:
-            # print("else")
-            # print (ads_edit.main.id)
             if ads_edit.main.id == 43 :
-                print("eeeeeeeeeeeee")
                 try :
                     ads_exe_edit=get_object_or_404(car_form,ad_id=ads_edit)
                 except:pass
                 if form.is_valid() :
-                    print("55555555")
                     new_form = form.save(commit=False)  # تاخير حفظ الفورم حتي تعديلها
                     new_form.user=request.user
                     form.save()
-                    try :
-                        ads_exe_edit.delete()
+                    try : ads_exe_edit.delete()
                     except:pass
                     return redirect('/')
                 else:
@@ -101,7 +86,6 @@ def edit_ads(request , id ):
                     ).order_by('name')
             else:
                 if form.is_valid() :
-                    print("55555555")
                     new_form = form.save(commit=False)  # تاخير حفظ الفورم حتي تعديلها
                     new_form.user=request.user
                     form.save()
@@ -121,15 +105,6 @@ def edit_ads(request , id ):
                     form.fields['end'].queryset = catugry.objects.filter(main_id=main_id_creat ,sub_id=sub_id_creat ,end_id=None).order_by('name')
                     form.fields['last'].queryset = catugry.objects.filter(main_id=main_id_creat ,sub_id=sub_id_creat ,end_id=end_id_creat
                     ).order_by('name')
-
-                    # main_id_creat=form.data['main']
-                    # sub_id_creat=form.data['sub']
-                    # end_id_creat=form.data['end']
-                    # form_main=form.data['main']
-                    # form_sub=form.data['sub']
-                    # form_end=form.data['end']
-                    # tes(main_id_creat,sub_id_creat,end_id_creat,form_main,form_sub,form_end)
-                    # print("done")
 
             
     else:
@@ -182,5 +157,4 @@ def edit_ads(request , id ):
         'signalf': signalf,
     }
     return render (request , 'creat.html' , context)
-    #########################################################################
 

@@ -152,7 +152,8 @@ def load_sub(request):
 
     if sub_idt :
         end = catugry.objects.filter( main_id=main_idt ,sub_id=sub_idt ,end_id=None).order_by('name')
-        sub=[]  
+        sub=[] 
+        last=[] 
     else:
         end=[]
         last=[]

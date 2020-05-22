@@ -65,55 +65,57 @@
 // ############################################################
 // ###########################################################
 
-{% comment %} ############################################# {% endcomment %}
-    $("#id_sub").change(function () {
-      var url = $("#adsform").attr("data-url");  // get the url of the `load_cities` view
-      var subId = $(this).val();  // get the selected country ID from the HTML input
-      var url2= ("{% url 'ads:load_sub'%}")  // get the url of the `load_cities` view
+$("#id_sub").change(function () {
+    var subId = $(this).val();
+    var url2 = ("{% url 'ads:load_sub'%}")
+    var mainId = $("#id_main").val();
 
-      var mainId=$("#id_main").val();
-
-      $.ajax({                       // initialize an AJAX request
-        url: url2,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+    if (subId !== "") {
+      console.log("55555");
+      $.ajax({
+        url: url2,
         data: {
-          'main':mainId ,
-          'sub': subId       // add the country id to the GET parameters
-          
+          'main': mainId,
+          'sub': subId
         },
-        success: function (data) {   // `data` is the return of the `load_cities` view function
+        success: function (data) {
           $("#id_end").html(data);
         }
       });
+    }
+    else {
+      console.log("4444444");
+      $("#id_last").html(Choose2);
+      $("#id_end").html(Choose2);
+    }
+  });
 
+  $("#id_end").change(function () {
+    var url = $("#adsform").attr("data-url");
+    var endId = $(this).val(); 
+    var mainId = $("#id_main").val();
+    var subId = $("#id_sub").val();
+    var url2 = ("{% url 'ads:load_sub'%}");
 
-    });
-
-    
-
-    {% comment %} ############################################# {% endcomment %}
-
-    $("#id_end").change(function () {
-      var url = $("#adsform").attr("data-url");  // get the url of the `load_cities` view
-      var endId = $(this).val();  // get the selected country ID from the HTML input // get the url of the `load_cities` view
-      var mainId=$("#id_main").val();
-      var subId=$("#id_sub").val();
-
-      $.ajax({                       // initialize an AJAX request
-        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+    if (endId !== "") {
+      console.log("55555");
+      $.ajax({
+        url: url2,
         data: {
           'main':mainId ,
           'sub': subId ,
-          'end': endId      // add the country id to the GET parameters
-          
+          'end': endId      
         },
-        success: function (data) {   // `data` is the return of the `load_cities` view function
+        success: function (data) {
           $("#id_last").html(data);
-          console.log(data);  // replace the contents of the city input with the data that came from the server
         }
       });
-
-    });
-
+    }
+    else {
+      console.log("4444444");
+      $("#id_last").html(Choose2);
+    }
+  });
   </script>
 
   {% endblock card %}

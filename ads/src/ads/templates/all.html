@@ -67,7 +67,7 @@
                 <li class="list-group-item">cat || {{ ad.main }}</li>
               </ul>
               <div class="card-body">
-                <a class="btn btn-primary" href=" {{ ad.id }}#con " role="button">know More</a>
+                <a class="btn btn-primary" href="{% url 'ads:ads_detail' ad.id  %}#con"  role="button">know More</a>
                 <a class="btn btn-success" href="{% url 'ads:edit_ads' ad.id %}" role="button">Edit !</a>
               </div>
             </div>
@@ -177,7 +177,7 @@
     });
   });
 
-
+  
   $("#nav-Mobile-tab").click(function () {
     var cat = 50;
     $.ajax({
@@ -185,7 +185,6 @@
       data: { 'cat': cat },
       success: function (data) {
         $("#nav-Mobile").html(data);
-        console.log(data);
       }
     });
   });
@@ -198,7 +197,6 @@
       data: { 'cat': cat },
       success: function (data) {
         $("#nav-clothes").html(data);
-        console.log(data);
       }
     });
   });
@@ -212,7 +210,6 @@
       data: { 'cat': cat },
       success: function (data) {
         $("#nav-Appliances").html(data);
-        console.log(data);
       }
     });
   });
@@ -226,7 +223,6 @@
       data: { 'cat': cat },
       success: function (data) {
         $("#nav-Electronic").html(data);
-        console.log(data);
       }
     });
   });
@@ -239,7 +235,6 @@
       data: { 'cat': cat },
       success: function (data) {
         $("#nav-Sports").html(data);
-        console.log(data);
       }
     });
   });
@@ -253,7 +248,6 @@
       data: { 'cat': cat },
       success: function (data) {
         $("#nav-Pets").html(data);
-        console.log(data);
       }
     });
   });
@@ -266,7 +260,6 @@
       data: { 'cat': cat },
       success: function (data) {
         $("#nav-Furniture").html(data);
-        console.log(data);
       }
     });
   });
@@ -280,7 +273,6 @@
       data: { 'cat': cat },
       success: function (data) {
         $("#nav-Babies").html(data);
-        console.log(data);
       }
     });
   });
@@ -294,7 +286,6 @@
       data: { 'cat': cat },
       success: function (data) {
         $("#nav-Properties").html(data);
-        console.log(data);
       }
     });
   });
@@ -309,7 +300,6 @@
       data: { 'cat': cat },
       success: function (data) {
         $("#nav-Services").html(data);
-        console.log(data);
       }
     });
   });

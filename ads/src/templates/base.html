@@ -16,13 +16,13 @@
 </head>
 
 <body>
-  
+
   <div class="container-fluid">
     <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! my nav  start !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
     <section>
       <nav class="navbar navbar-expand-lg navbar-light mynav"><a class="navbar-brand col-4 pl-0 mr-0" href="#"><img
-            class="my-nav-icon" src="{% static '../../static/icon/arrows (2).svg'%}" alt=""><span class="myex-all"> <span
-              class="myex">Ex</span>change All</span></a>
+            class="my-nav-icon" src="{% static '../../static/icon/arrows (2).svg'%}" alt=""><span class="myex-all">
+            <span class="myex">Ex</span>change All</span></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigations-09"><span
             class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse justify-content-md-center col-8 px-0" id="navigations-09">
@@ -32,15 +32,17 @@
             <li class="nav-item"><a class="nav-link" href="{% url 'ads:creat_ads'%}">create</a></li>
             <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">My
                 Account</a>
-              <div class="dropdown-menu"><a class="dropdown-item" href="#">Login</a><a class="dropdown-item" href="#">New
+              <div class="dropdown-menu"><a class="dropdown-item" href="#">Login</a><a class="dropdown-item"
+                  href="#">New
                   Account </a></div>
             </li>
           </ul>
-          <div class="col-6 text-lg-right px-0"><a class="btn btn-outline-primary mt-2 mt-lg-0 mr-0" href="#">Sign up</a>
+          <div class="col-6 text-lg-right px-0"><a class="btn btn-outline-primary mt-2 mt-lg-0 mr-0" href="#">Sign
+              up</a>
           </div>
         </div>
       </nav>
-    </section>  
+    </section>
     <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! my nav  end !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 
     <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! my nav cat start !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
@@ -49,69 +51,95 @@
         <div class="row mt-5 mycatlink">
           <div class="col-md-6 col-lg-3 d-flex align-items-start my-icon-div col-sm-6"><img id="aa"
               class="mr-2 mt-2 my-icon" src="{% static '../static/icon/house.svg'%}" alt="">
-            <div >
-              <h5 class="mb-1" >Properties</h5>
-            </div>
+
+            <a href="{% url 'search:by_main_properties' 111 %}">
+              <div>
+                <h5 class="mb-1">Properties</h5>
+              </div>
+            </a>
+
+
+
           </div>
           <div class="col-md-6 col-lg-3 d-flex align-items-start my-icon-div col-sm-6"><img class="mr-2 mt-2 my-icon"
               src="{% static '../static/icon/clothes.svg'%}" alt="">
+            <a href="{% url 'search:by_main_clothes' 112 %}">
             <div>
               <h5 class="mb-1">clothes</h5>
             </div>
+            </a>
           </div>
           <div class="col-md-6 col-lg-3 d-flex align-items-start my-icon-div col-sm-6"><img class="mr-2 mt-2 my-icon"
               src="{% static '../static/icon/home app.svg'%}" alt="">
+            <a href="{% url 'search:by_main_Appliances' 113 %}">
             <div>
               <h5 class="mb-1">Appliances</h5>
             </div>
+            </a>
           </div>
           <div class="col-md-6 col-lg-3 d-flex align-items-start my-icon-div col-sm-6"><img class="mr-2 mt-2 my-icon"
               src="{% static '../static/icon/service.svg'%}" alt="">
+            <a href="{% url 'search:by_main_Services' 114 %}">
             <div>
               <h5 class="mb-1"> Services</h5>
             </div>
+            </a>
           </div>
           <div class="col-md-6 col-lg-3 d-flex align-items-start my-icon-div col-sm-6"><img class="mr-2 mt-2 my-icon"
               src="{% static '../static/icon/fishing-rod.svg'%}" alt="">
+            <a href="{% url 'search:by_main_Sports' 115 %}">
             <div>
               <h5 class="mb-1">Sports & Hobbies</h5>
             </div>
+            </a>
           </div>
           <div class="col-md-6 col-lg-3 d-flex align-items-start my-icon-div col-sm-6"><img class="mr-2 mt-2 my-icon"
               src="{% static '../static/icon/car (1).svg'%}" alt="">
+            <a href="{% url 'search:by_main_Vehicles' 43 %}">
             <div>
               <h5 class="mb-1">Vehicles</h5>
             </div>
+            </a>
           </div>
           <div class="col-md-6 col-lg-3 d-flex align-items-start my-icon-div col-sm-6"><img class="mr-2 mt-2 my-icon"
               src="{% static '../static/icon/hamster.svg'%}" alt="">
+            <a href="{% url 'search:by_main_Pets' 116 %}">
             <div>
               <h5 class="mb-1">Pets - Accessories</h5>
             </div>
+            </a>
           </div>
           <div class="col-md-6 col-lg-3 d-flex align-items-start my-icon-div col-sm-6"><img class="mr-2 mt-2 my-icon"
               src="{% static '../static/icon/livingroom.svg'%}" alt="">
+            <a href="{% url 'search:by_main_Furniture' 117 %}">
             <div>
               <h5 class="mb-1">Home Furniture</h5>
             </div>
+            </a>
           </div>
           <div class="col-md-6 col-lg-3 d-flex align-items-start my-icon-div col-sm-6"><img class="mr-2 mt-2 my-icon"
               src="{% static '../static/icon/baby.svg'%}" alt="">
+            <a href="{% url 'search:by_main_Babies' 118 %}">
             <div>
               <h5 class="mb-1">Babies & Kids</h5>
             </div>
+            </a>
           </div>
           <div class="col-md-6 col-lg-3 d-flex align-items-start my-icon-div col-sm-6"><img class="mr-2 mt-2 my-icon"
               src="{% static '../static/icon/mopile.svg'%}" alt="">
+            <a href="{% url 'search:by_main_Mobile' 50 %}">
             <div>
               <h5 class="mb-1">Mobile Phones & Accessories</h5>
             </div>
+            </a>
           </div>
           <div class="col-md-6 col-lg-3 d-flex align-items-start my-icon-div col-sm-6"><img class="mr-2 mt-2 my-icon"
               src="{% static '../static/icon/computer.svg'%}" alt="">
+            <a href="{% url 'search:by_main_Electronic' 53 %}">
             <div>
               <h5 class="mb-1">Electronic Devices</h5>
             </div>
+            </a>
           </div>
 
         </div>
@@ -125,9 +153,13 @@
     {% block card %}
 
     {% endblock card %}
-{% block detail %}
+    {% block detail %}
 
-{% endblock detail %}
+    {% endblock detail %}
+
+    {% block main_search %}
+
+    {% endblock main_search %}
 
 
 

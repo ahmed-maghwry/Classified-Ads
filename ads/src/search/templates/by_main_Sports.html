@@ -1,10 +1,15 @@
+{% extends 'base_ads.html' %}
 
-<div class="tab-content my-content" id="nav-tabContent">
-    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-      <div class="row">
+{% block main_search %}
+{% load static %}
 
-        {% for ad in by_catugry_2 %}
-        
+<section id="con" class="py-3 my-product-detils">
+
+    <div class="container">
+        <div class="row">
+
+
+            {% for ad in main_catugry_q %}
 
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 my-card-respon ">
                 <div class="card my-card">
@@ -18,17 +23,22 @@
                         <li class="list-group-item">cat || {{ ad.main }}</li>
                     </ul>
                     <div class="card-body">
-                        <a class="btn btn-primary" href=" {{ ad.id }}#con " role="button">know More</a>
+                        <a class="btn btn-primary" href="{% url 'ads:ads_detail' ad.id  %}#con"  role="button">know More</a>
                         <a class="btn btn-success" href="{% url 'ads:edit_ads' ad.id %}" role="button">Edit !</a>
                     </div>
                 </div>
             </div>
             {% endfor %}
-      </div>
 
 
 
 
 
-            
-        
+
+        </div>
+    </div>
+</section>
+
+
+
+{% endblock main_search %}

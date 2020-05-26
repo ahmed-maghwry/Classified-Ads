@@ -4,11 +4,11 @@ from django.shortcuts import get_object_or_404 , redirect
 from ads.models import ads ,catugry , car_form
 from django.urls import reverse_lazy
 from . forms import car_search , general
+import json
+import io
 
 def by_catugry(request ):
-    print("111111111")
     catugry_1 = request.GET.get('cat')
-    print(catugry_1)
     if catugry_1 is not None or "" :
         by_catugry_2=ads.objects.filter(main_id=catugry_1).order_by('-create_date')
         context = {
@@ -21,7 +21,6 @@ def by_catugry(request ):
 
 
 def by_main_properties(request , main_id_):
-    print("2222222")
     main_id_=main_id_
     main_catugry_q=ads.objects.filter(main_id=main_id_).order_by('-create_date')
     context = {
@@ -32,7 +31,6 @@ def by_main_properties(request , main_id_):
 
 
 def by_main_Sports(request , main_id_):
-    print("2222222")
     main_id_=main_id_
     main_catugry_q=ads.objects.filter(main_id=main_id_).order_by('-create_date')
     context = {
@@ -42,7 +40,6 @@ def by_main_Sports(request , main_id_):
 
 
 def by_main_Babies(request , main_id_):
-    print("2222222")
     main_id_=main_id_
     main_catugry_q=ads.objects.filter(main_id=main_id_).order_by('-create_date')
     context = {
@@ -57,11 +54,7 @@ def by_main_Vehicles(request , main_id_):
     general_search_form.fields['sub'].queryset = catugry.objects.filter(main_id=main_id_ , sub_id=None).order_by('name')
     general_search_form.fields['end'].queryset = catugry.objects.none()
     general_search_form.fields['last'].queryset = catugry.objects.none()    
-
     main_catugry_q=ads.objects.filter(main_id=main_id_).order_by('-create_date')
-
-
-    
     context = {
         'main_catugry_q' : main_catugry_q ,
         'general_search_form' : general_search_form,
@@ -70,8 +63,13 @@ def by_main_Vehicles(request , main_id_):
     }
     return render(request, 'by_main_Vehicles.html',context)
 
+def by_main_Vehicles2(request):
+    if request.is_ajax():
+        print(request.GET['last'])
+
+    return render(request, 'by_main_Vehicles2.html',{})
+
 def by_main_Mobile(request , main_id_):
-    print("2222222")
     main_id_=main_id_
     main_catugry_q=ads.objects.filter(main_id=main_id_).order_by('-create_date')
     context = {
@@ -80,7 +78,6 @@ def by_main_Mobile(request , main_id_):
     return render(request, 'by_main_Mobile.html',context)
 
 def by_main_clothes(request , main_id_):
-    print("2222222")
     main_id_=main_id_
     main_catugry_q=ads.objects.filter(main_id=main_id_).order_by('-create_date')
     context = {
@@ -90,7 +87,6 @@ def by_main_clothes(request , main_id_):
     
 
 def by_main_Appliances(request , main_id_):
-    print("2222222")
     main_id_=main_id_
     main_catugry_q=ads.objects.filter(main_id=main_id_).order_by('-create_date')
     context = {
@@ -100,7 +96,6 @@ def by_main_Appliances(request , main_id_):
 
 
 def by_main_Pets(request , main_id_):
-    print("2222222")
     main_id_=main_id_
     main_catugry_q=ads.objects.filter(main_id=main_id_).order_by('-create_date')
     context = {
@@ -110,7 +105,6 @@ def by_main_Pets(request , main_id_):
 
 
 def by_main_Electronic(request , main_id_):
-    print("2222222")
     main_id_=main_id_
     main_catugry_q=ads.objects.filter(main_id=main_id_).order_by('-create_date')
     context = {
@@ -120,7 +114,6 @@ def by_main_Electronic(request , main_id_):
 
 
 def by_main_Services(request , main_id_):
-    print("2222222")
     main_id_=main_id_
     main_catugry_q=ads.objects.filter(main_id=main_id_).order_by('-create_date')
     context = {
@@ -130,7 +123,6 @@ def by_main_Services(request , main_id_):
 
 
 def by_main_Furniture(request , main_id_):
-    print("2222222")
     main_id_=main_id_
     main_catugry_q=ads.objects.filter(main_id=main_id_).order_by('-create_date')
     context = {

@@ -7,99 +7,77 @@
 
 
 
-    <form method="GET" id="adsform"  enctype="multipart/form-data" novalidate>
+  <form method="GET" id="searchform" enctype="multipart/form-data" novalidate>
 
-        <table>
+
+    <table>
+      <!{% csrf_token %} -->
             {{ general_search_form.as_ul }}
-        </table>
+    </table>
+    <button id="serch" type="button">Search</button>
 
-        <table>
-            {{ car_search_form.as_ul}}  
-        </table>
-            
+    <table>
+      <!{% csrf_token %} -->
+            {{ car_search_form.as_ul }}
+    </table>
 
-            
-        <button id="serch" type="button">Search</button>
-    </form>
+  </form>
+
+  <!-- <table>
+    {% csrf_token %}
+    {{ car_search_form.as_ul }}
+  </table>
+             -->
+
+
+
 
     <div class="container">
-        <div class="row">
+    <div class="row">
 
 
-            {% for ad in main_catugry_q %}
+      {% for ad in main_catugry_q %}
 
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 my-card-respon ">
-                <div class="card my-card">
-                    <img src="{{ad.img.url}}" class="card-img-top my-card-img" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ad.title}}</h5>
-                        <p class="card-text">{{ad.description}}</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">it is for || {{ ad.ad_option }}</li>
-                        <li class="list-group-item">cat || {{ ad.main }}</li>
-                    </ul>
-                    <div class="card-body">
-                        <a class="btn btn-primary" href="{% url 'ads:ads_detail' ad.id  %}#con" role="button">know
-                            More</a>
-                        <a class="btn btn-success" href="{% url 'ads:edit_ads' ad.id %}" role="button">Edit !</a>
-                    </div>
-                </div>
+        <div class="card my-card">
+          <img src="{{ad.img.url}}" class="card-img-top my-card-img" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">{{ ad.title }}</h5>
+              <p class="card-text">{{ ad.description }}</p>
             </div>
-            {% endfor %}
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">it is for || {{ ad.ad_option }}</li>
+              <li class="list-group-item">cat || {{ ad.main }}</li>
+            </ul>
+            <div class="card-body">
+              <a class="btn btn-primary" href="{% url 'ads:ads_detail' ad.id  %}#con" role="button">know
+                            More</a>
+              <a class="btn btn-success" href="{% url 'ads:edit_ads' ad.id %}" role="button">Edit !</a>
+            </div>
+                </div>
         </div>
+        {% endfor %}
+      </div>
     </div>
 </section>
 
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script>
     var Choose2 = '<option value="">Choose</option>'
-    
-// ############################################################
 
 $("#serch").click(function () {
-    var sub = $("#id_Price").val();
-    var end =  $("#id_end").val();
-    var last = $("input[name='usb_charger']").val();
-    // $(":checked").val();
-    console.log(sub);
-    console.log(end);
-
-    console.log(last);
-
-
-    // var url2 = ("{% url 'ads:load_sub'%}")
-    // $("#id_last").html(Choose2);
-    // if (subId !== "") {
-    //   console.log("55555");
-    //   $.ajax({
-    //     url: url2,
-    //     data: {
-    //       'main': mainId,
-    //       'sub': subId
-    //     },
-    //     success: function (data) {
-    //       $("#id_end").html(data);
-    //     }
-    //   });
-    // }
-    // else {
-    //   console.log("4444444");
-    //   $("#id_last").html(Choose2);
-    //   $("#id_end").html(Choose2);
-    // }
+  var myForm = $('#searchform');
+  var formData = myForm.serialize();
+  var thisURL =( " {% url 'search:by_main_Vehicles2' %} " )
+  console.log(formData);
+  $.ajax({
+      method:'GET',
+    url: thisURL,
+    data: formData,
   });
+});
 
-
-
-
-
-
-
-
-
-// ###########################################################
 
 $("#id_sub").change(function () {
     var subId = $(this).val();
@@ -107,7 +85,6 @@ $("#id_sub").change(function () {
     var mainId = 43;
     $("#id_last").html(Choose2);
     if (subId !== "") {
-      console.log("55555");
       $.ajax({
         url: url2,
         data: {
@@ -120,25 +97,23 @@ $("#id_sub").change(function () {
       });
     }
     else {
-      console.log("4444444");
       $("#id_last").html(Choose2);
       $("#id_end").html(Choose2);
     }
   });
   $("#id_end").change(function () {
     var url = $("#adsform").attr("data-url");
-    var endId = $(this).val(); 
+    var endId = $(this).val();
     var mainId = 43
     var subId = $("#id_sub").val();
     var url2 = ("{% url 'ads:load_sub'%}");
     if (endId !== "") {
-      console.log("55555");
       $.ajax({
         url: url2,
         data: {
-          'main':mainId ,
-          'sub': subId ,
-          'end': endId      
+          'main': mainId,
+          'sub': subId,
+          'end': endId
         },
         success: function (data) {
           $("#id_last").html(data);
@@ -146,10 +121,10 @@ $("#id_sub").change(function () {
       });
     }
     else {
-      console.log("4444444");
       $("#id_last").html(Choose2);
     }
   });
   </script>
 
-{% endblock main_search %}
+
+  {% endblock main_search %}

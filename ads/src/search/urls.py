@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^main/Sports/(?P<main_id_>\d+)$', views.by_main_Sports , name='by_main_Sports'),
     url(r'^main/Babies/(?P<main_id_>\d+)$', views.by_main_Babies , name='by_main_Babies'),
     url(r'^main/Vehicles/(?P<main_id_>\d+)$', views.by_main_Vehicles , name='by_main_Vehicles'),
+    url(r'main/Vehicles/ajax/', views.by_main_Vehicles2 , name='by_main_Vehicles2'),
     url(r'^main/Mobile/(?P<main_id_>\d+)$', views.by_main_Mobile , name='by_main_Mobile'),
     url(r'^main/clothes/(?P<main_id_>\d+)$', views.by_main_clothes , name='by_main_clothes'),
     url(r'^main/Appliances/(?P<main_id_>\d+)$', views.by_main_Appliances , name='by_main_Appliances'),

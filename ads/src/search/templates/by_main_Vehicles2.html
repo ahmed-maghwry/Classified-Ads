@@ -1,0 +1,25 @@
+<div class="row " id="rr">
+
+    {% for ad in  main_catugry_q %}
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 my-card-respon ">
+        <div class="card my-card">
+            <img src="{{ad.img.url}}" class="card-img-top my-card-img" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{ ad.title }}</h5>
+                <p class="card-text">{{ ad.description }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">it is for || {{ ad.ad_option }}</li>
+                <li class="list-group-item">cat || {{ ad.main }}</li>
+            </ul>
+            <div class="card-body">
+                <a class="btn btn-primary" href="{% url 'ads:ads_detail' ad.id  %}#con" role="button">know
+                    More</a>
+                <a class="btn btn-success" href="{% url 'ads:edit_ads' ad.id %}" role="button">Edit !</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+
+</div>

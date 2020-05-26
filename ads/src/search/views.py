@@ -64,10 +64,27 @@ def by_main_Vehicles(request , main_id_):
     return render(request, 'by_main_Vehicles.html',context)
 
 def by_main_Vehicles2(request):
+    main_id_=43
+    main_catugry_q=ads.objects.filter(main_id=main_id_).order_by('-create_date')    
     if request.is_ajax():
-        print(request.GET['last'])
+        print(request.GET.items)
+        
+        for key , value in request.GET.items():
+            variable_column = key
+            search_type = value
+            filter = variable_column + '__' + search_type
+            info=ads.filter(**{ filter: search_string })
 
-    return render(request, 'by_main_Vehicles2.html',{})
+            # main_catugry_q=ads.objects.filter( key == value ).order_by('-create_date')
+            main_catugry_q=info
+    context = {
+        'main_catugry_q' : main_catugry_q ,
+    } 
+    return render(request, 'by_main_Vehicles2.html',context)
+
+
+
+
 
 def by_main_Mobile(request , main_id_):
     main_id_=main_id_

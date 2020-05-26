@@ -11,29 +11,18 @@
 
 
     <table>
-      <!{% csrf_token %} -->
             {{ general_search_form.as_ul }}
     </table>
     <button id="serch" type="button">Search</button>
 
     <table>
-      <!{% csrf_token %} -->
             {{ car_search_form.as_ul }}
     </table>
 
   </form>
 
-  <!-- <table>
-    {% csrf_token %}
-    {{ car_search_form.as_ul }}
-  </table>
-             -->
-
-
-
-
     <div class="container">
-    <div class="row">
+    <div class="row" id="rr">
 
 
       {% for ad in main_catugry_q %}
@@ -70,12 +59,15 @@ $("#serch").click(function () {
   var myForm = $('#searchform');
   var formData = myForm.serialize();
   var thisURL =( " {% url 'search:by_main_Vehicles2' %} " )
-  console.log(formData);
   $.ajax({
       method:'GET',
     url: thisURL,
     data: formData,
-  });
+    success: function (data) {
+      $("#rr").html(data);
+      console.log(data);
+        }
+});
 });
 
 

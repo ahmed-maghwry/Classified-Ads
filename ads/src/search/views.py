@@ -3,6 +3,7 @@ from django.shortcuts import render , HttpResponse
 from django.shortcuts import get_object_or_404 , redirect
 from ads.models import ads ,catugry , car_form
 from django.urls import reverse_lazy
+from . forms import car_search , general
 
 def by_catugry(request ):
     print("111111111")
@@ -49,13 +50,23 @@ def by_main_Babies(request , main_id_):
     }
     return render(request, 'by_main_Babies.html',context)
 
-
 def by_main_Vehicles(request , main_id_):
-    print("2222222")
+    general_search_form = general()
+    car_search_form  =  car_search()
     main_id_=main_id_
+    general_search_form.fields['sub'].queryset = catugry.objects.filter(main_id=main_id_ , sub_id=None).order_by('name')
+    general_search_form.fields['end'].queryset = catugry.objects.none()
+    general_search_form.fields['last'].queryset = catugry.objects.none()    
+
     main_catugry_q=ads.objects.filter(main_id=main_id_).order_by('-create_date')
+
+
+    
     context = {
         'main_catugry_q' : main_catugry_q ,
+        'general_search_form' : general_search_form,
+        'car_search_form' : car_search_form , 
+
     }
     return render(request, 'by_main_Vehicles.html',context)
 

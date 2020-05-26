@@ -70,6 +70,7 @@
     var subId = $(this).val();
     var url2 = ("{% url 'ads:load_sub'%}")
     var mainId = $("#id_main").val();
+    $("#id_last").html(Choose2);
 
     if (subId !== "") {
       console.log("55555");
@@ -96,7 +97,7 @@
     var endId = $(this).val(); 
     var mainId = $("#id_main").val();
     var subId = $("#id_sub").val();
-    var url2 = ("{% url 'ads:load_sub'%}");
+    var url2 = ("{% url 'ads:load_sub'%}")
 
 
 

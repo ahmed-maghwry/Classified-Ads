@@ -8,7 +8,7 @@ class general(forms.ModelForm):
     
     class Meta:
         model = ads
-        fields = [ 'title' , 'sub','end' , 'last'  ]
+        fields = [  'sub','end' , 'last'  ]
 
 
 class car_search(forms.ModelForm):

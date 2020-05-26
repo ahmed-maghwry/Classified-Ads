@@ -25,41 +25,40 @@
   
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script>
+    var Choose2 = '<option value="">Choose</option>'
+
+    
     $("#id_main").change(function () {
       var url = $("#adsform").attr("data-url");
-      var url2= ("{% url 'ads:load_sub'%}")  // get the url of the `load_cities` view
-      var url3= ("{% url 'ads:change_form'%}")  // get the url of the `load_cities` view
-      var mainId = $(this).val();  // get the selected country ID from the HTML input
-      var main_form_id = $(this).val();  // get the selected country ID from the HTML input
+      var url2= ("{% url 'ads:load_sub'%}")  
+      var url3= ("{% url 'ads:change_form'%}")  
+      var mainId = $(this).val(); 
+      var main_form_id = $(this).val(); 
 
 
-      $.ajax({                       // initialize an AJAX request
-        url: url2,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+      $.ajax({                       
+        url: url2,                    
         data: {
-          'main': mainId       // add the country id to the GET parameters
+          'main': mainId       
         },
-        success: function (data) {   // `data` is the return of the `load_cities` view function
+        success: function (data) {   
           $("#id_sub").html(data);
         }
       });
 // ############################################################
 // ###########################################################
 
-      $.ajax({                       // initialize an AJAX request
-        url: url3,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+      $.ajax({                       
+        url: url3,                    
         data: {
           'main_form_id': main_form_id,
 
         },
-        success: function (data2) {   // `data` is the return of the `load_cities` view function
+        success: function (data2) {   
           $("#change_form").html(data2);
-          console.log(data2);  // replace the contents of the city input with the data that came from the server
-
-
+          console.log(data2);  
         }
       });
-
-
     });
 
 // ############################################################
@@ -67,8 +66,11 @@
 
 $("#id_sub").change(function () {
     var subId = $(this).val();
-    var url2 = ("{% url 'ads:load_sub'%}")
+    var Choose2 = '<option value="">Choose</option>';
+    var url2 = ("{% url 'ads:load_sub'%}");
     var mainId = $("#id_main").val();
+    $("#id_last").html(Choose2);
+
 
     if (subId !== "") {
       console.log("55555");
@@ -87,6 +89,8 @@ $("#id_sub").change(function () {
       console.log("4444444");
       $("#id_last").html(Choose2);
       $("#id_end").html(Choose2);
+      console.log(Choose2);  
+
     }
   });
 

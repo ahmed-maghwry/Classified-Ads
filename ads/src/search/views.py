@@ -65,21 +65,33 @@ def by_main_Vehicles(request , main_id_):
 
 def by_main_Vehicles2(request):
     main_id_=43
-    main_catugry_q=ads.objects.filter(main_id=main_id_).order_by('-create_date')    
+    aa='main_id'
+    # main_catugry_q=ads.objects.filter(main_id=main_id_).order_by('-create_date')  
     if request.is_ajax():
-        print(request.GET.items)
-        
-        for key , value in request.GET.items():
-            variable_column = key
-            search_type = value
-            filter = variable_column + '__' + search_type
-            info=ads.filter(**{ filter: search_string })
+        main_id_=40
+        for f in  general()._meta.fields :
+            main_idc=request.GET.get('main_id')
+            variable_column = 'end_id'
+            search_string='58'
+            search_type = 'contains'
+            filter = variable_column 
+            dd={'sub_id' : '47'}
+            main_catugry_q=ads.objects.filter(** dd )
 
-            # main_catugry_q=ads.objects.filter( key == value ).order_by('-create_date')
-            main_catugry_q=info
+
+            print(main_catugry_q)
+            # .values('id',g)            
+
+        #     print (type( f))
+        # for key in request.GET.items() :
+        #     print (key )
+        #     print(type(request.GET.items()))
     context = {
         'main_catugry_q' : main_catugry_q ,
-    } 
+    }
+
+
+
     return render(request, 'by_main_Vehicles2.html',context)
 
 

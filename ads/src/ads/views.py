@@ -104,6 +104,7 @@ def creat_ads(request):
             else:
                 main_id_creat=form.data['main']
                 sub_id_creat=form.data['sub']
+                print(type(sub_id_creat))
                 end_id_creat=form.data['end']
                 if main_id_creat == "" : main_id_creat=0
                 else: main_id_creat=form.data['main']

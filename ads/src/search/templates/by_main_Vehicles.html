@@ -15,9 +15,9 @@
     </table>
     <button id="serch" type="button">Search</button>
 
-    <table>
+    <!-- <table>
             {{ car_search_form.as_ul }}
-    </table>
+    </table> -->
 
   </form>
 
@@ -62,7 +62,10 @@ $("#serch").click(function () {
   $.ajax({
       method:'GET',
     url: thisURL,
-    data: formData,
+    data: {
+      'formData' : formData,
+      'main_id' : 'main_id'
+    } ,
     success: function (data) {
       $("#rr").html(data);
       console.log(data);

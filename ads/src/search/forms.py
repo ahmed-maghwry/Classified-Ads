@@ -10,9 +10,16 @@ class general(forms.ModelForm):
         model = ads
         fields = [  'sub','end' , 'last'  ]
 
+class price_form (forms.Form):
+    from_Price = forms.DecimalField(max_digits=14 , decimal_places=4 , label ='Price from')
+    to_Price = forms.DecimalField(max_digits=14 , decimal_places=4 ,  label ='Price to')
+
+
+
+
 
 class car_search(forms.ModelForm):
     class Meta:
         model = car_form
-        exclude = ['ad_id' ]
+        exclude = ['ad_id' , 'Price' ]
 

@@ -65,37 +65,30 @@ def by_main_Vehicles(request , main_id_):
 
 def by_main_Vehicles2(request):
     main_id_=43
-    aa='main_id'
-    # main_catugry_q=ads.objects.filter(main_id=main_id_).order_by('-create_date')  
+    general_list=['sub' , 'end' ,'last']
+    signal=0
     if request.is_ajax():
-        main_id_=40
-        for f in  general()._meta.fields :
-            main_idc=request.GET.get('main_id')
-            variable_column = 'end_id'
-            search_string='58'
-            search_type = 'contains'
-            filter = variable_column 
-            dd={'sub_id' : '47'}
-            main_catugry_q=ads.objects.filter(** dd )
+        print(request.GET)
+        for search_key in request.GET :
+            search_value=request.GET.get(search_key)
+            if search_value != "" and search_value != None :
+                signal=1
+                if search_key in general_list :
+                    search_var={search_key : search_value}
+                    main_catugry_q=ads.objects.filter( ** search_var )
+                elif  search_key not in general_list and search_value != 'on' :
+                    tt="car_form__{}__iexact".format(search_key)
+                    vv={tt:search_value}
+                    print(vv)
+                    main_catugry_q=ads.objects.filter(** vv )
+                # main_catugry_q=ads.objects.filter(car_form__airbags__iexact='1')
+                # main_catugry_q=ads.objects.filter(main_id=main_id_).order_by('-create_date')
+        if signal == 0 :
+            print('iiiiiiii')
+            main_catugry_q=ads.objects.filter(main_id=main_id_).order_by('-create_date')
 
-
-            print(main_catugry_q)
-            # .values('id',g)            
-
-        #     print (type( f))
-        # for key in request.GET.items() :
-        #     print (key )
-        #     print(type(request.GET.items()))
-    context = {
-        'main_catugry_q' : main_catugry_q ,
-    }
-
-
-
-    return render(request, 'by_main_Vehicles2.html',context)
-
-
-
+    context = {'main_catugry_q' : main_catugry_q ,}
+    return render(request, 'by_main_Vehicles_result.html',context)
 
 
 def by_main_Mobile(request , main_id_):

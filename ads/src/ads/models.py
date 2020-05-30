@@ -102,7 +102,7 @@ class catugry(models.Model):
         return str(self.name)
 
 
-payment_options=(('1',"Cash"),('2',"Exchange"),('3',"Installments"))
+payment_options=(('1',"Cash"),('2',"Exchange"),('3',"Installments") , ('4','Rent'))
 years=(('1',"2001"),('2',"2002"),('3',"2003"),('4',"2004"),('5',"2005"),('6',"2006"),('7',"2007"),('8',"2008"),('9',"2009"),
         ('10',"2010"),('11',"2011"),('12',"2012"),('13',"2013"),('14',"2014"),('15',"2015"),('16',"2016"),('17',"2017"),
         ('18',"2018"),('19',"2019"),  ('20',"2020"), )
@@ -117,7 +117,9 @@ Kilometers_list=(('1',"0 - 999"),('2',"1000 - 29999 "),('3',"30000 - 49999") ,
 transmission_types=(('1',"Automatic"),('2',"Manual"))
 rent_duration=(('1',"Daily"),('2',"Monthly"),('3',"Yearly"))
 rent_options=(('1',"With Driver"),('2',"Without Driver"),('3',"Both Options"))
-
+condition=(('1',"New"),('2',"Used"))
+ad_type=(('1',"For Sale"),('2',"Wanted item"))
+warranty=(('1',"Yes"),('2',"NO"))
 
 
 
@@ -127,6 +129,8 @@ class car_form(models.Model):
     ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
     payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
     Price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
+    ad_type=models.CharField(max_length=2,choices=ad_type,blank=True,null=True)
+    condition=models.CharField(max_length=2,choices=condition,blank=True,null=True)
     year=models.CharField(max_length=2,choices=years,blank=True,null=True)
     color=models.CharField(max_length=2,choices=colors  ,blank=True,null=True)
     body_type=models.CharField(max_length=1,choices=body_types,blank=True,null=True)
@@ -160,6 +164,9 @@ class car_form(models.Model):
     touch_screen = models.BooleanField(default=False)
     usb_charger = models.BooleanField(default=False)
 
+    def __str__(self):
+        return str (self.ad_id.title)
+
 
 class car_rent(models.Model):
    
@@ -167,6 +174,9 @@ class car_rent(models.Model):
     ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
     rent_duration=models.CharField(max_length=1, choices=rent_duration ,blank=True,null=True)
     Price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
+    condition=models.CharField(max_length=2,choices=condition,blank=True,null=True)
+    ad_type=models.CharField(max_length=2,choices=ad_type,blank=True,null=True)
+
     rent_option=models.CharField(max_length=1, choices=rent_options ,blank=True,null=True)
     year=models.CharField(max_length=2,choices=years ,blank=True,null=True)
     color=models.CharField(max_length=2,choices=colors ,blank=True,null=True)
@@ -199,3 +209,85 @@ class car_rent(models.Model):
     sunroof = models.BooleanField(default=False)
     touch_screen = models.BooleanField(default=False)
     usb_charger = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str (self.ad_id.title)
+
+
+
+class motorcycles(models.Model):
+    ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
+    payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
+    Price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
+    ad_type=models.CharField(max_length=2,choices=ad_type,blank=True,null=True)
+    condition=models.CharField(max_length=2,choices=condition,blank=True,null=True)
+    year=models.CharField(max_length=2,choices=years,blank=True,null=True)
+    color=models.CharField(max_length=2,choices=colors  ,blank=True,null=True)
+    engine_capacity=models.CharField(max_length=1,choices=engine_capacities  ,blank=True,null=True)
+    Kilometers=models.CharField(max_length=1, choices=Kilometers_list ,blank=True,null=True)
+    transmission_type=models.CharField(max_length=1,choices=transmission_types,blank=True,null=True)
+
+    def __str__(self):
+        return str (self.ad_id.title)
+
+class car_spare_parts(models.Model):
+    ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
+    payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
+    Price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
+    ad_type=models.CharField(max_length=2,choices=ad_type,blank=True,null=True)
+    condition=models.CharField(max_length=2,choices=condition,blank=True,null=True)
+
+    def __str__(self):
+        return str (self.ad_id.title)
+
+class Boats(models.Model):
+    ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
+    payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
+    Price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
+    ad_type=models.CharField(max_length=2,choices=ad_type,blank=True,null=True)
+    condition=models.CharField(max_length=2,choices=condition,blank=True,null=True)
+
+    def __str__(self):
+        return str (self.ad_id.title)
+
+
+class heavy_trucks(models.Model):
+    ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
+    payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
+    Price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
+    ad_type=models.CharField(max_length=2,choices=ad_type,blank=True,null=True)
+    condition=models.CharField(max_length=2,choices=condition,blank=True,null=True)
+    year=models.CharField(max_length=2,choices=years,blank=True,null=True)
+    color=models.CharField(max_length=2,choices=colors  ,blank=True,null=True)
+    engine_capacity=models.CharField(max_length=1,choices=engine_capacities  ,blank=True,null=True)
+    Kilometers=models.CharField(max_length=1, choices=Kilometers_list ,blank=True,null=True)
+    transmission_type=models.CharField(max_length=1,choices=transmission_types,blank=True,null=True)
+
+    def __str__(self):
+        return str (self.ad_id.title)
+
+
+class mobile_phones(models.Model):
+    ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
+    payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
+    Price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
+    ad_type=models.CharField(max_length=2,choices=ad_type,blank=True,null=True)
+    warranty=models.CharField(max_length=2,choices=warranty,blank=True,null=True)
+    condition=models.CharField(max_length=2,choices=condition,blank=True,null=True)
+    color=models.CharField(max_length=2,choices=colors  ,blank=True,null=True)
+
+    def __str__(self):
+        return str (self.ad_id.title)
+    
+
+class mobile_accessories(models.Model):
+    ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
+    payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
+    Price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
+    ad_type=models.CharField(max_length=2,choices=ad_type,blank=True,null=True)
+    warranty=models.CharField(max_length=2,choices=warranty,blank=True,null=True)
+    condition=models.CharField(max_length=2,choices=condition,blank=True,null=True)
+    color=models.CharField(max_length=2,choices=colors  ,blank=True,null=True)
+
+    def __str__(self):
+        return str (self.ad_id.title)

@@ -31,7 +31,6 @@
     $("#id_main").change(function () {
       var url = $("#adsform").attr("data-url");
       var url2= ("{% url 'ads:load_sub'%}")  
-      var url3= ("{% url 'ads:change_form'%}")  
       var mainId = $(this).val(); 
       var main_form_id = $(this).val(); 
 
@@ -48,17 +47,7 @@
 // ############################################################
 // ###########################################################
 
-      $.ajax({                       
-        url: url3,                    
-        data: {
-          'main_form_id': main_form_id,
-
-        },
-        success: function (data2) {   
-          $("#change_form").html(data2);
-          console.log(data2);  
-        }
-      });
+      
     });
 
 // ############################################################
@@ -69,6 +58,8 @@ $("#id_sub").change(function () {
     var Choose2 = '<option value="">Choose</option>';
     var url2 = ("{% url 'ads:load_sub'%}");
     var mainId = $("#id_main").val();
+    var url3= ("{% url 'ads:change_form'%}") ; 
+
     $("#id_last").html(Choose2);
 
 
@@ -92,6 +83,22 @@ $("#id_sub").change(function () {
       console.log(Choose2);  
 
     }
+
+
+    $.ajax({                       
+        url: url3,                    
+        data: {
+          'subId': subId,
+
+        },
+        success: function (data2) {   
+          $("#change_form").html(data2);
+          console.log(data2);  
+        }
+      });
+
+
+
   });
 
   $("#id_end").change(function () {

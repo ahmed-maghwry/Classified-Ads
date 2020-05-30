@@ -31,13 +31,11 @@
     var main_form_id = $(this).val(); 
     var sub_Id = $("#id_sub").val();
     var end_Id = $("#id_end").val();
-    var url3= ("{% url 'ads:change_form'%}"); 
 
     $.ajax({                       
       url: url2,                   
       data: {
         'main': mainId,
-
       },
 
       success: function (data) {  
@@ -51,16 +49,7 @@
     // ############################################################
     // ###########################################################
 
-    $.ajax({
-      url: url3,
-      data: {
-        'main_form_id': main_form_id,
-      },
-      success: function (data2) {
-        $("#change_form").html(data2);
-        console.log(data2);
-      }
-    });
+    
   });
 
   // ############################################################
@@ -70,7 +59,10 @@
     var subId = $(this).val();
     var url2 = ("{% url 'ads:load_sub'%}")
     var mainId = $("#id_main").val();
+    var url3= ("{% url 'ads:change_form'%}"); 
+
     $("#id_last").html(Choose2);
+
 
     if (subId !== "") {
       console.log("55555");
@@ -90,6 +82,18 @@
       $("#id_last").html(Choose2);
       $("#id_end").html(Choose2);
     }
+
+    $.ajax({
+      url: url3,
+      data: {
+        'subId': subId,
+      },
+      success: function (data2) {
+        $("#change_form").html(data2);
+        console.log(data2);
+      }
+    });
+
   });
 
   $("#id_end").change(function () {

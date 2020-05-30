@@ -9,12 +9,12 @@
       {{ general_search_form.as_ul }}
     </table>
     <button id="serch" type="button">Search</button>
-    <table>
-      {{ range_price_form.as_ul }}
-    </table>
-    <table>
-      {{ car_search_form.as_ul }}
-    </table>
+    
+    <div id="main_form_search">
+
+
+    </div>
+    
   </form>
   <dev class="search" id="search_result">
     <div class="container">
@@ -38,8 +38,8 @@
             </div>
           </div>
         </div>
-          {% endfor %}
-        
+        {% endfor %}
+
       </div>
     </div>
     </div>
@@ -52,11 +52,12 @@
   $("#serch").click(function () {
     var myForm = $('#searchform');
     var formData = myForm.serialize();
-    var thisURL = (" {% url 'search:by_main_Vehicles2' %} ")
+    var subId = $("#id_sub").val();
+    var thisURL = (" {% url 'search:by_main_result' %} ")
     $.ajax({
       method: 'GET',
       url: thisURL,
-      data: formData,
+      data: formData ,
       success: function (data) {
         $("#search_result").html(data);
         console.log(data);
@@ -64,10 +65,10 @@
     });
   });
 
-
   $("#id_sub").change(function () {
     var subId = $(this).val();
     var url2 = ("{% url 'ads:load_sub'%}")
+    var url4 = ("{% url 'search:change_form_search'%}")
     var mainId = 43;
     $("#id_last").html(Choose2);
     if (subId !== "") {
@@ -75,18 +76,35 @@
         url: url2,
         data: {
           'main': mainId,
-          'sub': subId
+          'sub': subId,
         },
         success: function (data) {
           $("#id_end").html(data);
         }
       });
+      $.ajax({
+      method: 'GET',
+      url: url4,
+      data: {
+        'main': mainId,
+         'subId': subId ,
+      } ,
+      success: function (data) {
+        $("#main_form_search").html(data);
+        $("#search_result").html('');
+        console.log(data);
+      }
+    });
+
     }
     else {
       $("#id_last").html(Choose2);
       $("#id_end").html(Choose2);
+      $("#main_form_search").html('');
+      $("#search_result").html('');
     }
   });
+
   $("#id_end").change(function () {
     var url = $("#adsform").attr("data-url");
     var endId = $(this).val();
@@ -111,6 +129,5 @@
     }
   });
 </script>
-
 
 {% endblock main_search %}

@@ -36,8 +36,8 @@ def ads_detail(request , id):
 
 
 def change_form (request):
-    main_form_id = request.GET.get('main_form_id')
-    if main_form_id == "43" :
+    main_form_id = request.GET.get('subId')
+    if main_form_id == "44" :
         cat=car_forms()
     elif main_form_id == "23" :
         cat=mobilef()
@@ -55,10 +55,10 @@ def creat_ads(request):
     signalf=0
     if request.method =='POST':
         form = adsform(request.POST , request.FILES )
-        if form.data['main'] == "43" :
+        if form.data['sub'] == "44" :
             catff = car_forms (request.POST )
             signalf=1
-        elif form.data['main'] == "43" :
+        elif form.data['sub'] == "44" :
             catff = mobilef (request.POST )  
             signalf=1
         else : 
@@ -67,13 +67,26 @@ def creat_ads(request):
             if form.is_valid() and catff.is_valid() :
                 new_form = form.save(commit=False)  # تاخير حفظ الفورم حتي تعديلها
                 new_form.user=request.user
+                
                 new_catff=catff.save(commit=False)
+
+#######################333
+############################
+############################33
+                # new_form.description= {**form.data, **catff.data}
+                new_form.description= catff.data
+
+                #######################333
+############################
+############################33
+  
+
                 new_catff.ad_id=form.save()
                 print (form.cleaned_data)
                 form.save()
                 catff.save()   
                 return redirect('/')
-                
+                form.data
             else:
                 main_id_creat=form.data['main']
                 sub_id_creat=form.data['sub']

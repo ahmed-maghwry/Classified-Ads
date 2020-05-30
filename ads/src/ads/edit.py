@@ -11,7 +11,7 @@ def edit_ads(request , id ):
     signalf=0
     if request.method =='POST':
         form = adsform(request.POST , request.FILES, instance=ads_edit  )
-        if form.data['main'] == "43" :
+        if form.data['sub'] == "44" :
             try:
                 ads_exe_edit=get_object_or_404(car_form,ad_id=ads_edit)
                 catff = car_forms ( request.POST ,instance=ads_exe_edit )
@@ -58,7 +58,7 @@ def edit_ads(request , id ):
                 }
                 pass
         else:
-            if ads_edit.main.id == 43 :
+            if ads_edit.sub.id == 44 :
                 try :
                     ads_exe_edit=get_object_or_404(car_form,ad_id=ads_edit)
                 except:pass
@@ -133,11 +133,11 @@ def edit_ads(request , id ):
         form.fields['last'].queryset = catugry.objects.filter(main_id=main_id_creat ,sub_id=sub_id_creat ,end_id=end_id_creat
         ).order_by('name') 
         
-        if ads_edit.main.id == 43 :
+        if ads_edit.sub.id == 44 :
             ads_exe_edit=get_object_or_404(car_form,ad_id=ads_edit)
             catff = car_forms ( instance=ads_exe_edit )
             signalf=1
-        elif ads_edit.main.id == 43 :
+        elif ads_edit.sub.id == 44 :
             ads_exe_edit=get_object_or_404(car_form,ad_id=ads_edit)
             # catff = mobilef (request.POST, instance=ads_edit )  
             # signalf=1

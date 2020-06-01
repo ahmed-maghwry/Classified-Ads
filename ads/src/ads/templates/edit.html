@@ -13,7 +13,7 @@
 
     {% if signalf == 1 %}
     <table  id="change_form">
-      {{catff}}
+      {{ details_form }}
     </table>    
     
     {% else %}
@@ -33,6 +33,9 @@
       var url2= ("{% url 'ads:load_sub'%}")  
       var mainId = $(this).val(); 
       var main_form_id = $(this).val(); 
+      $("#change_form").html('');
+      $("#id_end").html(Choose2);
+      $("#id_last").html(Choose2);
 
 
       $.ajax({                       
@@ -42,6 +45,7 @@
         },
         success: function (data) {   
           $("#id_sub").html(data);
+
         }
       });
 // ############################################################
@@ -59,12 +63,12 @@ $("#id_sub").change(function () {
     var url2 = ("{% url 'ads:load_sub'%}");
     var mainId = $("#id_main").val();
     var url3= ("{% url 'ads:change_form'%}") ; 
+    $("#change_form").html('');
 
     $("#id_last").html(Choose2);
 
 
     if (subId !== "") {
-      console.log("55555");
       $.ajax({
         url: url2,
         data: {
@@ -77,14 +81,10 @@ $("#id_sub").change(function () {
       });
     }
     else {
-      console.log("4444444");
       $("#id_last").html(Choose2);
       $("#id_end").html(Choose2);
-      console.log(Choose2);  
 
     }
-
-
     $.ajax({                       
         url: url3,                    
         data: {
@@ -109,7 +109,6 @@ $("#id_sub").change(function () {
     var url2 = ("{% url 'ads:load_sub'%}");
 
     if (endId !== "") {
-      console.log("55555");
       $.ajax({
         url: url2,
         data: {
@@ -123,7 +122,6 @@ $("#id_sub").change(function () {
       });
     }
     else {
-      console.log("4444444");
       $("#id_last").html(Choose2);
     }
   });

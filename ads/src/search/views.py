@@ -1,7 +1,7 @@
 
 from django.shortcuts import render , HttpResponse
 from django.shortcuts import get_object_or_404 , redirect
-from ads.models import ads , catugry  ,car_form ,motorcycles , car_spare_parts , Boats ,heavy_trucks ,mobile_phones , mobile_accessories 
+from ads.models import ads , catugry 
 from django.urls import reverse_lazy
 from . forms import *
 

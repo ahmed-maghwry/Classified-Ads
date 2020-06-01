@@ -1,5 +1,5 @@
 from django import forms
-from ads.models import  ads  ,car_form ,motorcycles , car_spare_parts , Boats ,heavy_trucks ,mobile_phones , mobile_accessories 
+from ads.models import  *
 import PIL
 
 class general(forms.ModelForm):
@@ -13,36 +13,36 @@ class price_form (forms.Form):
 
 class car_search(forms.ModelForm):
     class Meta:
-        model = car_form
+        model = db_car
         exclude = ['ad_id' , 'Price' ]
 
 class motorcycles_search(forms.ModelForm):
     class Meta:
-        model = motorcycles
+        model = db_motorcycles
         exclude = ['ad_id' , 'Price' ]
 
 class car_spare_parts_search(forms.ModelForm):
     class Meta:
-        model = car_spare_parts
+        model = db_car_spare_parts
         exclude = ['ad_id' , 'Price' ]
 
 class Boats_search(forms.ModelForm):
     class Meta:
-        model = Boats
+        model = db_Boats
         exclude = ['ad_id' , 'Price' ]
 
 class heavy_trucks_search(forms.ModelForm):
     class Meta:
-        model = heavy_trucks
+        model = db_heavy_trucks
         exclude = ['ad_id' , 'Price' ]
 
 class mobile_phones_search(forms.ModelForm):
     class Meta:
-        model = mobile_phones
+        model = db_mobile_phones
         exclude = ['ad_id' , 'Price' ]
 
 class mobile_accessories_search(forms.ModelForm):
     class Meta:
-        model = mobile_accessories
+        model = db_mobile_accessories
         exclude = ['ad_id' , 'Price' ]
 

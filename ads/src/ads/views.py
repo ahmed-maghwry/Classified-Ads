@@ -1,9 +1,9 @@
 from django.shortcuts import render , HttpResponse
 from django.shortcuts import get_object_or_404 , redirect
-from . models import ads ,catugry , car_form
-from . forms import carf , mobilef , adsform  ,car_forms ,adsform2
+from . models import * 
+from . forms import *
 from django.urls import reverse_lazy
-cat=""# Empty variable use like signal and i think it is not important but i'm afraid to delete it
+# cat=""# Empty variable use like signal and i think it is not important but i'm afraid to delete it
 # Create your views here.
 def all_ads(request):
     ads_all=ads.objects.all()
@@ -33,58 +33,63 @@ def ads_detail(request , id):
     #    and so on for each category number 
     # 2-and if the category doesn't have special fields then return signalf context as zero
     # finally  if signalf context == zero there are no special fields for this ad
-
+def check_is_number(number):
+    if number != '0'and number != "0.0" :
+        try:
+            if float (number):return True
+        except:return False
+    else :return False
 
 def change_form (request):
-    main_form_id = request.GET.get('subId')
-    if main_form_id == "44" :
-        cat=car_forms()
-    elif main_form_id == "23" :
-        cat=mobilef()
-    else :
-        cat="Ahmed" # Empty variable use like signal and i think it is not important but i'm afraid to delete it
-# Create your views here.
+    sub_form_id = request.GET.get('subId')
+    forms_={
+        '44' : car () , '46' : motorcycles (), '47' : car_spare_parts (),
+        '49' : Boats() , '48' : heavy_trucks (), '51' : mobile_phones (),
+        '52' : mobile_accessories ()  
+    }
+    if sub_form_id in forms_ and check_is_number(sub_form_id) == True :
+        details_form=forms_[sub_form_id]  
+    else:details_form=''
     context2 ={
-        'cat':cat,
-        'signalf' :0  #variable use like signal to make me actually know is there main_form_id variable come with response or not
+        'details_form':details_form,
+        'signalf' :0  #variable use like signal to make me actually know is there sub_form_id variable come with response or not
     }
     return render (request , 'change_form.html' , context2)
     #########################################################################
 def creat_ads(request):
-
     signalf=0
     if request.method =='POST':
         form = adsform(request.POST , request.FILES )
-        if form.data['sub'] == "44" :
-            catff = car_forms (request.POST )
+        sub_form_id=form.data['sub']
+        forms_={
+        '44' : car , '46' : motorcycles , '47' : car_spare_parts ,
+        '49' : Boats , '48' : heavy_trucks , '51' : mobile_phones,
+        '52' : mobile_accessories 
+        }
+        if sub_form_id in forms_ and check_is_number(sub_form_id) == True:
+            details_form=forms_[sub_form_id] (request.POST) 
             signalf=1
-        elif form.data['sub'] == "44" :
-            catff = mobilef (request.POST )  
-            signalf=1
-        else : 
-            pass
+        else: signalf=0
         if signalf == 1 :
-            if form.is_valid() and catff.is_valid() :
+            if form.is_valid() and details_form.is_valid() :
                 new_form = form.save(commit=False)  # تاخير حفظ الفورم حتي تعديلها
                 new_form.user=request.user
-                
-                new_catff=catff.save(commit=False)
+                new_details_form=details_form.save(commit=False)
 
 #######################333
 ############################
 ############################33
-                # new_form.description= {**form.data, **catff.data}
-                new_form.description= catff.data
+                # new_form.description= {**form.data, **details_form.data}
+                new_form.description= details_form.data
 
                 #######################333
 ############################
 ############################33
   
 
-                new_catff.ad_id=form.save()
-                print (form.cleaned_data)
+                new_details_form.ad_id=form.save()
                 form.save()
-                catff.save()   
+                details_form.save()   
                 return redirect('/')
                 form.data
             else:
@@ -104,7 +109,7 @@ def creat_ads(request):
                 ).order_by('name')
                 context = {
                     'form': form,
-                    'catff': catff,
+                    'details_form': details_form,
                     'signalf': signalf,
                 }
                 pass
@@ -138,7 +143,7 @@ def creat_ads(request):
     try:
         context = {
             'form': form ,
-            'catff': catff,
+            'details_form': details_form,
             'signalf': signalf,
         }
     except :

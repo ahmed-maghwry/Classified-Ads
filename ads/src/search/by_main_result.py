@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404 , redirect
-from ads.models import ads ,catugry ,car_form ,motorcycles , car_spare_parts , Boats ,heavy_trucks ,mobile_phones , mobile_accessories 
+from ads.models import *
 from django.shortcuts import render 
 from .forms import * 
 
@@ -13,8 +13,9 @@ def change_form_search (request):
         '49' : Boats_search() , '48' : heavy_trucks_search() , '51' : mobile_phones_search() ,
         '50' : mobile_accessories_search()   
     }
-    main_form_search=forms_[sub_form_id]   
-    # main_catugry_q=ads.objects.filter(main_id=main_form_id , sub_id=sub_form_id).order_by('-create_date')
+    if sub_form_id in forms_ :
+        main_form_search=forms_[sub_form_id]  
+    else:main_form_search=''
     context2 ={
         'main_form_search':main_form_search,
         'range_price_form':range_price_form,
@@ -32,7 +33,7 @@ def check_is_number(number):
 def by_main_result(request):
     search_db_id = request.GET.get('sub')
     db_list={
-            '':'no_form' , '44' : 'car_form', '46' : 'motorcycles' , '47' : 'car_spare_parts' ,
+            '':'no_form' , '44' : 'car', '46' : 'motorcycles' , '47' : 'car_spare_parts' ,
             '49' : 'Boats' , '48' : 'heavy_trucks' , '51' : 'mobile_phones' ,
             '50' : 'mobile_accessories'   
         }

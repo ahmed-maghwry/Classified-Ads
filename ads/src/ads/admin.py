@@ -1,14 +1,14 @@
 from django.contrib import admin
-from .models import ads , catugry ,car_form ,motorcycles , car_spare_parts , Boats ,heavy_trucks ,mobile_phones , mobile_accessories 
+from .models import *
     
 
 # Register your models here.
 admin.site.register(ads)
 admin.site.register(catugry)
-admin.site.register(car_form)
-admin.site.register(motorcycles)
-admin.site.register(car_spare_parts)
-admin.site.register(Boats)
-admin.site.register(heavy_trucks)
-admin.site.register(mobile_phones)
-admin.site.register(mobile_accessories)
+admin.site.register(db_car)
+admin.site.register(db_motorcycles)
+admin.site.register(db_car_spare_parts)
+admin.site.register(db_Boats)
+admin.site.register(db_heavy_trucks)
+admin.site.register(db_mobile_phones)
+admin.site.register(db_mobile_accessories)

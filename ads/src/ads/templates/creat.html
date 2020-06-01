@@ -12,7 +12,7 @@
   </table>
   {% if signalf == 1 %}
   <table id="change_form">
-    {{catff}}
+    {{ details_form }}
   </table>
   {% else %}
   <table id="change_form">
@@ -31,8 +31,12 @@
     var main_form_id = $(this).val(); 
     var sub_Id = $("#id_sub").val();
     var end_Id = $("#id_end").val();
+    $("#change_form").html('');
+    $("#id_end").html(Choose2);
+    $("#id_last").html(Choose2);
+ 
 
-    $.ajax({                       
+    $.ajax({                      
       url: url2,                   
       data: {
         'main': mainId,
@@ -46,8 +50,8 @@
       }
     });
 
-    // ############################################################
-    // ###########################################################
+    // ############ ################################################
+    // ########## #################################################
 
     
   });
@@ -60,12 +64,10 @@
     var url2 = ("{% url 'ads:load_sub'%}")
     var mainId = $("#id_main").val();
     var url3= ("{% url 'ads:change_form'%}"); 
-
     $("#id_last").html(Choose2);
 
-
+    
     if (subId !== "") {
-      console.log("55555");
       $.ajax({
         url: url2,
         data: {
@@ -78,11 +80,10 @@
       });
     }
     else {
-      console.log("4444444");
       $("#id_last").html(Choose2);
       $("#id_end").html(Choose2);
+      $("#change_form").html('');
     }
-
     $.ajax({
       url: url3,
       data: {
@@ -120,14 +121,9 @@
       });
     }
     else {
-      console.log("4444444");
       $("#id_last").html(Choose2);
     }
-
-  
-
   });
-
 </script>
 
 {% endblock card %}

@@ -124,7 +124,7 @@ warranty=(('1',"Yes"),('2',"NO"))
 
 
 
-class car_form(models.Model):
+class db_car(models.Model):
     
     ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
     payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
@@ -168,7 +168,7 @@ class car_form(models.Model):
         return str (self.ad_id.title)
 
 
-class car_rent(models.Model):
+class db_car_rent(models.Model):
    
 
     ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
@@ -215,7 +215,7 @@ class car_rent(models.Model):
 
 
 
-class motorcycles(models.Model):
+class db_motorcycles(models.Model):
     ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
     payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
     Price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
@@ -230,7 +230,7 @@ class motorcycles(models.Model):
     def __str__(self):
         return str (self.ad_id.title)
 
-class car_spare_parts(models.Model):
+class db_car_spare_parts(models.Model):
     ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
     payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
     Price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
@@ -240,7 +240,7 @@ class car_spare_parts(models.Model):
     def __str__(self):
         return str (self.ad_id.title)
 
-class Boats(models.Model):
+class db_Boats(models.Model):
     ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
     payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
     Price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
@@ -251,7 +251,7 @@ class Boats(models.Model):
         return str (self.ad_id.title)
 
 
-class heavy_trucks(models.Model):
+class db_heavy_trucks(models.Model):
     ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
     payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
     Price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
@@ -267,7 +267,7 @@ class heavy_trucks(models.Model):
         return str (self.ad_id.title)
 
 
-class mobile_phones(models.Model):
+class db_mobile_phones(models.Model):
     ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
     payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
     Price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
@@ -280,7 +280,7 @@ class mobile_phones(models.Model):
         return str (self.ad_id.title)
     
 
-class mobile_accessories(models.Model):
+class db_mobile_accessories(models.Model):
     ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
     payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
     Price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)

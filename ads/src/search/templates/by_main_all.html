@@ -52,15 +52,13 @@
   $("#serch").click(function () {
     var myForm = $('#searchform');
     var formData = myForm.serialize();
-    var subId = $("#id_sub").val();
-    var thisURL = (" {% url 'search:by_main_result' %} ")
+      var thisURL = (" {% url 'search:by_main_result' %} ")
     $.ajax({
       method: 'GET',
       url: thisURL,
       data: formData ,
       success: function (data) {
         $("#search_result").html(data);
-        console.log(data);
       }
     });
   });
@@ -68,13 +66,16 @@
     var subId = $(this).val();
     var url2 = ("{% url 'ads:load_sub'%}")
     var url4 = ("{% url 'search:change_form_search'%}")
-    var mainId = 43;
+    var url5 = ("{% url 'search:by_main_result'%}")
+    var mainId = {{main_id_}};
+    console.log(mainId);
+
     $("#id_last").html(Choose2);
     if (subId !== "") {
       $.ajax({
         url: url2,
         data: {
-          'main': mainId,
+          'mainId': mainId,
           'sub': subId,
         },
         success: function (data) {
@@ -91,7 +92,7 @@
       success: function (data) {
         $("#main_form_search").html(data);
         $("#search_result").html('');
-        console.log(data);
+        
       }
     });
 
@@ -101,13 +102,24 @@
       $("#id_end").html(Choose2);
       $("#main_form_search").html('');
       $("#search_result").html('');
+
+      $.ajax({
+      method: 'GET',
+      url: url5,
+      data: {
+        'mainId': mainId,
+      } ,
+      success: function (data) {
+        $("#search_result").html(data);
+      }
+    });
+
     }
   });
 
   $("#id_end").change(function () {
     var url = $("#adsform").attr("data-url");
     var endId = $(this).val();
-    var mainId = 43
     var subId = $("#id_sub").val();
     var url2 = ("{% url 'ads:load_sub'%}");
     if (endId !== "") {

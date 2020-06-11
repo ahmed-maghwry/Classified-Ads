@@ -103,6 +103,8 @@ class catugry(models.Model):
 
 
 payment_options=(('1',"Cash"),('2',"Exchange"),('3',"Installments") , ('4','Rent'))
+payment_options_pets=(('1',"Cash"),('2',"Exchange"),('3',"Installments") , ('4','Adoption'))
+
 years=(('1',"2001"),('2',"2002"),('3',"2003"),('4',"2004"),('5',"2005"),('6',"2006"),('7',"2007"),('8',"2008"),('9',"2009"),
         ('10',"2010"),('11',"2011"),('12',"2012"),('13',"2013"),('14',"2014"),('15',"2015"),('16',"2016"),('17',"2017"),
         ('18',"2018"),('19',"2019"),  ('20',"2020"), )
@@ -120,6 +122,13 @@ rent_options=(('1',"With Driver"),('2',"Without Driver"),('3',"Both Options"))
 condition=(('1',"New"),('2',"Used"))
 ad_type=(('1',"For Sale"),('2',"Wanted item"))
 warranty=(('1',"Yes"),('2',"NO"))
+yes_or_no=(('1',"Yes"),('2',"NO"))
+sale_rent=(('1',"Sale"),('2',"rent"))
+from_one=(('1',"1"),('2',"2"),('3',"3"),('4',"4"),('5',"5"),('6',"6"),('7',"7"),('8',"8"),('9',"9"),('10',"10"),('11',"11"),('12',"+11"))
+gender_list=(('1',"male"),('2',"female"))
+employment_type_list=(('1',"Full-time"),('2',"Part-time"),('3',"Internship"),('3',"Freelance"))
+education_level=(('1',"Student"),('2',"High-Secondary School "),('3',"Diploma") ,
+        ('4',"Bachelors Degree"),('5',"Masters Degree"),('5',"PhD Degree") )
 
 
 
@@ -128,7 +137,7 @@ class db_car(models.Model):
     
     ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
     payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
-    Price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
+    price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
     ad_type=models.CharField(max_length=2,choices=ad_type,blank=True,null=True)
     condition=models.CharField(max_length=2,choices=condition,blank=True,null=True)
     year=models.CharField(max_length=2,choices=years,blank=True,null=True)
@@ -166,14 +175,12 @@ class db_car(models.Model):
 
     def __str__(self):
         return str (self.ad_id.title)
-
-
 class db_car_rent(models.Model):
    
 
     ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
     rent_duration=models.CharField(max_length=1, choices=rent_duration ,blank=True,null=True)
-    Price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
+    price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
     condition=models.CharField(max_length=2,choices=condition,blank=True,null=True)
     ad_type=models.CharField(max_length=2,choices=ad_type,blank=True,null=True)
 
@@ -212,13 +219,10 @@ class db_car_rent(models.Model):
 
     def __str__(self):
         return str (self.ad_id.title)
-
-
-
 class db_motorcycles(models.Model):
     ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
     payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
-    Price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
+    price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
     ad_type=models.CharField(max_length=2,choices=ad_type,blank=True,null=True)
     condition=models.CharField(max_length=2,choices=condition,blank=True,null=True)
     year=models.CharField(max_length=2,choices=years,blank=True,null=True)
@@ -229,32 +233,28 @@ class db_motorcycles(models.Model):
 
     def __str__(self):
         return str (self.ad_id.title)
-
 class db_car_spare_parts(models.Model):
     ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
     payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
-    Price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
+    price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
     ad_type=models.CharField(max_length=2,choices=ad_type,blank=True,null=True)
     condition=models.CharField(max_length=2,choices=condition,blank=True,null=True)
 
     def __str__(self):
         return str (self.ad_id.title)
-
 class db_Boats(models.Model):
     ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
     payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
-    Price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
+    price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
     ad_type=models.CharField(max_length=2,choices=ad_type,blank=True,null=True)
     condition=models.CharField(max_length=2,choices=condition,blank=True,null=True)
 
     def __str__(self):
         return str (self.ad_id.title)
-
-
 class db_heavy_trucks(models.Model):
     ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
     payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
-    Price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
+    price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
     ad_type=models.CharField(max_length=2,choices=ad_type,blank=True,null=True)
     condition=models.CharField(max_length=2,choices=condition,blank=True,null=True)
     year=models.CharField(max_length=2,choices=years,blank=True,null=True)
@@ -265,12 +265,10 @@ class db_heavy_trucks(models.Model):
 
     def __str__(self):
         return str (self.ad_id.title)
-
-
 class db_mobile_phones(models.Model):
     ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
     payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
-    Price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
+    price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
     ad_type=models.CharField(max_length=2,choices=ad_type,blank=True,null=True)
     warranty=models.CharField(max_length=2,choices=warranty,blank=True,null=True)
     condition=models.CharField(max_length=2,choices=condition,blank=True,null=True)
@@ -278,12 +276,10 @@ class db_mobile_phones(models.Model):
 
     def __str__(self):
         return str (self.ad_id.title)
-    
-
 class db_mobile_accessories(models.Model):
     ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
     payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
-    Price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
+    price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
     ad_type=models.CharField(max_length=2,choices=ad_type,blank=True,null=True)
     warranty=models.CharField(max_length=2,choices=warranty,blank=True,null=True)
     condition=models.CharField(max_length=2,choices=condition,blank=True,null=True)
@@ -291,3 +287,101 @@ class db_mobile_accessories(models.Model):
 
     def __str__(self):
         return str (self.ad_id.title)
+class db_properties (models.Model):
+    ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
+    payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
+    price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
+    ad_type=models.CharField(max_length=1,choices=ad_type,blank=True,null=True)
+    for_sale_rent=models.CharField(max_length=1,choices=sale_rent,blank=True,null=True)
+    level= models.CharField(max_length=2,choices=from_one,blank=True,null=True)
+    bedrooms= models.CharField(max_length=2,choices=from_one,blank=True,null=True)
+    bathrooms= models.CharField(max_length=2,choices=from_one,blank=True,null=True)
+    area = models.DecimalField(max_digits=8,decimal_places=2,null=True,blank=True , verbose_name='Area (m²) ')
+    furnished = models.CharField(max_length=1,choices=yes_or_no,blank=True,null=True)
+    Compound = models.CharField(max_length=1,choices=yes_or_no,blank=True,null=True)
+    balcony = models.BooleanField(default=False)
+    private_Garden = models.BooleanField(default=False)
+    central_ac_heating = models.BooleanField(default=False)
+    water_Meter = models.BooleanField(default=False)
+    natural_Gas = models.BooleanField(default=False)
+    electricity_Meter = models.BooleanField(default=False)
+    covered_Parking = models.BooleanField(default=False)
+    maids_Room = models.BooleanField(default=False)
+    security = models.BooleanField(default=False)
+    pets_allowed = models.BooleanField(default=False)
+    landline = models.BooleanField(default=False)
+    elevator = models.BooleanField(default=False)
+class db_properties_ecommer(models.Model):
+    ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
+    payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
+    price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
+    ad_type=models.CharField(max_length=1,choices=ad_type,blank=True,null=True)
+    for_sale_rent=models.CharField(max_length=1,choices=sale_rent,blank=True,null=True)
+    level= models.CharField(max_length=2,choices=from_one,blank=True,null=True)
+    bedrooms= models.CharField(max_length=2,choices=from_one,blank=True,null=True)
+    bathrooms= models.CharField(max_length=2,choices=from_one,blank=True,null=True)
+    area = models.DecimalField(max_digits=8,decimal_places=2,null=True,blank=True , verbose_name='Area (m²) ')
+    furnished = models.CharField(max_length=1,choices=yes_or_no,blank=True,null=True)
+    Compound = models.CharField(max_length=1,choices=yes_or_no,blank=True,null=True)
+    central_ac_heating = models.BooleanField(default=False)
+    water_Meter = models.BooleanField(default=False)
+    natural_Gas = models.BooleanField(default=False)
+    electricity_Meter = models.BooleanField(default=False)
+    covered_Parking = models.BooleanField(default=False)
+    security = models.BooleanField(default=False)
+    landline = models.BooleanField(default=False)
+    elevator = models.BooleanField(default=False)
+class db_properties_buildings_lands(models.Model):
+    ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
+    payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
+    price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
+    ad_type=models.CharField(max_length=1,choices=ad_type,blank=True,null=True)
+    for_sale_rent=models.CharField(max_length=1,choices=sale_rent,blank=True,null=True)
+    level= models.CharField(max_length=2,choices=from_one,blank=True,null=True)
+    bedrooms_in_level= models.CharField(max_length=2,choices=from_one,blank=True,null=True)
+    bathrooms_in_level= models.CharField(max_length=2,choices=from_one,blank=True,null=True)
+    area = models.DecimalField(max_digits=8,decimal_places=2,null=True,blank=True , verbose_name='Area (m²) ')
+    Compound = models.CharField(max_length=1,choices=yes_or_no,blank=True,null=True)
+    central_ac_heating = models.BooleanField(default=False)
+    water_Meter = models.BooleanField(default=False)
+    natural_Gas = models.BooleanField(default=False)
+    electricity_Meter = models.BooleanField(default=False)
+    covered_Parking = models.BooleanField(default=False)
+    security = models.BooleanField(default=False)
+    landline = models.BooleanField(default=False)
+    elevator = models.BooleanField(default=False)
+class db_furnisher(models.Model):
+
+    ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
+    payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
+    price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
+    condition=models.CharField(max_length=2,choices=condition,blank=True,null=True)
+    ad_type=models.CharField(max_length=1,choices=ad_type,blank=True,null=True)
+    room_area = models.DecimalField(max_digits=8,decimal_places=3,null=True,blank=True , verbose_name='Area (m²) ')
+
+
+class db_pets(models.Model):
+    ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
+    payment_option=models.CharField(max_length=1, choices=payment_options_pets ,blank=True,null=True)
+    price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
+    gender=models.CharField(max_length=2,choices=gender_list,blank=True,null=True)
+    ad_type=models.CharField(max_length=1,choices=ad_type,blank=True,null=True)
+    age = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
+class db_jops_services(models.Model):
+    ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
+    price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True ,verbose_name='Salary' )
+    gender=models.CharField(max_length=1,choices=gender_list,blank=True,null=True)
+    education=models.CharField(max_length=1,choices=education_level,blank=True,null=True)
+    ad_type=models.CharField(max_length=1,choices=ad_type,blank=True,null=True)
+    age = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
+    employment_type=models.CharField(max_length=1,choices=employment_type_list,blank=True,null=True)
+
+class db_general(models.Model):
+    ad_id= models.ForeignKey(ads , to_field='id' ,on_delete=models.CASCADE,blank=True,null=True)
+    payment_option=models.CharField(max_length=1, choices=payment_options ,blank=True,null=True)
+    price = models.DecimalField(max_digits=14,decimal_places=4,null=True,blank=True)
+    condition=models.CharField(max_length=2,choices=condition,blank=True,null=True)
+    ad_type=models.CharField(max_length=1,choices=ad_type,blank=True,null=True)
+
+
+

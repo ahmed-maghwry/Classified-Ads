@@ -199,7 +199,14 @@ position: relative;
 
 /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! product detils  start !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 
-
+.my-product-detils-container{
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+}
+.main_img{
+    position: relative;
+    left: 17%;
+}
 .my-product-detils{
     background: #e3dddd21;
     margin: 10px;

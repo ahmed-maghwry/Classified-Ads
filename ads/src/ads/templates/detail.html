@@ -5,9 +5,10 @@
 
 <section  id="con"  class="py-3 my-product-detils">
 
-    <div  class="container">
+    <div  class="container my-product-detils-container">
       <div class="row">
-        <div class="col-lg-6 order-2 order-lg-1">
+        <div class="col-lg-2 order-3"></div>
+        <div class="col-lg-5 order-2 order-lg-1">
           <h2>{{detail.title}}</h2>
           <p>$39,99 (Ex. Tax)</p>
           
@@ -30,14 +31,8 @@
           </table>
             <a class="btn btn-success" href="" role="button">favoret !</a>
         </div>
-        <div class="col-lg-6 order-1 order-lg-2 mb-5 mb-lg-0"><img class="img-fluid" src=" {{detail.img.url}}" alt="">
-          <div class="d-flex justify-content-between w-100 mt-4">
-            <div class="p-0"><img class="w-100" src=" {{detail.img.url}}" alt=""></div>
-            <div class="p-0 mx-4"><img class="w-100" src=" {{detail.img.url}}" alt=""></div>
-            <div class="p-0"><img class="w-100" src=" {{detail.img.url}}" alt=""></div>
-
-
-          </div>
+        <div class="col-lg-5 order-4 order-lg-4 mb-5 mb-lg-0 main_img"><img class="img-fluid" src=" {{detail.img.url}}" alt="">
+          
         </div>
       </div>
     </div>

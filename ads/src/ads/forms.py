@@ -136,7 +136,7 @@ class car_spare_parts(forms.ModelForm):
 class Boats(forms.ModelForm):
     class Meta:
         model = db_Boats
-        exclude = ['ad_id'  ]
+        exclude = ['ad_id' ]
 
 class heavy_trucks(forms.ModelForm):
     class Meta:
@@ -146,9 +146,42 @@ class heavy_trucks(forms.ModelForm):
 class mobile_phones(forms.ModelForm):
     class Meta:
         model = db_mobile_phones
-        exclude = ['ad_id'  ]
+        exclude = ['ad_id' ]
 
 class mobile_accessories(forms.ModelForm):
     class Meta:
         model = db_mobile_accessories
-        exclude = ['ad_id'  ]
+        exclude = ['ad_id' ]
+
+
+
+class properties(forms.ModelForm):
+    class Meta:
+        model = db_properties
+        exclude = ['ad_id' ]
+
+class properties_ecommer(forms.ModelForm):
+    class Meta:
+        model = db_properties_ecommer
+        exclude = ['ad_id' ]
+
+class properties_buildings_lands(forms.ModelForm):
+    class Meta:
+        model = db_properties_buildings_lands
+        exclude = ['ad_id' ]
+class furnisher(forms.ModelForm):
+    class Meta:
+        model = db_furnisher
+        exclude = ['ad_id' ]
+class jops_services(forms.ModelForm):
+    class Meta:
+        model = db_jops_services
+        exclude = ['ad_id' ]
+class pets(forms.ModelForm):
+    class Meta:
+        model = db_pets
+        exclude = ['ad_id' ]
+class general(forms.ModelForm):
+    class Meta:
+        model = db_general
+        exclude = ['ad_id' ]

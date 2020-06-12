@@ -7,8 +7,7 @@
 
     <div  class="container my-product-detils-container">
       <div class="row">
-        <div class="col-lg-2 order-3"></div>
-        <div class="col-lg-5 order-2 order-lg-1">
+        <div class="col-lg-5 order-1 order-lg-1">
           <h2>{{detail.title}}</h2>
           <p>$39,99 (Ex. Tax)</p>
           
@@ -31,8 +30,32 @@
           </table>
             <a class="btn btn-success" href="" role="button">favoret !</a>
         </div>
-        <div class="col-lg-5 order-4 order-lg-4 mb-5 mb-lg-0 main_img"><img class="img-fluid" src=" {{detail.img.url}}" alt="">
+        <div class="col-lg-7 order-2">
+          <div class="row">
+              
+            <figure class="col-lg-6">
+              <a href="{{detail.img.url}}" data-lightbox="roadtrip"><img alt="picture" src="{{detail.img.url}}" class="img-fluid"></a>        
+            </figure>
+
+            {%if detail.img5.url %}
+            <figure class="col-lg-6">
+              <a href="{{detail.img2.url}}" data-lightbox="roadtrip"><img alt="picture" src="{{detail.img5.url}}" class="img-fluid"></a>        
+            </figure>
+            {% endif %}
+
+            <figure class="col-lg-6">
+              <a href="{{detail.img.url}}" data-lightbox="roadtrip"><img alt="picture" src="{{detail.img.url}}" class="img-fluid"></a>        
+            </figure>
+
+            <figure class="col-lg-6">
+              <a href="{{detail.img.url}}" data-lightbox="roadtrip"><img alt="picture" src="{{detail.img.url}}" class="img-fluid"></a>        
+            </figure>
+            
           
+            
+
+
+          </div>
         </div>
       </div>
     </div>
@@ -41,4 +64,17 @@
 
   
 {% endblock detail %}
+
+
+
+{% block javascr %}
+<script src="{% static '../static/js/lightbox.js' %}"></script>
+
+{% endblock javascr %}
+
+
+{% block css %}
+<link rel="stylesheet" href="{% static '../static/css/lightbox.css' %}" class="stylsheet">
+
+{% endblock css %}
 

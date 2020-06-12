@@ -12,6 +12,9 @@
   <link rel="icon" href="{% static '../static/icon/favicon.ico' %}">
   <link rel="stylesheet" href="{% static '../static/css/font-as.css' %}" class="stylsheet">
   <link rel="stylesheet" href="{% static '../static/css/me.css' %}" class="stylsheet">
+       {% block css %}
+
+    {% endblock css %}
 
 </head>
 
@@ -217,10 +220,15 @@
     <!-- #################################    end footer ################################# -->
 
   </div>
+
   <script src="{% static '../static/js/all-as.js' %}"></script>
   <script src="{% static '../static/js/jquery/jquery.min.js' %}"></script>
   <script src="{% static '../static/js/popper/popper.min.js' %}"></script>
   <script src="{% static '../static/js/bootstrap/bootstrap.min.js' %}"></script>
+     {% block javascr %}
+
+    {% endblock javascr %}
+
 </body>
 
 </html>

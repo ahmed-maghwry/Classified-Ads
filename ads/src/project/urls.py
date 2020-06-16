@@ -26,6 +26,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('ads.urls' , namespace='ads' )),
     path('search/', include('search.urls' , namespace='search' )),
+    path('accounts/', include('allauth.urls')),
+
 
 
 

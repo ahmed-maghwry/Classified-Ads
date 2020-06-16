@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-  <title>Page title</title>
+  <!-- <title>Page title</title> -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -16,9 +16,14 @@
 
     {% endblock css %}
 
+    <title>{% block head_title %}{% endblock %}</title>
+    {% block extra_head %}
+    {% endblock %}
+
 </head>
 
 <body>
+
 
   <div class="container-fluid">
     <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! my nav  start !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
@@ -35,9 +40,23 @@
             <li class="nav-item"><a class="nav-link" href="{% url 'ads:creat_ads'%}">create</a></li>
             <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">My
                 Account</a>
-              <div class="dropdown-menu"><a class="dropdown-item" href="#">Login</a><a class="dropdown-item"
-                  href="#">New
-                  Account </a></div>
+                
+                {% if user.is_authenticated %}
+
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="{% url 'account_logout' %}">Sign Out</a>
+                  <a class="dropdown-item" href="{% url 'account_email' %}">Change E-mail </a>
+                </div>
+                
+                {% else %}
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="{% url 'account_login' %}">Login</a>
+                  <a class="dropdown-item" href="{% url 'account_signup' %}">New Account </a>
+                </div>
+                {% endif %}
+                  
+              
+
             </li>
           </ul>
           <div class="col-6 text-lg-right px-0"><a class="btn btn-outline-primary mt-2 mt-lg-0 mr-0" href="#">Sign
@@ -47,6 +66,17 @@
       </nav>
     </section>
     <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! my nav  end !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+
+    {% if messages %}
+    <div>
+      <strong>Messages:</strong>
+      <ul>
+        {% for message in messages %}
+        <li>{{message}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
 
     <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! my nav cat start !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
     <section class="py-5 mynavcat ">
@@ -153,6 +183,24 @@
 
 
 
+
+
+
+    {% block body %}
+
+    
+
+    
+    {% block content %}
+    {% endblock %}
+    {% endblock %}
+    {% block extra_body %}
+    {% endblock %}
+
+
+
+
+    
     {% block card %}
 
     {% endblock card %}

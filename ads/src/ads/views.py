@@ -2,6 +2,8 @@ from django.shortcuts import render , HttpResponse
 from django.shortcuts import get_object_or_404 , redirect
 from . models import * 
 from . forms import *
+from django.contrib.auth.decorators import login_required
+
 from django.urls import reverse_lazy
 # cat=""# Empty variable use like signal and i think it is not important but i'm afraid to delete it
 # Create your views here.
@@ -63,6 +65,7 @@ def change_form (request):
     }
     return render (request , 'change_form.html' , context2)
     #########################################################################
+
 def creat_ads(request):
     signalf=0
     if request.method =='POST':

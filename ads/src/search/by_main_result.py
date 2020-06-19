@@ -2,6 +2,8 @@ from django.shortcuts import get_object_or_404 , redirect
 from ads.models import *
 from django.shortcuts import render 
 from .forms import * 
+from django.core.paginator import Paginator
+
 
 
 def change_form_search (request):
@@ -58,14 +60,13 @@ def by_main_result(request):
 
     if check_is_number(search_db_id)==True :
         db_search=db_list[search_db_id]
-        print(db_search)
     general_search_list=['sub' , 'end' ,'last']
     price_list=['to_price', 'from_price' ]
     signal=0
     if main_id == None and search_db_id !="" and search_db_id != None :
 
         if request.is_ajax() :
-            main_catugry_q=ads.objects.filter( sub_id=search_db_id)
+            main_catugry_q_complet=ads.objects.filter( sub_id=search_db_id)
 
             for search_key in request.GET :
                 
@@ -76,40 +77,44 @@ def by_main_result(request):
                     if search_key in general_search_list :
                         signal=1
                         search_var={search_key : search_value}
-                        main_catugry_q=main_catugry_q.filter( ** search_var )
+                        main_catugry_q_complet=main_catugry_q_complet.filter( ** search_var )
                     elif  search_key not in general_search_list and search_key not in price_list and search_value != 'on' :
                         signal=1
                         exe_search_var="{}__{}__iexact".format(db_search ,search_key)
                         diction_search_var={exe_search_var:search_value}
-                        main_catugry_q=main_catugry_q.filter(** diction_search_var )
+                        main_catugry_q_complet=main_catugry_q_complet.filter(** diction_search_var )
                         print(diction_search_var)
 
                     elif  search_key not in general_search_list and search_value == 'on' :
                         signal=1
                         bool_search_var="{}__{}__iexact".format(db_search ,search_key)
                         diction_bool_search_var={bool_search_var:1}
-                        main_catugry_q=main_catugry_q.filter(** diction_bool_search_var )
+                        main_catugry_q_complet=main_catugry_q_complet.filter(** diction_bool_search_var )
                     elif  search_key in price_list and check_is_number(search_value) == True  :
                         if search_key == 'from_price'  :
                             signal=1
                             bool_search_var="{}__{}__gte".format(db_search , 'price')
                             diction_bool_search_var={bool_search_var : search_value}
-                            main_catugry_q=main_catugry_q.filter(** diction_bool_search_var )
+                            main_catugry_q_complet=main_catugry_q_complet.filter(** diction_bool_search_var )
                         elif search_key == 'to_price' :
                             signal=1
                             bool_search_var="{}__{}__lt".format(db_search , 'price')
                             diction_bool_search_var={bool_search_var : search_value}
-                            main_catugry_q=main_catugry_q.filter(** diction_bool_search_var )
+                            main_catugry_q_complet=main_catugry_q_complet.filter(** diction_bool_search_var )
             if signal == 0 :
-                main_catugry_q=ads.objects.filter(main_id=main_id).order_by('-create_date')
+                main_catugry_q_complet=ads.objects.filter(main_id=main_id).order_by('-create_date')
                 pass
 
         else:pass
     
     else:
 
-        print("main namper")
-        main_catugry_q=ads.objects.filter(main_id=main_id).order_by('-create_date')
+        main_catugry_q_complet=ads.objects.filter(main_id=main_id).order_by('-create_date')
+
+    paginator = Paginator (main_catugry_q_complet ,2 ) # Show 25 contacts per page.
+    page_number = request.GET.get('page')
+    main_catugry_q = paginator.get_page(page_number)
+
     context = {'main_catugry_q' : main_catugry_q ,}
     return render(request, 'by_main_result.html',context)
 

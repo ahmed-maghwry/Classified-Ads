@@ -3,15 +3,20 @@ from django.shortcuts import get_object_or_404 , redirect
 from . models import * 
 from . forms import *
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+
 
 from django.urls import reverse_lazy
 # cat=""# Empty variable use like signal and i think it is not important but i'm afraid to delete it
 # Create your views here.
 def all_ads(request):
-    ads_all=ads.objects.all()
-    context = {
-        'ads_all' : ads_all ,
-    }
+    ads_all_complet=ads.objects.all()
+    paginator = Paginator(ads_all_complet ,30 ) # Show 25 contacts per page.
+
+    page_number = request.GET.get('page')
+    ads_all = paginator.get_page(page_number)
+
+    context = {'ads_all' : ads_all ,}
     return render(request , 'all.html' , context)
     #########################################f################################
 def ads_detail(request , id):   
@@ -44,6 +49,8 @@ def check_is_number(number):
 
 def change_form (request):
     sub_form_id = request.GET.get('subId')
+    # if int(sub_form_id) in range (213 , 286) :
+    #     sub_form_id= "213"
     forms_={
         '44' : car () , '45' : car () , '46' : motorcycles (), '47' : car_spare_parts (),
         '49' : Boats() , '48' : heavy_trucks (),

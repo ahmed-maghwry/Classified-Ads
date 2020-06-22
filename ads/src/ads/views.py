@@ -180,7 +180,9 @@ def creat_ads(request):
 
 
 def load_sub(request):
-    
+    print("url")
+    print(request.META.get('QUERY_STRING', None))
+    print("url")
     main_idt = request.GET.get('main')
     sub_idt = request.GET.get('sub')
     end_idt = request.GET.get('end')
@@ -206,6 +208,7 @@ def load_sub(request):
         end=[]
     else: 
         last=[]
+    print(sub , end , last)
     context={
         'sub': sub ,
         'end': end ,

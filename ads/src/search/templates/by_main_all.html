@@ -44,9 +44,8 @@
 
       </div>
     </div>
-    </div>
-    <!-- ###################################################   start Pagination     ######################             -->
-    <div class="paginator">
+     <!-- ###################################################   start Pagination     ######################             -->
+     <div class="paginator">
       {% if main_catugry_q.has_other_pages %}
       <nav class="p-2 my-Pagination" aria-label="Pagination">
         <ul class="pagination justify-content-center mb-0 flex-wrap"> 
@@ -77,10 +76,12 @@
  
       <!--  ###################################################   end Pagination     ######################             -->
     </div>
+    </div>
 </section>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
+  
   var Choose2 = '<option value="">Choose</option>'
 
   $("#serch").click(function () {
@@ -102,14 +103,14 @@
     var url4 = ("{% url 'search:change_form_search'%}")
     var url5 = ("{% url 'search:by_main_result'%}")
     var mainId = {{main_id_}};
-    console.log(mainId);
+    console.log(mainId); 
 
     $("#id_last").html(Choose2);
     if (subId !== "") {
       $.ajax({
         url: url2,
         data: {
-          'mainId': mainId,
+          'main': mainId,
           'sub': subId,
         },
         success: function (data) {
@@ -141,7 +142,7 @@
       method: 'GET',
       url: url5,
       data: {
-        'mainId': mainId,
+        'main': mainId,
       } ,
       success: function (data) {
         $("#search_result").html(data);
@@ -156,6 +157,7 @@
     var endId = $(this).val();
     var subId = $("#id_sub").val();
     var url2 = ("{% url 'ads:load_sub'%}");
+    var mainId = {{main_id_}};
     if (endId !== "") {
       $.ajax({
         url: url2,
@@ -166,6 +168,7 @@
         },
         success: function (data) {
           $("#id_last").html(data);
+          console.log("dsds")
         }
       });
     }

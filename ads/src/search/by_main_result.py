@@ -42,6 +42,7 @@ def check_is_number(number):
 def by_main_result(request):
     main_id = request.GET.get('mainId')
     search_db_id = request.GET.get('sub')
+    
 
     db_list={'':'no_form' ,
         '44' : 'db_car' , '45' : 'db_car' , '46' : 'db_motorcycles', '47' : 'db_car_spare_parts',
@@ -66,13 +67,18 @@ def by_main_result(request):
     if main_id == None and search_db_id !="" and search_db_id != None :
 
         if request.is_ajax() :
+            print("url")
+            print(request.META.get('QUERY_STRING', None))
+            print("url")
+            print(request.GET.get('page'))
+            print("url")
             main_catugry_q_complet=ads.objects.filter( sub_id=search_db_id)
 
             for search_key in request.GET :
                 
                 search_value=request.GET.get(search_key)
             
-                if search_value != "" and search_value != None :
+                if search_value != "" and search_value != None  and search_key != 'page':
                     search_value=request.GET.get(search_key)
                     if search_key in general_search_list :
                         signal=1
@@ -111,7 +117,7 @@ def by_main_result(request):
 
         main_catugry_q_complet=ads.objects.filter(main_id=main_id).order_by('-create_date')
 
-    paginator = Paginator (main_catugry_q_complet ,2 ) # Show 25 contacts per page.
+    paginator = Paginator (main_catugry_q_complet ,1 ) # Show 25 contacts per page.
     page_number = request.GET.get('page')
     main_catugry_q = paginator.get_page(page_number)
 

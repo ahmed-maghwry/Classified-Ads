@@ -25,34 +25,33 @@
 
     <!-- ###################################################   start Pagination     ######################             -->
     <div class="paginator">
-        {% if main_catugry_q.has_other_pages %}
-        <nav class="p-2 my-Pagination" aria-label="Pagination">
-          <ul class="pagination justify-content-center mb-0 flex-wrap"> 
-            {% if main_catugry_q.has_previous  %}
-              <li class="page-item "><a class="page-link" id="first" href_test="{% if request.META.QUERY_STRING %}{{request.META.QUERY_STRING}}&{% endif %}page=1">First</a></li>
-              <li class="page-item "><a class="page-link" id="previous" href_test="{% if request.META.QUERY_STRING %}{{request.META.QUERY_STRING}}&{% endif %}page={{ main_catugry_q.previous_page_number }}">Previous</a></li>
+      {% if main_catugry_q.has_other_pages %}
+      <nav class="p-2 my-Pagination" aria-label="Pagination">
+        <ul class="pagination justify-content-center mb-0 flex-wrap"> 
+          {% if main_catugry_q.has_previous  %}
+            <li class="page-item "><a class="page-link paginator_click" style="cursor: pointer;" id="first" href_test="{% if query %}{{query}}{% endif %}page=1">First</a></li>
+            <li class="page-item "><a class="page-link paginator_click" style="cursor: pointer;" id="previous" href_test="{% if query %}{{query}}{% endif %}page={{ main_catugry_q.previous_page_number }}">Previous</a></li>
+          {% else %}
+            <li class="page-item disabled" style="cursor: not-allowed;" ><a class="page-link" href="#">First</a></li>
+            <li class="page-item disabled" style="cursor: not-allowed;" ><a class="page-link" href="#">Previous</a></li>
+          {% endif %}
+          {% for ads_page in main_catugry_q.paginator.page_range %}
+          {% if main_catugry_q.number == ads_page %}
+          <li class="page-item active "><a class="page-link"  id="pages_actual" >{{ads_page}}</a></li>
+          {% elif ads_page > main_catugry_q.number|add:'-4' and ads_page < main_catugry_q.number|add:'4' %}
+          <li class="page-item  "><a class="page-link " style="cursor: pointer;" id="pages_want_{{ads_page}}" href_test="{% if query %}{{query}}{% endif %}page={{ads_page }}">{{ads_page}}</a></li>
+          {% endif %}
+          {% endfor %}
+          {% if main_catugry_q.has_next %}
+            <li class="page-item"><a class="page-link paginator_click" style="cursor: pointer;" id="next" href_test="{% if query %}{{query}}{% endif %}page={{ main_catugry_q.next_page_number }}">Next</a></li>
+            <li class="page-item"><a class="page-link paginator_click" style="cursor: pointer;" id="last" href_test="{% if query %}{{query}}{% endif %}page={{ main_catugry_q.paginator.num_pages }}">Last </a></li>
             {% else %}
-              <li class="page-item disabled"><a class="page-link" href="#">First</a></li>
-              <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-            {% endif %}
-            {% for ads_page in main_catugry_q.paginator.page_range %}
-            {% if main_catugry_q.number == ads_page %}
-            <li class="page-item active "><a class="page-link" id="pages_actual" href_test="{% if request.META.QUERY_STRING %}{{request.META.QUERY_STRING}}&{% endif %}page={{ads_page }}">{{ads_page}}</a></li>
-            {% elif ads_page > main_catugry_q.number|add:'-4' and ads_page < main_catugry_q.number|add:'4' %}
-            <li class="page-item  "><a class="page-link" id="pages_want_{{ads_page}}" href_test="{% if request.META.QUERY_STRING %}{{request.META.QUERY_STRING}}&{% endif %}page={{ads_page }}">{{ads_page}}</a></li>
-            {% endif %}
-            {% endfor %}
-            {% if main_catugry_q.has_next %}
-              <li class="page-item"><a class="page-link" id="next" href_test="{% if request.META.QUERY_STRING %}{{request.META.QUERY_STRING}}&{% endif %}page={{ main_catugry_q.next_page_number }}">Next</a></li>
-              <li class="page-item"><a class="page-link" id="last" href_test="{% if request.META.QUERY_STRING %}{{request.META.QUERY_STRING}}&{% endif %}page={{ main_catugry_q.paginator.num_pages }}">Last </a></li>
-              {% else %}
-              <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
-              <li class="page-item disabled"><a class="page-link" href="#">Last</a></li>
-            {% endif %}
-          </ul>
-        </nav>
-        {% endif %}
-   
+            <li class="page-item disabled" style="cursor: not-allowed;" ><a class="page-link"  href="#">Next</a></li>
+            <li class="page-item disabled" style="cursor: not-allowed;" ><a class="page-link"  href="#">Last</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+      {% endif %}
         <!--  ###################################################   end Pagination     ######################             -->
 
 
@@ -60,63 +59,18 @@
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
-  $("#next").click(function () {
-    var data_send = $(this).attr("href_test")
-    var thisURL = (" {% url 'search:by_main_result' %} ")
-    console.log(data_send); 
-    $.ajax({
-      method: 'GET',
-      url: thisURL,
-      data: data_send ,
-      success: function (data) {
-        console.log(data);
-        $("#search_result").html(data);
-      }
-    });
+  $(".paginator_click").click(function () {
+  var data_send = $(this).attr("href_test")
+  var thisURL = ("{% url 'search:by_main_result'%}")
+  $.ajax({
+    method: 'GET',
+    url: thisURL ,
+    data: data_send ,
+    success: function (data) {
+      $("#search_result").html(data);
+    }
   });
-  $("#last").click(function () {
-    var data_send = $(this).attr("href_test")
-    var thisURL = (" {% url 'search:by_main_result' %} ")
-    console.log(data_send); 
-    $.ajax({
-      method: 'GET',
-      url: thisURL,
-      data: data_send ,
-      success: function (data) {
-        console.log(data);
-        $("#search_result").html(data);
-      }
-    });
-  });
-  $("#previous").click(function () {
-    var data_send = $(this).attr("href_test")
-    var thisURL = (" {% url 'search:by_main_result' %} ")
-    console.log(data_send); 
-    $.ajax({
-      method: 'GET',
-      url: thisURL,
-      data: data_send ,
-      success: function (data) {
-        console.log(data);
-        $("#search_result").html(data);
-      }
-    });
-  });
-  $("#first").click(function () {
-    var data_send = $(this).attr("href_test")
-    var thisURL = (" {% url 'search:by_main_result' %} ")
-    console.log(data_send); 
-    $.ajax({
-      method: 'GET',
-      url: thisURL,
-      data: data_send ,
-      success: function (data) {
-        console.log(data);
-        $("#search_result").html(data);
-      }
-    });
-  });
-
+});
 
 
   {% for ads_page in main_catugry_q.paginator.page_range %}
@@ -129,7 +83,6 @@
       url: thisURL,
       data: data_send ,
       success: function (data) {
-        console.log(data);
         $("#search_result").html(data);
       }
     });

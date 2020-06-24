@@ -42,6 +42,8 @@ def check_is_number(number):
 def by_main_result(request):
     main_id = request.GET.get('mainId')
     search_db_id = request.GET.get('sub')
+    query="" #IT IS USE INLINE 74 TO MAKE QUERY
+
     
 
     db_list={'':'no_form' ,
@@ -67,17 +69,13 @@ def by_main_result(request):
     if main_id == None and search_db_id !="" and search_db_id != None :
 
         if request.is_ajax() :
-            print("url")
-            print(request.META.get('QUERY_STRING', None))
-            print("url")
-            print(request.GET.get('page'))
-            print("url")
+            for key  in request.GET :
+                if key != 'page' :
+                    query="{}={}&".format(key , request.GET.get(key))+query
+                else:pass
             main_catugry_q_complet=ads.objects.filter( sub_id=search_db_id)
-
-            for search_key in request.GET :
-                
-                search_value=request.GET.get(search_key)
-            
+            for search_key in request.GET :               
+                search_value=request.GET.get(search_key)          
                 if search_value != "" and search_value != None  and search_key != 'page':
                     search_value=request.GET.get(search_key)
                     if search_key in general_search_list :
@@ -89,7 +87,6 @@ def by_main_result(request):
                         exe_search_var="{}__{}__iexact".format(db_search ,search_key)
                         diction_search_var={exe_search_var:search_value}
                         main_catugry_q_complet=main_catugry_q_complet.filter(** diction_search_var )
-                        print(diction_search_var)
 
                     elif  search_key not in general_search_list and search_value == 'on' :
                         signal=1
@@ -121,6 +118,6 @@ def by_main_result(request):
     page_number = request.GET.get('page')
     main_catugry_q = paginator.get_page(page_number)
 
-    context = {'main_catugry_q' : main_catugry_q ,}
+    context = {'main_catugry_q' : main_catugry_q , 'query':query}
     return render(request, 'by_main_result.html',context)
 

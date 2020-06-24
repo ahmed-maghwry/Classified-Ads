@@ -5,6 +5,7 @@ app_name = 'user_profile'
 
 urlpatterns = [
     # url(r'^$',views.all_ads, name='all_ads') ,
+    url(r'^$',views.user_profile_sittings, name='user_profile_sittings') ,
     url(r'^(?P<id>\d+)$', views.favoret , name='favoret'),
     # url(r'^creat$', views.creat_ads , name='creat_ads'),
     # url('ajax/load-cities/', views.load_sub, name='load_sub'),# <-- this one here #

@@ -16,5 +16,9 @@ def favoret(request , id) :
         user_detail.favoret_ads.add(id)
     return HttpResponse("<h1>There are no object</h1>")
 
+
+def user_profile_sittings (request  ) :
+    context={}
+    return render(request , 'user_profile_sittings.html' , context)
     
 

@@ -9,44 +9,44 @@
 
 
 <section class="py-5 my-card-sec">
-  <div class="container text-center">
+  <div class="container text-center" id="target_page">
 
     <nav class="my-nav-tap">
       <div class="nav nav-tabs my-tap-all" id="nav-tab" role="tablist">
         <a class="nav-item nav-link my-taps active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
           aria-controls="nav-home" aria-selected="true"> Home</a>
-        <a class="nav-item nav-link my-taps" id="nav-Mobile-tab" data-toggle="tab" href="#nav-Mobile" role="tab"
+        <a class="nav-item nav-link my-taps cat_nav" cat_id="50" id="nav-Mobile-tab" data-toggle="tab" href="#nav-Mobile" role="tab"
           aria-controls="nav-Mobile" href="#" aria-selected="false">Mobile Phones & Accessories</a>
 
-        <a class="nav-item nav-link my-taps" id="nav-clothes-tab" data-toggle="tab" href="#nav-clothes" role="tab"
+        <a class="nav-item nav-link my-taps cat_nav" cat_id="112" id="nav-clothes-tab" data-toggle="tab" href="#nav-clothes" role="tab"
           aria-controls="nav-clothes" aria-selected="false">clothes</a>
 
 
-        <a class="nav-item nav-link my-taps" id="nav-Appliances-tab" data-toggle="tab" href="#nav-Appliances" role="tab"
+        <a class="nav-item nav-link my-taps cat_nav" cat_id="113" id="nav-Appliances-tab" data-toggle="tab" href="#nav-Appliances" role="tab"
           aria-controls="nav-Appliances" aria-selected="false">Appliances</a>
 
-        <a class="nav-item nav-link my-taps" id="nav-Electronic-tab" data-toggle="tab" href="#nav-Electronic" role="tab"
+        <a class="nav-item nav-link my-taps cat_nav" cat_id="53" id="nav-Electronic-tab" data-toggle="tab" href="#nav-Electronic" role="tab"
           aria-controls="nav-Electronic" aria-selected="false">Electronic Devices</a>
 
-        <a class="nav-item nav-link my-taps" id="nav-Sports-tab" data-toggle="tab" href="#nav-Sports" role="tab"
+        <a class="nav-item nav-link my-taps cat_nav" cat_id="115" id="nav-Sports-tab" data-toggle="tab" href="#nav-Sports" role="tab"
           aria-controls="nav-Sports" aria-selected="false">Sports & Hobbies</a>
 
-        <a class="nav-item nav-link my-taps" id="nav-Vehicles-tab" data-toggle="tab" href="#nav-Vehicles" role="tab"
+        <a class="nav-item nav-link my-taps cat_nav" cat_id="43" id="nav-Vehicles-tab" data-toggle="tab" href="#nav-Vehicles" role="tab"
           aria-controls="nav-Vehicles" aria-selected="false">Vehicles</a>
 
-        <a class="nav-item nav-link my-taps" id="nav-Pets-tab" data-toggle="tab" href="#nav-Pets" role="tab"
+        <a class="nav-item nav-link my-taps cat_nav" cat_id="116" id="nav-Pets-tab" data-toggle="tab" href="#nav-Pets" role="tab"
           aria-controls="nav-Pets" aria-selected="false">Pets - Accessories</a>
 
-        <a class="nav-item nav-link my-taps" id="nav-Furniture-tab" data-toggle="tab" href="#nav-Furniture" role="tab"
+        <a class="nav-item nav-link my-taps cat_nav" cat_id="117" id="nav-Furniture-tab" data-toggle="tab" href="#nav-Furniture" role="tab"
           aria-controls="nav-Furniture" aria-selected="false">Home Furniture</a>
 
-        <a class="nav-item nav-link my-taps" id="nav-Babies-tab" data-toggle="tab" href="#nav-Babies" role="tab"
+        <a class="nav-item nav-link my-taps cat_nav" cat_id="118" id="nav-Babies-tab" data-toggle="tab" href="#nav-Babies" role="tab"
           aria-controls="nav-Babies" aria-selected="false">Babies & Kids</a>
 
-        <a class="nav-item nav-link my-taps" id="nav-Properties-tab" data-toggle="tab" href="#nav-Properties" role="tab"
+        <a class="nav-item nav-link my-taps cat_nav" cat_id="111" id="nav-Properties-tab" data-toggle="tab" href="#nav-Properties" role="tab"
           aria-controls="nav-Properties" aria-selected="false">Properties</a>
 
-        <a class="nav-item nav-link my-taps" id="nav-Services-tab" data-toggle="tab" href="#nav-Services" role="tab"
+        <a class="nav-item nav-link my-taps cat_nav" cat_id="114" id="nav-Services-tab" data-toggle="tab" href="#nav-Services" role="tab"
           aria-controls="nav-Services" aria-selected="false">Services</a>
 
       </div>
@@ -84,25 +84,25 @@
         <nav class="p-2 my-Pagination" aria-label="Pagination">
           <ul class="pagination justify-content-center mb-0 flex-wrap"> 
             {% if ads_all.has_previous  %}
-              <li class="page-item "><a class="page-link" href="?page=1">First</a></li>
-              <li class="page-item "><a class="page-link" href="?page={{ ads_all.previous_page_number }}">Previous</a></li>
+              <li class="page-item "><a class="page-link" href="?page=1#target_page">First</a></li>
+              <li class="page-item "><a class="page-link" href="?page={{ ads_all.previous_page_number }}#target_page">Previous</a></li>
             {% else %}
-              <li class="page-item disabled"><a class="page-link" href="#">First</a></li>
-              <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+              <li class="page-item disabled" style="cursor: not-allowed;" ><a class="page-link" href="#">First</a></li>
+              <li class="page-item disabled" style="cursor: not-allowed;" ><a class="page-link" href="#">Previous</a></li>
             {% endif %}
             {% for ads_page in ads_all.paginator.page_range %}
             {% if ads_all.number == ads_page %}
-            <li class="page-item active "><a class="page-link" href="?page={{ads_page }}">{{ads_page}}</a></li>
+            <li class="page-item active "><a class="page-link" href="?page={{ads_page }}#target_page">{{ads_page}}</a></li>
             {% elif ads_page > ads_all.number|add:'-4' and ads_page < ads_all.number|add:'4' %}
-            <li class="page-item  "><a class="page-link" href="?page={{ads_page }}">{{ads_page}}</a></li>
+            <li class="page-item  "><a class="page-link" href="?page={{ads_page }}#target_page">{{ads_page}}</a></li>
             {% endif %}
             {% endfor %}
             {% if ads_all.has_next %}
-              <li class="page-item"><a class="page-link" href="?page={{ ads_all.next_page_number }}">Next</a></li>
-              <li class="page-item"><a class="page-link" href="?page={{ ads_all.paginator.num_pages }}">Last </a></li>
+              <li class="page-item"><a class="page-link" href="?page={{ ads_all.next_page_number }}#target_page">Next</a></li>
+              <li class="page-item"><a class="page-link" href="?page={{ ads_all.paginator.num_pages }}#target_page">Last </a></li>
               {% else %}
-              <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
-              <li class="page-item disabled"><a class="page-link" href="#">Last</a></li>
+              <li class="page-item disabled" style="cursor: not-allowed;" ><a class="page-link" href="#">Next</a></li>
+              <li class="page-item disabled" style="cursor: not-allowed;" ><a class="page-link" href="#">Last</a></li>
             {% endif %}
           </ul>
         </nav>
@@ -188,141 +188,15 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <script>
-  $("#nav-Vehicles-tab").click(function () {
-    var cat = 43 ;
+  $(".cat_nav").click(function () {
+    var cat = $(this).attr("cat_id")
+    var target_nav = $(this).attr("href")
+    console.log(target_nav);
     $.ajax({
       url: "{% url 'search:by_catugry' %}",
       data: { 'cat': cat },
       success: function (data) {
-        $("#nav-Vehicles").html(data);
-        console.log(data);
-      }
-    });
-  });
-
-  
-  $("#nav-Mobile-tab").click(function () {
-    var cat = 50;
-    $.ajax({
-      url: "{% url 'search:by_catugry' %}",
-      data: { 'cat': cat },
-      success: function (data) {
-        $("#nav-Mobile").html(data);
-      }
-    });
-  });
-
-
-  $("#nav-clothes-tab").click(function () {
-    var cat = 112;
-    $.ajax({
-      url: "{% url 'search:by_catugry' %}",
-      data: { 'cat': cat },
-      success: function (data) {
-        $("#nav-clothes").html(data);
-      }
-    });
-  });
-
-
-
-  $("#nav-Appliances-tab").click(function () {
-    var cat = 113;
-    $.ajax({
-      url: "{% url 'search:by_catugry' %}",
-      data: { 'cat': cat },
-      success: function (data) {
-        $("#nav-Appliances").html(data);
-      }
-    });
-  });
-
-
-
-  $("#nav-Electronic-tab").click(function () {
-    var cat = 53;
-    $.ajax({
-      url: "{% url 'search:by_catugry' %}",
-      data: { 'cat': cat },
-      success: function (data) {
-        $("#nav-Electronic").html(data);
-      }
-    });
-  });
-
-
-  $("#nav-Sports-tab").click(function () {
-    var cat = 115;
-    $.ajax({
-      url: "{% url 'search:by_catugry' %}",
-      data: { 'cat': cat },
-      success: function (data) {
-        $("#nav-Sports").html(data);
-      }
-    });
-  });
-
-
-
-  $("#nav-Pets-tab").click(function () {
-    var cat = 116;
-    $.ajax({
-      url: "{% url 'search:by_catugry' %}",
-      data: { 'cat': cat },
-      success: function (data) {
-        $("#nav-Pets").html(data);
-      }
-    });
-  });
-
-
-  $("#nav-Furniture-tab").click(function () {
-    var cat =117;
-    $.ajax({
-      url: "{% url 'search:by_catugry' %}",
-      data: { 'cat': cat },
-      success: function (data) {
-        $("#nav-Furniture").html(data);
-      }
-    });
-  });
-
-
-
-  $("#nav-Babies-tab").click(function () {
-    var cat = 118;
-    $.ajax({
-      url: "{% url 'search:by_catugry' %}",
-      data: { 'cat': cat },
-      success: function (data) {
-        $("#nav-Babies").html(data);
-      }
-    });
-  });
-
-
-
-  $("#nav-Properties-tab").click(function () {
-    var cat = 111;
-    $.ajax({
-      url: "{% url 'search:by_catugry' %}",
-      data: { 'cat': cat },
-      success: function (data) {
-        $("#nav-Properties").html(data);
-      }
-    });
-  });
-
-
-
-
-  $("#nav-Services-tab").click(function () {
-    var cat = 114 ;
-    $.ajax({
-      url: "{% url 'search:by_catugry' %}",
-      data: { 'cat': cat },
-      success: function (data) {
-        $("#nav-Services").html(data);
+        $(target_nav).html(data);
       }
     });
   });

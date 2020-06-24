@@ -11,7 +11,7 @@ from django.urls import reverse_lazy
 # Create your views here.
 def all_ads(request):
     ads_all_complet=ads.objects.all()
-    paginator = Paginator(ads_all_complet ,30 ) # Show 25 contacts per page.
+    paginator = Paginator(ads_all_complet ,5 ) # Show 25 contacts per page.
 
     page_number = request.GET.get('page')
     ads_all = paginator.get_page(page_number)

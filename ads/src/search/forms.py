@@ -1,11 +1,21 @@
 from django import forms
 from ads.models import  *
-import PIL
+# import PIL
+order_by_option=(('create_date',"date_up"),('-create_date',"date_down"),('price',"price_up"),('-price',"price_down"),('title',"title_up"),('-title',"title_down"))
+
+class order_by (forms.Form):
+    order_by_options = forms.ChoiceField( choices =order_by_option,)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['order_by_options'].widget.attrs.update({'onchange': "this.form.submit()"  })
 
 class general(forms.ModelForm):
     class Meta:
         model = ads
         fields = [  'sub','end' , 'last'  ]
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['last'].widget.attrs.update({'multiple': 'multiple'})
 
 class price_form (forms.Form):
     from_price = forms.DecimalField(max_digits=14 , decimal_places=4 , label ='price from')
@@ -15,6 +25,24 @@ class car_search(forms.ModelForm):
     class Meta:
         model = db_car
         exclude = ['ad_id' , 'price' ]
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['color'].widget.attrs.update({'multiple': 'multiple'})
+        self.fields['body_type'].widget.attrs.update({'multiple': 'multiple'})
+        self.fields['year'].widget.attrs.update({'multiple': 'multiple'})
+        self.fields['condition'].widget.attrs.update({'multiple': 'multiple'})
+        self.fields['payment_option'].widget.attrs.update({'multiple': 'multiple'})
+        self.fields['engine_capacity'].widget.attrs.update({'multiple': 'multiple'})
+        self.fields['Kilometers'].widget.attrs.update({'multiple': 'multiple'})
+        self.fields['transmission_type'].widget.attrs.update({'multiple': 'multiple'})
+        
+
+
+
+
+
+
+
 
 class motorcycles_search(forms.ModelForm):
     class Meta:

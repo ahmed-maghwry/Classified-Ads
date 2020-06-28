@@ -5,6 +5,10 @@
 
 <section id="con" class="py-3 my-product-detils">
   <form method="GET" id="searchform" enctype="multipart/form-data" novalidate>
+    
+    <table >{{ order_by_form.as_ul }}</table>
+      
+    
     <table>
       {{ general_search_form.as_ul }}
     </table>
@@ -32,9 +36,9 @@
               <li class="list-group-item">cat || {{ ad.main }}</li>
             </ul>
             <div class="card-body">
-              <a class="btn btn-primary" href="{% url 'ads:ads_detail' ad.id  %}#con" role="button">know
+              <a class="btn btn-primary" target="_blank" href="{% url 'ads:ads_detail' ad.id  %}#con" role="button">know
                 More</a>
-              <a class="btn btn-success" href="{% url 'ads:edit_ads' ad.id %}" role="button">Edit !</a>
+              <a class="btn btn-success" target="_blank" href="{% url 'ads:edit_ads' ad.id %}" role="button">Edit !</a>
             </div>
           </div>
         </div>
@@ -83,8 +87,22 @@
 <script>
   
   var Choose2 = '<option value="">Choose</option>'
+  
+  $("#id_order_by_options").change (function () {
+    var myForm = $('#searchform');
+    var formData = myForm.serialize();
+      var thisURL = (" {% url 'search:by_main_result' %} ")
+    $.ajax({
+      method: 'GET',
+      url: thisURL,
+      data: formData ,
+      success: function (data) {
+        $("#search_result").html(data);
+      }
+    });
+  });
 
-  $("#serch").click(function () {
+  $("#serch").click (function () {
     var myForm = $('#searchform');
     var formData = myForm.serialize();
       var thisURL = (" {% url 'search:by_main_result' %} ")

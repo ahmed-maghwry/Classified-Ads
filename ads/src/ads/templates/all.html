@@ -8,7 +8,7 @@
 
 
 
-<section class="py-5 my-card-sec">
+<section class="py-5 my-card-sec" id="all">
   <div class="container text-center" id="target_page">
 
     <nav class="my-nav-tap">
@@ -53,7 +53,18 @@
     </nav>
     <div class="tab-content my-content" id="nav-tabContent">
       <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <table>
+          <form action=" {% url 'ads:all_ads' %}#all"> 
+            {{ order_by_form.as_ul }}
+          </form>
+          
+
+        </table>
+        <br>
+
         <div class="row">
+          
+          
 
           {% for ad in ads_all %}
 
@@ -95,6 +106,7 @@
             <li class="page-item active "><a class="page-link" href="?page={{ads_page }}#target_page">{{ads_page}}</a></li>
             {% elif ads_page > ads_all.number|add:'-4' and ads_page < ads_all.number|add:'4' %}
             <li class="page-item  "><a class="page-link" href="?page={{ads_page }}#target_page">{{ads_page}}</a></li>
+            <!-- لو الصفحة من اللوب اكبر من الصفحة الفعلية -4 و كمان اصغر من الفحة الفعلية +4  -->
             {% endif %}
             {% endfor %}
             {% if ads_all.has_next %}
@@ -188,6 +200,27 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <script>
+
+// $("#id_order_by_options").change (function () {
+//       var order_by_options = $(this).val();
+//       var thisURL = (" {% url 'ads:all_ads' %} ")
+//       $.post(thisURL,
+//       {
+//         'order_by_options': order_by_options,
+//       },
+      
+      // location.reload(order_by_options);
+    // $.ajax({
+    //   method: 'GET',
+    //   url: thisURL,
+    //   data: order_by_options ,
+    //   success: function (data) {
+    //     // $("#search_result").html(data);
+    //   }
+    // });
+  // });
+
+
   $(".cat_nav").click(function () {
     var cat = $(this).attr("cat_id")
     var target_nav = $(this).attr("href")

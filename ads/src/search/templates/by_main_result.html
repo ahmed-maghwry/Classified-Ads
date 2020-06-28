@@ -14,9 +14,9 @@
                     <li class="list-group-item">cat || {{ ad.sub }}</li>
                 </ul>
                 <div class="card-body">
-                    <a class="btn btn-primary" href="{% url 'ads:ads_detail' ad.id  %}#con" role="button">know
+                    <a class="btn btn-primary" target="_blank" href="{% url 'ads:ads_detail' ad.id  %}#con" role="button">know
                         More</a>
-                    <a class="btn btn-success" href="{% url 'ads:edit_ads' ad.id %}" role="button">Edit !</a>
+                    <a class="btn btn-success" target="_blank" href="{% url 'ads:edit_ads' ad.id %}" role="button">Edit !</a>
                 </div>
             </div>
         </div>
@@ -68,6 +68,8 @@
     data: data_send ,
     success: function (data) {
       $("#search_result").html(data);
+      console.log({{ has_other_pages }});
+
     }
   });
 });
@@ -77,7 +79,6 @@
   $("#pages_want_{{ads_page}}").click(function () {
     var data_send = $(this).attr("href_test")
     var thisURL = (" {% url 'search:by_main_result' %} ")
-    console.log(data_send); 
     $.ajax({
       method: 'GET',
       url: thisURL,

@@ -4,19 +4,22 @@ from . models import *
 from . forms import *
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from search.forms import order_by
 
 
 from django.urls import reverse_lazy
 # cat=""# Empty variable use like signal and i think it is not important but i'm afraid to delete it
 # Create your views here.
 def all_ads(request):
-    ads_all_complet=ads.objects.all()
+    order_by_form = order_by ()
+    order_by_data = request.GET.get('order_by_options', '-create_date' )
+    print(order_by_data)
+    
+    ads_all_complet=ads.objects.all().order_by(order_by_data)
     paginator = Paginator(ads_all_complet ,5 ) # Show 25 contacts per page.
-
     page_number = request.GET.get('page')
     ads_all = paginator.get_page(page_number)
-
-    context = {'ads_all' : ads_all ,}
+    context = {'ads_all' : ads_all , 'order_by_form':order_by_form,}
     return render(request , 'all.html' , context)
     #########################################f################################
 def ads_detail(request , id):   
@@ -146,7 +149,6 @@ def creat_ads(request):
             else:
                 main_id_creat=form.data['main']
                 sub_id_creat=form.data['sub']
-                print(type(sub_id_creat))
                 end_id_creat=form.data['end']
                 if main_id_creat == "" : main_id_creat=0
                 else: main_id_creat=form.data['main']
@@ -180,9 +182,6 @@ def creat_ads(request):
 
 
 def load_sub(request):
-    print("url")
-    print(request.META.get('QUERY_STRING', None))
-    print("url")
     main_idt = request.GET.get('main')
     sub_idt = request.GET.get('sub')
     end_idt = request.GET.get('end')
@@ -208,7 +207,6 @@ def load_sub(request):
         end=[]
     else: 
         last=[]
-    print(sub , end , last)
     context={
         'sub': sub ,
         'end': end ,

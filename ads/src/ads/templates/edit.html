@@ -1,5 +1,6 @@
 {% extends 'base_ads.html' %}
 
+{% load static %}
 
 {% block card %}
 
@@ -23,7 +24,7 @@
     <button type="submit">Save</button>
   </form>
   
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="{% static '../../static/js/jquery/jquery.min.js' %}"></script>
   <script>
     var Choose2 = '<option value="">Choose</option>'
 

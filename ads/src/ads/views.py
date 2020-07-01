@@ -4,22 +4,24 @@ from . models import *
 from . forms import *
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from search.forms import order_by
+from search.forms import order_by_no_ajax
 
 
 from django.urls import reverse_lazy
 # cat=""# Empty variable use like signal and i think it is not important but i'm afraid to delete it
 # Create your views here.
 def all_ads(request):
-    order_by_form = order_by ()
+    order_by_no_ajax_get = order_by_no_ajax ()
     order_by_data = request.GET.get('order_by_options', '-create_date' )
-    print(order_by_data)
+    order_by_no_ajax_get.fields["order_by_options"].choices
     
+
+
     ads_all_complet=ads.objects.all().order_by(order_by_data)
     paginator = Paginator(ads_all_complet ,5 ) # Show 25 contacts per page.
     page_number = request.GET.get('page')
     ads_all = paginator.get_page(page_number)
-    context = {'ads_all' : ads_all , 'order_by_form':order_by_form,}
+    context = {'ads_all' : ads_all , 'order_by_no_ajax_get':order_by_no_ajax_get,'order_by_data':order_by_data,}
     return render(request , 'all.html' , context)
     #########################################f################################
 def ads_detail(request , id):   

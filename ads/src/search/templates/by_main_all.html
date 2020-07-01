@@ -6,7 +6,10 @@
 <section id="con" class="py-3 my-product-detils">
   <form method="GET" id="searchform" enctype="multipart/form-data" novalidate>
     
-    <table >{{ order_by_form.as_ul }}</table>
+    {{ order_by_form.as_ul }}
+    <select class="d-none" name="main" id="id_main">
+      <option value="{{ main_id_ }}">{{ main_id_ }}</option>
+    </select>
       
     
     <table>

@@ -1,5 +1,6 @@
 {% extends 'base_ads.html' %}
 
+{% load static %}
 
 {% block card %}
 
@@ -8,7 +9,7 @@
 <form method="post" id="adsform" data-url="{% url 'ads:load_sub'%}mkm" enctype="multipart/form-data" novalidate>
   {% csrf_token %}
   <table>
-    {{ form.as_table }}
+    {{ form }}
   </table>
   {% if signalf == 1 %}
   <table id="change_form">
@@ -21,7 +22,7 @@
   <button type="submit">Save</button>
 </form>
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="{% static '../../static/js/jquery/jquery.min.js' %}"></script>
 <script>
   var Choose2 = '<option value="">Choose</option>'
 
@@ -35,7 +36,6 @@
     $("#id_end").html(Choose2);
     $("#id_last").html(Choose2);
  
-
     $.ajax({                      
       url: url2,                   
       data: {

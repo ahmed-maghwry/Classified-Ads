@@ -6,6 +6,8 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from operator import __or__ as OR1
 from functools import reduce
+import json
+
 
 
 def change_form_search (request):
@@ -44,9 +46,10 @@ def check_is_number(number):
     else :return False
 
 def by_main_result(request):
-    print(len(request.GET.getlist('color')))
-    main_id = request.GET.get('mainId')
+    main_id = request.GET.get('main')
     search_db_id = request.GET.get('sub')
+
+    print(search_db_id)
     order_by = request.GET.get('order_by_options')
     query="" #IT IS USE INLINE 74 TO MAKE QUERY
 
@@ -69,46 +72,56 @@ def by_main_result(request):
 
     if check_is_number(search_db_id)==True :
         db_search=db_list[search_db_id]
-    general_search_list=['sub' , 'end' ,'last']
+    general_search_list=[ 'main','sub' , 'end' ,'last']
     price_list=['to_price', 'from_price' ]
     signal=0
     print(request.GET)
     print("sasdasdada")
-    if main_id == None and search_db_id !="" and search_db_id != None :
+    if search_db_id !="" and search_db_id != None or main_id !="" and main_id !=None :
 
         if request.is_ajax() :
+            print("ajax")
             query_string=''
             for key  in request.GET :
-                if key != 'page' :
+                print("bbbbbbbbbbb")
+                if key != 'page'  :
                     for l in range(len(request.GET.getlist(key))) :
                         query="{}={}&".format(key , query_string.join(request.GET.getlist(key)[l]))+query
                 else:pass
-            print("ddddddddddd")
-            print(query)
-            print("ddddddddddd")
-            main_catugry_q_complet=ads.objects.filter( sub_id=search_db_id).order_by(order_by)
-            for search_key in request.GET :               
+            print("rr")
+            print(check_is_number(search_db_id))
+            if check_is_number(search_db_id)==False :
+                main_catugry_q_complet=ads.objects.filter( main_id=main_id ).order_by(order_by)
+            else: main_catugry_q_complet=ads.objects.filter( main_id=main_id ,sub_id=search_db_id).order_by(order_by)
+            print("rr")
+            for search_key in request.GET : 
+                print("aaaaaaaaaaa")              
                 search_value=request.GET.get(search_key)  
                 if search_value != "" and search_value != None  and search_key != 'page' and search_key != 'order_by_options':
+                    print("ssssssssssssss")
                     search_value=request.GET.get(search_key)
                     if search_key in general_search_list :
+                        print("dddddddddd")
                         search_var={search_key : search_value}
                         q_list = [ Q (**{search_key: value}) for value in request.GET.getlist(search_key)]
                         or_q_list = reduce(OR1 , q_list)
                         signal=1
                         main_catugry_q_complet=main_catugry_q_complet.filter( or_q_list).order_by( order_by)
                     elif  search_key not in general_search_list and search_key not in price_list and search_value != 'on' :
+                        print("ffffffffffff")
                         signal=1
                         exe_search_var="{}__{}__iexact".format(db_search ,search_key)
                         q_list = [ Q (**{exe_search_var: value}) for value in request.GET.getlist(search_key)]
                         or_q_list = reduce(OR1 , q_list)
                         main_catugry_q_complet=main_catugry_q_complet.filter(or_q_list).order_by (order_by)
                     elif  search_key not in general_search_list and search_value == 'on' :
+                        print("zzzzzzzzzzz")
                         signal=1
                         bool_search_var="{}__{}__iexact".format(db_search ,search_key)
                         diction_bool_search_var={bool_search_var:1}
                         main_catugry_q_complet=main_catugry_q_complet.filter(** diction_bool_search_var ).order_by( order_by)
                     elif  search_key in price_list and check_is_number(search_value) == True  :
+
                         if search_key == 'from_price'  :
                             signal=1
                             bool_search_var="{}__{}__gte".format(db_search , 'price')
@@ -126,11 +139,12 @@ def by_main_result(request):
         else:pass
     
     else:
+        print("dsds")
 
         main_catugry_q_complet=ads.objects.filter(main_id=main_id).order_by(order_by)
         
 
-    paginator = Paginator (main_catugry_q_complet ,30 ) # Show 25 contacts per page.
+    paginator = Paginator (main_catugry_q_complet ,5 ) # Show 25 contacts per page.
     page_number = request.GET.get('page')
     main_catugry_q = paginator.get_page(page_number)
     context = {'main_catugry_q' : main_catugry_q , 'query':query}

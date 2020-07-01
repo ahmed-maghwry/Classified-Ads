@@ -7,7 +7,12 @@ class order_by (forms.Form):
     order_by_options = forms.ChoiceField( choices =order_by_option,)
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['order_by_options'].widget.attrs.update({'onchange': "this.form.submit()"  })
+        # self.fields['order_by_options'].widget.attrs.update({'onchange': "this.form.submit()"  })
+class order_by_no_ajax (forms.Form):
+    order_by_options = forms.ChoiceField( choices =order_by_option,)
+    def __init__(self, *args, **kwargs):    
+        super().__init__(*args, **kwargs)
+        self.fields['order_by_options'].widget.attrs.update({'onchange': "this.form.submit();"  })
 
 class general(forms.ModelForm):
     class Meta:

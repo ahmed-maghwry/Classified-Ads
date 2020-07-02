@@ -89,10 +89,6 @@ page=1&
   
   $("#id_order_by_d").change(function () {
     var order_by_options_data = $("#id_order_by_d").val();
-    console.log(order_by_options_data);
-    // var target_nav = $("[cat_id|='{{ catugry_1 }}']").attr("href")
-    
-    console.log(order_by_options_data);
       $.ajax({      
         method: 'GET',                
         url: "{% url 'search:by_catugry' %}", 

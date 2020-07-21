@@ -7,30 +7,46 @@
 
     <div  class="container my-product-detils-container">
       <div class="row">
-        <div class="col-lg-5 order-1 order-lg-1">
+        <div class="col-lg-8 order-1 order-lg-1">
           <h2>{{detail.title}}</h2>
+          <br>
+          {% if user.is_authenticated %}
+          {% if detail not in user_favoret %}
+          <a class="btn btn-primary add_favoret " style="width: 25%; color: white;" ad_id2="{{ detail.id }}" ajax_href="{% url 'user_profile:favoret'%}"  role="button">Favorit</a>
+          {% else %}
+          <a class="btn btn-danger add_favoret" style="width: 35%; color: white;" ad_id2="{{ detail.id }}" ajax_href="{% url 'user_profile:favoret'%}"  role="button">Favorit</a>
+          {% endif %}
+          {% endif %}
+          <br>
+          <br>
           <p>$39,99 (Ex. Tax)</p>
           
           <p>{{detail.description}}</p>
-          <table class="table mt-3 mb-2 responsive">
-            <tbody>
+          <div class='row'>
+          <table class="table mt-3 mb-2 responsive col-lg-4">
+            <tbody>              
+              {% for key , value in all_field.items   %}
               <tr>
-                <td>It is for </td>
-                <td class="text-right">{{detail.ad_option}}</td>
+                <td>{{ key }} </td>
+                <td class="text-right">{{ value }}</td>
               </tr>
-              <tr>
-                <td>Item two</td>
-                <td class="text-right">Secound value</td>
-              </tr>
-              <tr>
-                <td>Item three</td>
-                <td class="text-right">Third value</td>
-              </tr>
+              {% endfor %}
             </tbody>
           </table>
+          <table class="table mt-3 mb-2 responsive col-lg-4">
+            <tbody>              
+              {% for key , value in all_field.items   %}
+              <tr>
+                <td>{{ key }} </td>
+                <td class="text-right">{{ value }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          </div>
             <a class="btn btn-success" href="" role="button">favoret !</a>
         </div>
-        <div class="col-lg-7 order-2">
+        <div class="col-lg-4 order-2">
           <div class="row">
               
             <figure class="col-lg-6">
@@ -69,7 +85,37 @@
       </div>
     </div>
   </section>
-  {{ all_field }}
+  
+
+  <script src="{% static '../../static/js/jquery/jquery.min.js' %}"></script>
+
+<script>
+
+$(".add_favoret").click(function () {
+    var url = $(this).attr("ajax_href");
+    var ad_id = $(this).attr("ad_id2");
+    var sel="[ad_id2='"+ad_id+"']"
+    $.ajax({
+      url: url ,
+      data: { 'ad_id': ad_id },
+      success: function (data) {
+        // var color_act=$(sel).css('background-color');
+        // console.log(color_act)
+        if ($(sel).hasClass('btn-primary')) {
+          $(sel).removeClass('btn-primary');
+          $(sel).addClass('btn-danger');
+          $(sel).animate({width: "35%",}, {duration: 100,});
+        }
+        else {
+          $(sel).removeClass('btn-danger');
+          $(sel).addClass('btn-primary');
+          $(sel).animate({width: "25%",}, {duration: 100,});
+        }
+      }
+    });
+  });
+
+</script>
 
 {% endblock detail %}
 

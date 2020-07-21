@@ -91,7 +91,11 @@
               <div class="card-body">
                 <a class="btn btn-primary" href="{% url 'ads:ads_detail' ad.id  %}#con"  role="button">know More</a>
                 {% if user.is_authenticated %}
-                <a class="btn btn-primary" href="{% url 'user_profile:favoret' ad.id  %}"  role="button">Favorit</a>
+                {% if ad not in user_favoret or not user_favoret %}
+                <a class="btn btn-primary add_favoret " style="width: 25%; color: white;" ad_id2="{{ ad.id }}" ajax_href="{% url 'user_profile:favoret'%}"  role="button">Favorit</a>
+                {% else %}
+                <a class="btn btn-danger add_favoret" style="width: 35%; color: white;" ad_id2="{{ ad.id }}" ajax_href="{% url 'user_profile:favoret'%}"  role="button">Favorit</a>
+                {% endif %}
                 {% endif %}
                 <a class="btn btn-success" href="{% url 'ads:edit_ads' ad.id %}" role="button">Edit !</a>
               </div>
@@ -155,12 +159,29 @@
 
 <script>
 
-
-
-
-
-
-
+$(".add_favoret").click(function () {
+    var url = $(this).attr("ajax_href");
+    var ad_id = $(this).attr("ad_id2");
+    var sel="[ad_id2='"+ad_id+"']"
+    $.ajax({
+      url: url ,
+      data: { 'ad_id': ad_id },
+      success: function (data) {
+        // var color_act=$(sel).css('background-color');
+        // console.log(color_act)
+        if ($(sel).hasClass('btn-primary')) {
+          $(sel).removeClass('btn-primary');
+          $(sel).addClass('btn-danger');
+          $(sel).animate({width: "35%",}, {duration: 100,});
+        }
+        else {
+          $(sel).removeClass('btn-danger');
+          $(sel).addClass('btn-primary');
+          $(sel).animate({width: "25%",}, {duration: 100,});
+        }
+      }
+    });
+  });
 
 $(".cat_nav").click(function () {
     var cat = $(this).attr("cat_id");
@@ -171,6 +192,7 @@ $(".cat_nav").click(function () {
       data: { 'cat': cat },
       success: function (data) {
         $("#cat_show").html(data);
+        
       }
     });
   });

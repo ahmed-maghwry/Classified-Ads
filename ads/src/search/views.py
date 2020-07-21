@@ -5,22 +5,12 @@ from ads.models import ads , catugry
 from django.urls import reverse_lazy
 from . forms import *
 from django.core.paginator import Paginator
-import json
 
 
 def by_catugry(request ):
-    print('asdadadadsd')
     order_by_data = request.GET.get('order_by_options_data' , '-create_date' )
     catugry_1 = request.GET.get('cat')
     query2 = request.GET.get('query')
-    print(order_by_data)
-    print(catugry_1)
-    print(request.GET)
-    print(query2)
-    # person_dict = json.loads(request.GET)
-    # print(person_dict)
-
-    
     catugry_1 = request.GET.get('cat')
     query=""
     if request.method == 'GET':

@@ -1,6 +1,7 @@
 from django.shortcuts import render , HttpResponse
 from django.shortcuts import get_object_or_404 , redirect
 from . models import * 
+from user_profile.models import user_details
 from . forms import *
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
@@ -11,6 +12,11 @@ from django.urls import reverse_lazy
 # cat=""# Empty variable use like signal and i think it is not important but i'm afraid to delete it
 # Create your views here.
 def all_ads(request):
+    try:
+        user=request.user
+        user_favoret=get_object_or_404(user_details , user=user).favoret_ads.all()
+    except:pass
+
     order_by_no_ajax_get = order_by_no_ajax ()
     order_by_data = request.GET.get('order_by_options', '-create_date' )
     order_by_no_ajax_get.fields["order_by_options"].choices
@@ -21,13 +27,20 @@ def all_ads(request):
     paginator = Paginator(ads_all_complet ,5 ) # Show 25 contacts per page.
     page_number = request.GET.get('page')
     ads_all = paginator.get_page(page_number)
-    context = {'ads_all' : ads_all , 'order_by_no_ajax_get':order_by_no_ajax_get,'order_by_data':order_by_data,}
+    try:
+        context = {'ads_all' : ads_all , 'order_by_no_ajax_get':order_by_no_ajax_get,'order_by_data':order_by_data,'user_favoret':user_favoret}
+    except:
+        context = {'ads_all' : ads_all , 'order_by_no_ajax_get':order_by_no_ajax_get,'order_by_data':order_by_data,}
     return render(request , 'all.html' , context)
     #########################################f################################
 def ads_detail(request , id):   
     detail=get_object_or_404(ads , id=id)
     sub_form_id = str(detail.sub.id)  
-    print (sub_form_id)  
+    try:
+        user=request.user
+        user_favoret=get_object_or_404(user_details , user=user).favoret_ads.all()
+    except:pass
+
     forms_={
         '44': db_car , '45' : db_car , '46' : db_motorcycles, '47' : db_car_spare_parts,
         '49': db_Boats , '48' : db_heavy_trucks,
@@ -41,7 +54,6 @@ def ads_detail(request , id):
         "287" : db_general,"288" : db_general,"289" : db_general,"290" : db_general,"291" : db_general,"292" : db_general,"293" : db_general,"294" : db_general,"295" : db_general,"296" : db_general,"297" : db_general,"251" : db_general,"252" : db_general,"253" : db_general,"254" : db_general,"255" : db_general,"256" : db_general,
     }
     if sub_form_id in forms_ and check_is_number(sub_form_id) == True :
-        print("fffff")
         details_form=forms_[sub_form_id]  
         detail_exet=get_object_or_404(details_form , ad_id=id)
         all_field={}
@@ -52,8 +64,16 @@ def ads_detail(request , id):
                     all_field[field.name] = field_val
     
     else:details_form=''
-    try:context={'detail':detail , 'all_field':all_field,}
-    except:context={'detail':detail }
+    try:
+        
+        try: 
+            context={'detail':detail , 'all_field':all_field,'user_favoret':user_favoret}
+            print('SSSSSS')
+        except:context={'detail':detail , 'all_field':all_field,}     
+    except:
+        print('FFFF')
+        try: context={'detail':detail ,'user_favoret':user_favoret}
+        except:context={'detail':detail }
 
 
     return render(request,'detail.html', context)

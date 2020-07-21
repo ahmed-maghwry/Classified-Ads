@@ -6,19 +6,41 @@ from .models import user_details
 
 # Create your views here.
 
-def favoret(request , id) :
+def favoret(request) :
+    print("aaaa")
+    ad_id=request.GET.get('ad_id')
+    print(ad_id)
     now_user=request.user
+    print(now_user)
+    
     user_detail=get_object_or_404(user_details , user=now_user)
-    ads_fav=get_object_or_404(ads , id=id)
-    if user_detail.favoret_ads.all().filter(id=id).exists() :
-        user_detail.favoret_ads.remove(id)
+    # ads_fav=get_object_or_404(ads , id=ad_id)
+    print(now_user)
+
+    if user_detail.favoret_ads.all().filter(id=ad_id).exists() :
+        user_detail.favoret_ads.remove(ad_id)
+        print('if')
+        maseg='remove'
     else :
-        user_detail.favoret_ads.add(id)
-    return HttpResponse("<h1>There are no object</h1>")
+        user_detail.favoret_ads.add(ad_id)
+        print('else')
+        maseg='add'
+    return HttpResponse(maseg)
+
+    
+    
 
 
 def user_profile_sittings (request  ) :
-    context={}
+    user=request.user
+    user_ads=get_user_ads(user)
+    user_favoret=get_object_or_404(user_details , user=user).favoret_ads.all()
+    context={'user_ads':user_ads , 'user_favoret':user_favoret , }
     return render(request , 'user_profile_sittings.html' , context)
-    
+
+def get_user_ads (user):
+    user_ads_filter=ads.objects.filter(user=user )
+    return user_ads_filter
+
+    # .order_by( order_by)
 

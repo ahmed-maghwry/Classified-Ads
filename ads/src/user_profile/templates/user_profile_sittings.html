@@ -1,5 +1,5 @@
 {% extends 'base_ads.html' %}
-
+favorite{% load static %}
 
 {% block card %}
 
@@ -7,76 +7,256 @@
 </section>
 
 
-
 <section class="py-5 my-card-sec">
     <div class="container text-center" id="target_page">
-
         <nav class="my-nav-tap">
+
             <div class="nav nav-tabs my-tap-all" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link my-taps active" id="nav-home-tab" data-toggle="tab" href="#nav-Mobile"
-                    role="tab" aria-controls="nav-home" aria-selected="true"> Home</a>
 
 
-                <a class="nav-item nav-link my-taps cat_nav" cat_id="50" id="nav-Mobile-tab" data-toggle="tab"
-                    href="#nav-clothes" role="tab" aria-controls="nav-Mobile" href="#" aria-selected="false">Mobile
-                    Phones & Accessories</a>
+                <a class="nav-item nav-link my-taps active " id="nav-my_ads-tab" data-toggle="tab" href="#nav-my_ads"
+                    role="tab" aria-controls="nav-my_ads" aria-selected="true">My Ads</a>
+
+                <a class="nav-item nav-link my-taps " id="nav-my_favoret-tab" data-toggle="tab" href="#nav-my_favoret"
+                    role="tab" aria-controls="nav-my_favoret" aria-selected="true">My Favoret</a>
 
 
             </div>
         </nav>
 
-        <div class="tab-content my-content" id="nav-tabContent">
-
-
+    <div class="tab-content my-content" id="nav-tabContent">
             <!-- new tab -->
+        <div class="tab-pane fade show active" id="nav-my_ads" role="tabpanel" aria-labelledby="nav-my_ads-tab">
+            <!-- <table>
+                <form action=" {% url 'ads:all_ads' %}#all"> 
+                    <li><label for="id_order_by_options">Order by options:</label> <select name="order_by_options" onchange="this.form.submit();" id="id_order_by_options">
+                    <option value="create_date" {% if order_by_data == 'create_date' %}selected{% endif %}>date_up</option>
+                    
+                    <option value="-create_date"{% if order_by_data == '-create_date' %}selected{% endif %}>date_down</option>
+                    
+                    <option value="price" {% if order_by_data == 'price' %}selected{% endif %}>price_up</option>
+                    
+                    <option value="-price"{% if order_by_data == '-price' %}selected{% endif %}>price_down</option>
+                    
+                    <option value="title" {% if order_by_data == 'title' %}selected{% endif %}>title_up</option>
+                    
+                    <option value="-title"{% if order_by_data == '-title' %}selected{% endif %}>title_down</option>
+                    
+                    </select></li> </form>
+                
+            </table> -->
+            <br>
+            <div class="row">
+                {% for ad in user_ads %}
 
-            <div class="tab-pane fade" id="nav-Mobile" role="tabpanel" aria-labelledby="nav-Mobile-tab">Home
-
-
-                <div class="col-sm-3"><!--left col-->
-              
-
-                    <div class="text-center">
-                      <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
-                      <h6>Upload a different photo...</h6>
-                      <input type="file" class="text-center center-block file-upload">
-                    </div><br>
-              
-                             
-                        <div class="panel panel-default">
-                          <div class="panel-heading">Website <i class="fa fa-link fa-1x"></i></div>
-                          <div class="panel-body"><a href="http://bootnipets.com">bootnipets.com</a></div>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 my-card-respon ">
+                    <div class="card my-card">
+                        <img src="{{ad.img.url}}" class="card-img-top my-card-img" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ad.title}}</h5>
+                            <p class="card-text">{{ad.description|truncatewords:3}}</p>
                         </div>
-                        
-                        
-                        <ul class="list-group">
-                          <li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
-                          <li class="list-group-item text-right"><span class="pull-left"><strong>Shares</strong></span> 125</li>
-                          <li class="list-group-item text-right"><span class="pull-left"><strong>Likes</strong></span> 13</li>
-                          <li class="list-group-item text-right"><span class="pull-left"><strong>Posts</strong></span> 37</li>
-                          <li class="list-group-item text-right"><span class="pull-left"><strong>Followers</strong></span> 78</li>
-                        </ul> 
-                             
-                        <div class="panel panel-default">
-                          <div class="panel-heading">Social Media</div>
-                          <div class="panel-body">
-                              <i class="fa fa-facebook fa-2x"></i> <i class="fa fa-github fa-2x"></i> <i class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i> <i class="fa fa-google-plus fa-2x"></i>
-                          </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">it is for || {{ ad.ad_option }}</li>
+                            <li class="list-group-item">cat || {{ ad.main }}</li>
+                        </ul>
+                        <div class="card-body">
+                            <a class="btn btn-primary" href="{% url 'ads:ads_detail' ad.id  %}#con"
+                                role="button">know More</a>
+                                {% if user.is_authenticated %}
+                                {% if ad not in user_favoret %}
+                                <a class="btn btn-primary add_favoret " style="width: 25%; color: white;" ad_id2="{{ ad.id }}" ajax_href="{% url 'user_profile:favoret'%}"  role="button">Favorit</a>
+                                {% else %}
+                                <a class="btn btn-danger add_favoret" style="width: 35%; color: white;" ad_id2="{{ ad.id }}" ajax_href="{% url 'user_profile:favoret'%}"  role="button">Favorit</a>
+                                {% endif %}
+                                {% endif %}
+                            <a class="btn btn-success" href="{% url 'ads:edit_ads' ad.id %}" role="button">Edit
+                                !</a>
                         </div>
-                        
-                      </div>
-
+                    </div>
+                </div>
+                {% endfor %}
             </div>
+            <!-- ###################################################   start Pagination     ######################             -->
+            {% if ads_all.has_other_pages %}
+            <nav class="p-2 my-Pagination" aria-label="Pagination">
+                <ul class="pagination justify-content-center mb-0 flex-wrap">
+                    {% if ads_all.has_previous  %}
+                    <li class="page-item "><a class="page-link"
+                            href="?{% if order_by_data %}order_by_options={{order_by_data}}{% endif %}&page=1#target_page">First</a>
+                    </li>
+                    <li class="page-item "><a class="page-link"
+                            href="?{% if order_by_data %}order_by_options={{order_by_data}}{% endif %}&page={{ ads_all.previous_page_number }}#target_page">Previous</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled" style="cursor: not-allowed;"><a class="page-link"
+                            href="#">First</a></li>
+                    <li class="page-item disabled" style="cursor: not-allowed;"><a class="page-link"
+                            href="#">Previous</a></li>
+                    {% endif %}
+                    {% for ads_page in ads_all.paginator.page_range %}
+                    {% if ads_all.number == ads_page %}
+                    <li class="page-item active "><a class="page-link">{{ads_page}}</a></li>
+                    {% elif ads_page > ads_all.number|add:'-4' and ads_page < ads_all.number|add:'4' %}
+                    <li class="page-item  "><a class="page-link"
+                            href="?{% if order_by_data %}order_by_options={{order_by_data}}{% endif %}&page={{ads_page }}#target_page">{{ads_page}}</a>
+                    </li>
+                    <!-- لو الصفحة من اللوب اكبر من الصفحة الفعلية -4 و كمان اصغر من الفحة الفعلية +4  -->
+                    {% endif %}
+                    {% endfor %}
+                    {% if ads_all.has_next %}
+                    <li class="page-item"><a class="page-link"
+                            href="?{% if order_by_data %}order_by_options={{order_by_data}}{% endif %}&page={{ ads_all.next_page_number }}#target_page">Next</a>
+                    </li>
+                    <li class="page-item"><a class="page-link"
+                            href="?{% if order_by_data %}order_by_options={{order_by_data}}{% endif %}&page={{ ads_all.paginator.num_pages }}#target_page">Last
+                        </a></li>
+                    {% else %}
+                    <li class="page-item disabled" style="cursor: not-allowed;"><a class="page-link"
+                            href="#">Next</a></li>
+                    <li class="page-item disabled" style="cursor: not-allowed;"><a class="page-link"
+                            href="#">Last</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
 
-
-            <!-- new tab -->
-
-            <div class="tab-pane fade" id="nav-clothes" role="tabpanel" aria-labelledby="nav-clothes-tab">Mobile Phones
-                & Accessories
-            </div>
+            <!--  ###################################################   end Pagination     ######################             -->
+        
         </div>
+        <!-- new tab -->
+        <div class="tab-pane fade " id="nav-my_favoret" role="tabpanel" aria-labelledby="nav-my_favoret-tab">
+            <!-- <table>
+                    <form action=" {% url 'ads:all_ads' %}#all"> 
+                        <li><label for="id_order_by_options">Order by options:</label> <select name="order_by_options" onchange="this.form.submit();" id="id_order_by_options">
+                        <option value="create_date" {% if order_by_data == 'create_date' %}selected{% endif %}>date_up</option>
+                        
+                        <option value="-create_date"{% if order_by_data == '-create_date' %}selected{% endif %}>date_down</option>
+                        
+                        <option value="price" {% if order_by_data == 'price' %}selected{% endif %}>price_up</option>
+                        
+                        <option value="-price"{% if order_by_data == '-price' %}selected{% endif %}>price_down</option>
+                        
+                        <option value="title" {% if order_by_data == 'title' %}selected{% endif %}>title_up</option>
+                        
+                        <option value="-title"{% if order_by_data == '-title' %}selected{% endif %}>title_down</option>
+                        
+                        </select></li> </form>
+                    
+                </table> -->
+            <br>
+            <div class="row">
+                {% for ad in user_favoret %}
+
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 my-card-respon ads_card{{ ad.id }}" >
+                    <div class="card my-card">
+                        <img src="{{ad.img.url}}" class="card-img-top my-card-img" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ad.title}}</h5>
+                            <p class="card-text">{{ad.description|truncatewords:3}}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">it is for || {{ ad.ad_option }}</li>
+                            <li class="list-group-item">cat || {{ ad.main }}</li>
+                        </ul>
+                        <div class="card-body">
+                            <a class="btn btn-primary" href="{% url 'ads:ads_detail' ad.id  %}#con" role="button">know
+                                More</a>
+                                {% if user.is_authenticated %}
+                                {% if ad not in user_favoret %}
+                                <a class="btn btn-primary add_favoret " style="width: 25%; color: white;" ad_id2="{{ ad.id }}" ajax_href="{% url 'user_profile:favoret'%}"  role="button">Favorit</a>
+                                {% else %}
+                                <a class="btn btn-danger add_favoret" style="width: 35%; color: white;" ad_id2="{{ ad.id }}" ajax_href="{% url 'user_profile:favoret'%}"  role="button">Favorit</a>
+                                {% endif %}
+                                {% endif %}
+                            <a class="btn btn-success" href="{% url 'ads:edit_ads' ad.id %}" role="button">Edit !</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- ###################################################   start Pagination     ######################             -->
+            {% if ads_all.has_other_pages %}
+            <nav class="p-2 my-Pagination" aria-label="Pagination" >
+                <ul class="pagination justify-content-center mb-0 flex-wrap">
+                    {% if ads_all.has_previous  %}
+                    <li class="page-item "><a class="page-link"
+                            href="?{% if order_by_data %}order_by_options={{order_by_data}}{% endif %}&page=1#target_page">First</a>
+                    </li>
+                    <li class="page-item "><a class="page-link"
+                            href="?{% if order_by_data %}order_by_options={{order_by_data}}{% endif %}&page={{ ads_all.previous_page_number }}#target_page">Previous</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled" style="cursor: not-allowed;"><a class="page-link" href="#">First</a>
+                    </li>
+                    <li class="page-item disabled" style="cursor: not-allowed;"><a class="page-link"
+                            href="#">Previous</a></li>
+                    {% endif %}
+                    {% for ads_page in ads_all.paginator.page_range %}
+                    {% if ads_all.number == ads_page %}
+                    <li class="page-item active "><a class="page-link">{{ads_page}}</a></li>
+                    {% elif ads_page > ads_all.number|add:'-4' and ads_page < ads_all.number|add:'4' %}
+                    <li class="page-item  "><a class="page-link"
+                            href="?{% if order_by_data %}order_by_options={{order_by_data}}{% endif %}&page={{ads_page }}#target_page">{{ads_page}}</a>
+                    </li>
+                    <!-- لو الصفحة من اللوب اكبر من الصفحة الفعلية -4 و كمان اصغر من الفحة الفعلية +4  -->
+                    {% endif %}
+                    {% endfor %}
+                    {% if ads_all.has_next %}
+                    <li class="page-item"><a class="page-link"
+                            href="?{% if order_by_data %}order_by_options={{order_by_data}}{% endif %}&page={{ ads_all.next_page_number }}#target_page">Next</a>
+                    </li>
+                    <li class="page-item"><a class="page-link"
+                            href="?{% if order_by_data %}order_by_options={{order_by_data}}{% endif %}&page={{ ads_all.paginator.num_pages }}#target_page">Last
+                        </a></li>
+                    {% else %}
+                    <li class="page-item disabled" style="cursor: not-allowed;"><a class="page-link" href="#">Next</a>
+                    </li>
+                    <li class="page-item disabled" style="cursor: not-allowed;"><a class="page-link" href="#">Last</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+
+            <!--  ###################################################   end Pagination     ######################             -->
+        
+        </div>
+    <!-- new tab -->
+    </div>
     </div>
 
 </section>
+
+
+<script src="{% static '../static/js/jquery/jquery.min.js' %}"></script>
+<script>
+$(".add_favoret").click(function () {
+    var url = $(this).attr("ajax_href");
+    var ad_id = $(this).attr("ad_id2");
+    var sel="[ad_id2='"+ad_id+"']"
+    var ad_card=".ads_card"+ad_id
+    $.ajax({
+      url: url ,
+      data: { 'ad_id': ad_id },
+      success: function (data) {
+        if ($(sel).hasClass('btn-primary')) {
+          $(sel).removeClass('btn-primary');
+          $(sel).addClass('btn-danger');
+          $(sel).animate({width: "35%",}, {duration: 100,});
+          $(ad_card).animate({opacity: "1"} , {duration: 500,});  
+        }
+        else {
+          $(sel).removeClass('btn-danger');
+          $(sel).addClass('btn-primary');
+          $(sel).animate({width: "25%",}, {duration: 100,});
+          $(ad_card).animate({opacity: "0.3"} , {duration: 500,}); 
+        }   
+      }
+    });
+  });
+
+</script>
+
 
 {% endblock card %}

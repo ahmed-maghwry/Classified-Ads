@@ -2,25 +2,23 @@
 
 {% block main_search %}
 {% load static %}
+{% load bootstrap4 %}
 
 <section id="con" class="py-3 my-product-detils">
   <form method="GET" id="searchform" enctype="multipart/form-data" novalidate>
     
-    {{ order_by_form.as_ul }}
+    {% bootstrap_form order_by_form %}
     <select class="d-none" name="main" id="id_main">
       <option value="{{ main_id_ }}">{{ main_id_ }}</option>
     </select>
+      <div class="row">
+        <div class="col-md-4">{% bootstrap_form general_search_form %}</div>
+        <div class="col-md-4" id="main_form_search"></div>
+      </div>
       
-    
-    <table>
-      {{ general_search_form.as_ul }}
-    </table>
     <button id="serch" type="button">Search</button>
     
-    <div id="main_form_search">
-
-
-    </div>
+    
     
   </form>
   <div class="search" id="search_result">

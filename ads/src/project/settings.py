@@ -52,14 +52,16 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
 
-
+    'bootstrap4',
     'ads',
     'search',
     'user_profile',
 ]
+BOOTSTRAP4 = {'horizontal_field_class': 'col-md-2', 'horizontal_label_class': 'col-md-1',
+}
 
 SITE_ID = 1
-
+ACCOUNT_LOGOUT_ON_GET =True
 LOGIN_REDIRECT_URL = '/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 

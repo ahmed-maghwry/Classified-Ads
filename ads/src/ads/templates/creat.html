@@ -1,25 +1,31 @@
 {% extends 'base_ads.html' %}
 
 {% load static %}
-
+{% load bootstrap4 %}
 {% block card %}
 
 
 
 <form method="post" id="adsform" data-url="{% url 'ads:load_sub'%}mkm" enctype="multipart/form-data" novalidate>
-  {% csrf_token %}
-  <table>
-    {{ form }}
-  </table>
-  {% if signalf == 1 %}
-  <table id="change_form">
-    {{ details_form }}
-  </table>
-  {% else %}
-  <table id="change_form">
-  </table>
-  {% endif %}
-  <button type="submit">Save</button>
+
+  <div class="row">
+    <div class="col-md-4 ">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+    </div>
+    {% if signalf == 1 %}
+    <div class="col-md-4" id="change_form">
+      {% bootstrap_form details_form %}
+    </div>
+    {% else %}
+    <div class="col-md-4" id="change_form">
+    </div>
+    {% endif %}
+  </div>
+  
+  {% buttons %}
+  <button type="submit" class="btn btn-primary">Save Ad</button>
+{% endbuttons %}
 </form>
 
 <script src="{% static '../../static/js/jquery/jquery.min.js' %}"></script>

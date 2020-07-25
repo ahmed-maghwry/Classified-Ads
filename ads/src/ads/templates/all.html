@@ -92,9 +92,9 @@
                 <a class="btn btn-primary" href="{% url 'ads:ads_detail' ad.id  %}#con"  role="button">know More</a>
                 {% if user.is_authenticated %}
                 {% if ad not in user_favoret or not user_favoret %}
-                <a class="btn btn-primary add_favoret " style="width: 25%; color: white;" ad_id2="{{ ad.id }}" ajax_href="{% url 'user_profile:favoret'%}"  role="button">Favorit</a>
+                <a class="btn btn-primary add_favoret " style="width: 27%; color: white;" ad_id2="{{ ad.id }}" ajax_href="{% url 'user_profile:favoret'%}"  role="button">Favorite</a>
                 {% else %}
-                <a class="btn btn-danger add_favoret" style="width: 35%; color: white;" ad_id2="{{ ad.id }}" ajax_href="{% url 'user_profile:favoret'%}"  role="button">Favorit</a>
+                <a class="btn btn-danger add_favoret" style="width: 35%; color: white;" ad_id2="{{ ad.id }}" ajax_href="{% url 'user_profile:favoret'%}"  role="button">Favorite</a>
                 {% endif %}
                 {% endif %}
                 <a class="btn btn-success" href="{% url 'ads:edit_ads' ad.id %}" role="button">Edit !</a>
@@ -177,7 +177,7 @@ $(".add_favoret").click(function () {
         else {
           $(sel).removeClass('btn-danger');
           $(sel).addClass('btn-primary');
-          $(sel).animate({width: "25%",}, {duration: 100,});
+          $(sel).animate({width: "27%",}, {duration: 100,});
         }
       }
     });

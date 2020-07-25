@@ -12,9 +12,9 @@
           <br>
           {% if user.is_authenticated %}
           {% if detail not in user_favoret %}
-          <a class="btn btn-primary add_favoret " style="width: 25%; color: white;" ad_id2="{{ detail.id }}" ajax_href="{% url 'user_profile:favoret'%}"  role="button">Favorit</a>
+          <a class="btn btn-primary add_favoret " style="width: 25%; color: white;" ad_id2="{{ detail.id }}" ajax_href="{% url 'user_profile:favoret'%}"  role="button">Favorite</a>
           {% else %}
-          <a class="btn btn-danger add_favoret" style="width: 35%; color: white;" ad_id2="{{ detail.id }}" ajax_href="{% url 'user_profile:favoret'%}"  role="button">Favorit</a>
+          <a class="btn btn-danger add_favoret" style="width: 35%; color: white;" ad_id2="{{ detail.id }}" ajax_href="{% url 'user_profile:favoret'%}"  role="button">Favorite</a>
           {% endif %}
           {% endif %}
           <br>

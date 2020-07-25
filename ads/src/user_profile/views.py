@@ -2,6 +2,7 @@ from django.shortcuts import render ,HttpResponse
 from django.shortcuts import get_object_or_404
 from ads.models import ads
 from .models import user_details
+from allauth.account.forms import ChangePasswordForm
 
 
 # Create your views here.
@@ -32,10 +33,11 @@ def favoret(request) :
 
 
 def user_profile_sittings (request  ) :
+    change_password=ChangePasswordForm()
     user=request.user
     user_ads=get_user_ads(user)
     user_favoret=get_object_or_404(user_details , user=user).favoret_ads.all()
-    context={'user_ads':user_ads , 'user_favoret':user_favoret , }
+    context={'user_ads':user_ads , 'user_favoret':user_favoret , 'change_password':change_password  }
     return render(request , 'user_profile_sittings.html' , context)
 
 def get_user_ads (user):

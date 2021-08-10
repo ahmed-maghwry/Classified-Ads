@@ -68,10 +68,8 @@ def ads_detail(request , id):
         
         try: 
             context={'detail':detail , 'all_field':all_field,'user_favoret':user_favoret}
-            print('SSSSSS')
         except:context={'detail':detail , 'all_field':all_field,}     
     except:
-        print('FFFF')
         try: context={'detail':detail ,'user_favoret':user_favoret}
         except:context={'detail':detail }
 

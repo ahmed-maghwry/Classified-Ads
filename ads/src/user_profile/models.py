@@ -72,7 +72,7 @@ class user_details (models.Model):
     user = models.ForeignKey(allauth_app_settings.USER_MODEL,verbose_name=('user'),on_delete=models.CASCADE)
 
     favoret_ads = models.ManyToManyField(ads)
-    phone_number = models.PositiveIntegerField() 
+    phone_number = models.PositiveIntegerField(blank=True,null=True) 
     messages_ok = models.BooleanField(default=True)
 
 

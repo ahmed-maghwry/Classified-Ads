@@ -4,27 +4,26 @@ from ads.models import ads
 from .models import user_details
 from allauth.account.forms import ChangePasswordForm
 
+from django.contrib.auth.models import User
 
 # Create your views here.
 
 def favoret(request) :
-    print("aaaa")
+    now_user=request.user
+
+    user_details.objects.get_or_create( user_id=now_user.id)
     ad_id=request.GET.get('ad_id')
     print(ad_id)
-    now_user=request.user
-    print(now_user)
-    
+    print(now_user.id)
     user_detail=get_object_or_404(user_details , user=now_user)
-    # ads_fav=get_object_or_404(ads , id=ad_id)
-    print(now_user)
 
+
+    ads_fav=get_object_or_404(ads , id=ad_id)
     if user_detail.favoret_ads.all().filter(id=ad_id).exists() :
         user_detail.favoret_ads.remove(ad_id)
-        print('if')
         maseg='remove'
     else :
         user_detail.favoret_ads.add(ad_id)
-        print('else')
         maseg='add'
     return HttpResponse(maseg)
 

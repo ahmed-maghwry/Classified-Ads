@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path , include
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+import debug_toolbar
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +28,7 @@ urlpatterns = [
     path('search/', include('search.urls' , namespace='search' )),
     path('user_pro/', include('user_profile.urls' , namespace='user_profile' )),
     path('accounts/', include('allauth.urls')),
+    path('__debug__/', include(debug_toolbar.urls)),
 
 
 

@@ -5,14 +5,16 @@
 {% load bootstrap4 %}
 
 <section id="con" class="py-3 my-product-detils">
+
   <form method="GET" id="searchform" enctype="multipart/form-data" novalidate>
-    
-    {% bootstrap_form order_by_form %}
     <select class="d-none" name="main" id="id_main">
       <option value="{{ main_id_ }}">{{ main_id_ }}</option>
     </select>
       <div class="row">
-        <div class="col-md-4">{% bootstrap_form general_search_form %}</div>
+        <div class="col-md-4">
+          {% bootstrap_form order_by_form %}
+
+          {% bootstrap_form general_search_form %}</div>
         <div class="col-md-4" id="main_form_search"></div>
       </div>
       
@@ -39,6 +41,15 @@
             <div class="card-body">
               <a class="btn btn-primary" target="_blank" href="{% url 'ads:ads_detail' ad.id  %}#con" role="button">know
                 More</a>
+            {% if user.is_authenticated %}
+            
+            {% if ad not in user_favoret or not user_favoret %}
+            
+            <a class="btn btn-primary add_favoret " style="width: 27%; color: white;" ad_id2="{{ ad.id }}" ajax_href="{% url 'user_profile:favoret'%}"  role="button">Favorite</a>
+            {% else %}
+            <a class="btn btn-danger add_favoret" style="width: 35%; color: white;" ad_id2="{{ ad.id }}" ajax_href="{% url 'user_profile:favoret'%}"  role="button">Favorite</a>
+            {% endif %}
+            {% endif %}
               <a class="btn btn-success" target="_blank" href="{% url 'ads:edit_ads' ad.id %}" role="button">Edit !</a>
             </div>
           </div>
@@ -84,10 +95,36 @@
     </div>
 </section>
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="{% static '../static/js/jquery/jquery.min.js' %}"></script>
 <script>
   
   var Choose2 = '<option value="">Choose</option>'
+
+  
+$(".add_favoret").click(function () {
+    var url = $(this).attr("ajax_href");
+    var ad_id = $(this).attr("ad_id2");
+    var sel="[ad_id2='"+ad_id+"']"
+    $.ajax({
+      url: url ,
+      data: { 'ad_id': ad_id },
+      success: function (data) {
+        // var color_act=$(sel).css('background-color');
+        // console.log(color_act)
+        if ($(sel).hasClass('btn-primary')) {
+          $(sel).removeClass('btn-primary');
+          $(sel).addClass('btn-danger');
+          $(sel).animate({width: "35%",}, {duration: 100,});
+        }
+        else {
+          $(sel).removeClass('btn-danger');
+          $(sel).addClass('btn-primary');
+          $(sel).animate({width: "27%",}, {duration: 100,});
+        }
+      }
+    });
+  });
+
   
   $("#id_order_by_options").change (function () {
     var myForm = $('#searchform');
@@ -112,7 +149,9 @@
       url: thisURL,
       data: formData ,
       success: function (data) {
-        $("#search_result").html(data);
+        $("#search_result").fadeOut;
+
+        // $("#search_result").html(data);
       }
     });
   });
@@ -146,6 +185,7 @@
       success: function (data) {
         $("#main_form_search").html(data);
         $("#search_result").html('');
+        console.log("if");
         
       }
     });
@@ -165,6 +205,7 @@
       } ,
       success: function (data) {
         $("#search_result").html(data);
+        console.log("if");
       }
     });
 
